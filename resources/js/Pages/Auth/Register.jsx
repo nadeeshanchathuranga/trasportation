@@ -11,6 +11,10 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        address: '',
+        country: '',
+        phone: '',
+        role_type: 'user',
     });
 
     const submit = (e) => {
@@ -25,10 +29,9 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
-            <form onSubmit={submit}>
+           <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
-
                     <TextInput
                         id="name"
                         name="name"
@@ -39,13 +42,11 @@ export default function Register() {
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
-
                     <InputError message={errors.name} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
-
                     <TextInput
                         id="email"
                         type="email"
@@ -56,13 +57,68 @@ export default function Register() {
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
-
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="address" value="Address" />
+                    <TextInput
+                        id="address"
+                        name="address"
+                        value={data.address}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('address', e.target.value)}
+                        required
+                    />
+                    <InputError message={errors.address} className="mt-2" />
+                </div>
 
+                <div className="mt-4">
+                    <InputLabel htmlFor="country" value="Country" />
+                    <TextInput
+                        id="country"
+                        name="country"
+                        value={data.country}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('country', e.target.value)}
+                        required
+                    />
+                    <InputError message={errors.country} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="phone" value="Phone" />
+                    <TextInput
+                        id="phone"
+                        name="phone"
+                        value={data.phone}
+                        className="mt-1 block w-full"
+                        onChange={(e) => setData('phone', e.target.value)}
+                        required
+                    />
+                    <InputError message={errors.phone} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="role_type" value="Role Type" />
+                    <select
+                        id="role_type"
+                        name="role_type"
+                        value={data.role_type}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        onChange={(e) => setData('role_type', e.target.value)}
+                        required
+                    >
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                        <option value="superadmin">Super Admin</option>
+                        <option value="vendor">Vendor</option>
+                    </select>
+                    <InputError message={errors.role_type} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Password" />
                     <TextInput
                         id="password"
                         type="password"
@@ -73,7 +129,6 @@ export default function Register() {
                         onChange={(e) => setData('password', e.target.value)}
                         required
                     />
-
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
@@ -82,7 +137,6 @@ export default function Register() {
                         htmlFor="password_confirmation"
                         value="Confirm Password"
                     />
-
                     <TextInput
                         id="password_confirmation"
                         type="password"
@@ -95,7 +149,6 @@ export default function Register() {
                         }
                         required
                     />
-
                     <InputError
                         message={errors.password_confirmation}
                         className="mt-2"
