@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vendor_id');
-            $table->unsignedBigInteger('user_id'); // Registered by
-            $table->unsignedBigInteger('type_id');
+            // $table->unsignedBigInteger('type_id');
             $table->string('model');
             $table->string('manufracture');
             $table->year('manufracture_year');

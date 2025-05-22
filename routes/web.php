@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VehicleController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -22,6 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
+    Route::post('/vehicles/store', [VehicleController::class, 'store'])->name('vehicles.store');
 });
 
 require __DIR__.'/auth.php';

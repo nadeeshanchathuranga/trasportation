@@ -8,8 +8,7 @@ class Vehicle extends Model
 {
       protected $fillable = [
         'vendor_id',
-        'user_id',
-        'type_id',
+        // 'type_id',
         'model',
         'manufracture',
         'manufracture_year',
@@ -24,5 +23,11 @@ class Vehicle extends Model
         'description',
         'insuarance_provider_name',
         'insuarance_document',
+        'cover_image'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(VehicleImage::class);
+    }
 }
