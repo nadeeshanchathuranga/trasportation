@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Register({ countries = [] }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -75,14 +75,21 @@ export default function Register() {
 
                 <div className="mt-4">
                     <InputLabel htmlFor="country" value="Country" />
-                    <TextInput
+                    <select
                         id="country"
                         name="country"
                         value={data.country}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                         onChange={(e) => setData('country', e.target.value)}
                         required
-                    />
+                    >
+                        <option value="">Select a country...</option>
+                        {countries.map((country) => (
+                            <option key={country} value={country}>
+                                {country}
+                            </option>
+                        ))}
+                    </select>
                     <InputError message={errors.country} className="mt-2" />
                 </div>
 
