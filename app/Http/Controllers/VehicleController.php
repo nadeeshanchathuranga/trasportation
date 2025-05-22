@@ -13,9 +13,26 @@ use Inertia\Inertia;
 
 class VehicleController extends Controller
 {
-    public function index(){
-        return Inertia::render('Vehicle/VehicleIndex');
+    public function index()
+    {
+        $vendor = auth()->user(); // assuming the user is a vendor
+
+        $vehicles = Vehicle::where('vendor_id', $vendor->id)->get();
+
+        $landVehicles = LandVehicle::whereIn('vehicle_id', $vehicles->pluck('id'))->with('vehicle')->get();
+        $airVehicles = AirVehicle::whereIn('vehicle_id', $vehicles->pluck('id'))->with('vehicle')->get();
+        $seaVehicles = SeaVehicle::whereIn('vehicle_id', $vehicles->pluck('id'))->with('vehicle')->get();
+
+        return Inertia::render('Vehicle/VehicleIndex', [
+            'data' => [
+                'vehicles' => $vehicles,
+                'landVehicles' => $landVehicles,
+                'airVehicles' => $airVehicles,
+                'seaVehicles' => $seaVehicles,
+            ]
+        ]);
     }
+
 
     public function create(){
         return Inertia::render('Vehicle/VehicleCreate');

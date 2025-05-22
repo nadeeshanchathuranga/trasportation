@@ -11,4 +11,9 @@ class SeaVehicle extends Model
         'port_of_operation',
     ];
 
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
 }

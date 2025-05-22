@@ -14,6 +14,11 @@ class LandVehicle extends Model
         'pickup_location',
         'drop_off_policy',
     ];
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
 }
 
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function VehicleCreate() {
   const [formData, setFormData] = useState({
@@ -53,19 +54,19 @@ export default function VehicleCreate() {
 
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const form = new FormData();
+        const form = new FormData();
 
-    // Add all fields to FormData
-    Object.entries(formData).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-        value.forEach((file, index) => {
-            form.append(`${key}[${index}]`, file);
-        });
-        } else {
-        form.append(key, value);
-        }
+        // Add all fields to FormData
+        Object.entries(formData).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                value.forEach((file, index) => {
+                    form.append(`${key}[${index}]`, file);
+            });
+            } else {
+                form.append(key, value);
+            }
     });
 
     // Optional: Add CSRF token if using Laravel's web.php route
@@ -82,7 +83,7 @@ export default function VehicleCreate() {
         });
 
         window.location.href = '/vehicles';
-        
+
     } catch (error) {
         console.error('❌ Submission error:', error.response?.data || error.message);
         alert('Failed to register vehicle.');
@@ -91,6 +92,7 @@ export default function VehicleCreate() {
 
 
   return (
+    <AuthenticatedLayout>
     <div className="min-h-screen bg-gray-500 py-10 px-4">
 
       <div className="max-w-5xl mx-auto bg-gray-300 rounded-2xl shadow-xl p-8">
@@ -251,7 +253,6 @@ export default function VehicleCreate() {
                     <option>Manual</option>
                     <option>CVT</option>
                     <option>Triptonic</option>
-                    <option>Semi-Automatic</option>
                   </select>
                 </div>
 
@@ -499,5 +500,6 @@ export default function VehicleCreate() {
         </form>
       </div>
     </div>
+    </AuthenticatedLayout>
   );
 }
