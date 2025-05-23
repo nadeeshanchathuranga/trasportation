@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
-use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {

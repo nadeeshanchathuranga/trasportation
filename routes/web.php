@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
     Route::post('/vehicles/store', [VehicleController::class, 'store'])->name('vehicles.store');
 
-
+    
      Route::get('/vendor', [VendorController::class, 'index'])->name('vendor.index');
      Route::Post('/vendor-store', [VendorController::class, 'store'])->name('vendor.store');
 
@@ -43,9 +43,6 @@ Route::middleware('auth')->group(function () {
       Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
       Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
       Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
-
-      Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
-    ->name('vendor.document');
 
 
 
