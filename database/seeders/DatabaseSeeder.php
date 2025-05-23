@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         // Call your custom seeders
         $this->call([
             VehicleCategorySeeder::class,
+            UserSeeder::class,
+            VendorSeeder::class,
         ]);
     }
 }

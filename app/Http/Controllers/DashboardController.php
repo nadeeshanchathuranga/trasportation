@@ -6,16 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 
 
 class DashboardController extends Controller
 {
 
-
 public function index()
 {
-    $user = auth()->user();
+    $user = Auth::user();
 
     if ($user->role_type === 'vendor') {
         return redirect()->route('vendor.index');
