@@ -7,6 +7,7 @@ use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\WebController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -17,6 +18,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
+// Web
+Route::get('/', [WebController::class, 'index'])->name('home');
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -58,5 +63,14 @@ Route::middleware('auth')->group(function () {
 
 
 });
+
+
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
