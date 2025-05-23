@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,16 @@ Route::middleware('auth')->group(function () {
 
      Route::get('/vendor', [VendorController::class, 'index'])->name('vendor.index');
      Route::Post('/vendor-store', [VendorController::class, 'store'])->name('vendor.store');
+
+
+      Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+      Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
+      Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
+      Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
+
+
+
+
 });
 
 require __DIR__.'/auth.php';

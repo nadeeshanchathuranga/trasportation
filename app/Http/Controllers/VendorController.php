@@ -70,6 +70,7 @@ public function store(Request $request)
             $validated['meritime_lisence'] = $request->file('meritime_lisence')->store('vendors/sea');
         }
 
+         $validated['status'] = 'pending';
         Vendor::create($validated);
 
         return redirect()->route('vendor.index')->with('success', 'Vendor registered successfully!');

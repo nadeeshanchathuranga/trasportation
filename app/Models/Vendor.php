@@ -16,6 +16,7 @@ class Vendor extends Model
         'no_of_vehicles',
         'air_certificate',
         'meritime_lisence',
+        'status',
     ];
 
     public function user()
