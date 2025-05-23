@@ -1,6 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 
 function handleApprove(id) {
     if (confirm('Are you sure you want to approve this vendor?')) {
@@ -22,7 +24,7 @@ export default function VendorList({ vendor_lists }) {
         if (filter === 'all') return true;
         if (filter === 'pending') return vendor.status === 'pending';
         if (filter === 'rejected') return vendor.status === 'rejected';
-        if (filter === 'accepted') return vendor.status === 'accepted'; 
+        if (filter === 'accepted') return vendor.status === 'accepted';
         return true;
     });
 
@@ -34,27 +36,27 @@ export default function VendorList({ vendor_lists }) {
                 <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-xl font-bold">Vendor List</h2>
-                        
+
                         <div className="flex space-x-2">
-                            <button 
+                            <button
                                 onClick={() => setFilter('all')}
                                 className={`px-4 py-2 rounded ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
                             >
                                 All Vendors
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setFilter('pending')}
                                 className={`px-4 py-2 rounded ${filter === 'pending' ? 'bg-yellow-500 text-white' : 'bg-gray-200'}`}
                             >
                                 Pending Vendors
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setFilter('accepted')}
                                 className={`px-4 py-2 rounded ${filter === 'accepted' ? 'bg-green-600 text-white' : 'bg-gray-200'}`}
                             >
                                 Accepted Vendors
                             </button>
-                            <button 
+                            <button
                                 onClick={() => setFilter('rejected')}
                                 className={`px-4 py-2 rounded ${filter === 'rejected' ? 'bg-red-600 text-white' : 'bg-gray-200'}`}
                             >
@@ -88,15 +90,26 @@ export default function VendorList({ vendor_lists }) {
                                             <td className="px-4 py-2 border">{vendor.user.name}</td>
                                             <td className="px-4 py-2 border">{vendor.business_name}</td>
                                             <td className="px-4 py-2 border">{vendor.business_registration_no}</td>
-                                            <td className="px-4 py-2 border">
+
+
+<td className="px-4 py-2 border">
+                                            {vendor.registration_document ? (
                                                 <a
-                                                    href={vendor.registration_document}
+                                                    href={`/vendor/document/${vendor.id}/registration-document`}
                                                     target="_blank"
+                                                    rel="noopener noreferrer"
                                                     className="text-blue-600 underline"
                                                 >
-                                                    View
+                                                     <FontAwesomeIcon icon={faFilePdf} size="lg" />
                                                 </a>
-                                            </td>
+                                            ) : (
+                                                "Not Available"
+                                            )}
+                                        </td>
+
+
+
+
                                             <td className="px-4 py-2 border">
                                                 <img
                                                     src={`/storage/vendors/logos/${vendor.business_logo}`}
@@ -104,23 +117,47 @@ export default function VendorList({ vendor_lists }) {
                                             </td>
                                             <td className="px-4 py-2 border">{vendor.category_id}</td>
                                             <td className="px-4 py-2 border">{vendor.no_of_vehicles}</td>
-                                            <td className="px-4 py-2 border">
-                                                {vendor.air_certificate ? (
-                                                    <a
-                                                        href={`/storage/${vendor.air_certificate}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-blue-600 underline"
-                                                    >
-                                                        View PDF
-                                                    </a>
-                                                ) : (
-                                                    "Not Available"
-                                                )}
-                                            </td>
-                                            <td className="px-4 py-2 border">
-                                                {vendor.meritime_lisence ? 'Yes' : 'No'}
-                                            </td>
+
+
+
+
+
+
+ <td className="px-4 py-2 border">
+                                            {vendor.air_certificate ? (
+                                                <a
+                                                    href={`/vendor/document/${vendor.id}/air-certificate`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 underline"
+                                                >
+                                                     <FontAwesomeIcon icon={faFilePdf} size="lg" />
+                                                </a>
+                                            ) : (
+                                                "Not Available"
+                                            )}
+                                        </td>
+
+
+
+
+
+
+
+                                         <td className="px-4 py-2 border">
+                                            {vendor.meritime_lisence ? (
+                                                <a
+                                                    href={`/vendor/document/${vendor.id}/meritime-lisence`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 underline"
+                                                >
+                                                     <FontAwesomeIcon icon={faFilePdf} size="lg" />
+                                                </a>
+                                            ) : (
+                                                "Not Available"
+                                            )}
+                                        </td>
                                             <td className="px-4 py-2 border">
                                                 {vendor.status === 'pending' ? (
                                                     <div className="flex gap-2">

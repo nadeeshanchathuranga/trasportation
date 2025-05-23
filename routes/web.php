@@ -51,6 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
+
+
+    Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
+    ->name('vendor.document');
+
+
 });
 
 require __DIR__ . '/auth.php';
