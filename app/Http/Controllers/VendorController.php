@@ -39,6 +39,19 @@ class VendorController extends Controller
         return Inertia::render('Vendors/EarningManagement');
     }
 
+    public function promotionManagement(){
+        return Inertia::render('Vendors/PromotionManagement');
+    }
+
+    public function reportManagement(){
+        return Inertia::render('Vendors/ReportsNotification');
+    }
+
+
+    public function reviewsManagement(){
+        return Inertia::render('Vendors/ReviewsRatings');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
