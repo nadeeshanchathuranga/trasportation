@@ -1,5 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, router } from '@inertiajs/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 
 function handleApprove(id) {
     if (confirm('Are you sure you want to approve this vendor?')) {
@@ -47,70 +49,87 @@ export default function VendorList({ vendor_lists }) {
                                         <td className="px-4 py-2 border">{vendor.business_name}</td>
                                         <td className="px-4 py-2 border">{vendor.business_registration_no}</td>
                                         <td className="px-4 py-2 border">
-                                            <a
-                                                href={vendor.registration_document}
-                                                target="_blank"
-                                                className="text-blue-600 underline"
-                                            >
-                                                View
-                                            </a>
+                                            {vendor.registration_document ? (
+                                                <a
+                                                    href={`/vendor/document/${vendor.id}/registration-document`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 underline"
+                                                >
+                                                     <FontAwesomeIcon icon={faFilePdf} size="lg" />
+                                                </a>
+                                            ) : (
+                                                "Not Available"
+                                            )}
                                         </td>
                                         <td className="px-4 py-2 border">
+ <img
+  src={`/storage/vendors/logos/${vendor.business_logo}`}
+  alt="Logo"
+  className="w-12 h-12 object-cover"
+/>
 
 
 
-
-
-                                            <img
-
-                                      src={`/storage/vendors/logos/${vendor.business_logo}`}
-
-                                            alt="Logo" className="w-12 h-12 object-cover" />
                                         </td>
                                         <td className="px-4 py-2 border">{vendor.category_id}</td>
                                         <td className="px-4 py-2 border">{vendor.no_of_vehicles}</td>
+                                        <td className="px-4 py-2 border">
+                                            {vendor.air_certificate ? (
+                                                <a
+                                                    href={`/vendor/document/${vendor.id}/air-certificate`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 underline"
+                                                >
+                                                    <FontAwesomeIcon icon={faFilePdf} size="lg" />
+                                                </a>
+                                            ) : (
+                                                "Not Available"
+                                            )}
+                                        </td>
+
+
 
 
 
 <td className="px-4 py-2 border">
-  {vendor.air_certificate ? (
-    <a
-      href={`/storage/${vendor.air_certificate}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-600 underline"
-    >
-      View PDF
-    </a>
-  ) : (
-    "Not Available"
-  )}
-</td>
-
+                                            {vendor.meritime_lisence ? (
+                                                <a
+                                                    href={`/vendor/document/${vendor.id}/meritime-lisence`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 underline"
+                                                >
+                                                     <FontAwesomeIcon icon={faFilePdf} size="lg" />
+                                                </a>
+                                            ) : (
+                                                "Not Available"
+                                            )}
+                                        </td>
 
 
 
 
                                         <td className="px-4 py-2 border">
-                                            {vendor.meritime_lisence ? 'Yes' : 'No'}
-                                        </td>
-                                        <td className="px-4 py-2   flex gap-2">
-                                           {vendor.status === 'pending' ? (
+                                            <div className="flex gap-2">
+                                                {vendor.status === 'pending' ? (
+                                                    <button
+                                                        onClick={() => handleApprove(vendor.id)}
+                                                        className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                                                    >
+                                                        Pending
+                                                    </button>
+                                                ) : (
+                                                    <span className="text-green-600 font-semibold">Accepted</span>
+                                                )}
                                                 <button
-                                                    onClick={() => handleApprove(vendor.id)}
-                                                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                                                    onClick={() => handleDelete(vendor.id)}
+                                                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                                                 >
-                                                    Pending
+                                                    Delete
                                                 </button>
-                                            ) : (
-                                                <span className="text-green-600 font-semibold">Accepted</span>
-                                            )}
-                                            <button
-                                                onClick={() => handleDelete(vendor.id)}
-                                                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                                            >
-                                                Delete
-                                            </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
