@@ -15,16 +15,29 @@ class VendorController extends Controller
      */
 
 
-         public function index()
-            {
-                $vehicle_categories = VehicleCategory::all(); // ✅ Add semicolon
+    public function index()
+        {
+            $vehicle_categories = VehicleCategory::all();
 
-                return Inertia::render('Vendors/index', [
-                    'user' => auth()->user(),
-                    'vehicleCategories' => $vehicle_categories, // ✅ Match the variable name
-                ]);
-            }
+            return Inertia::render('Vendors/index', [
+                'user' => auth()->user(),
+                'vehicleCategories' => $vehicle_categories,
+            ]);
+        }
 
+
+    public function vendorDashboard(){
+        return Inertia::render('Vendors/VendorDashboard');
+    }
+
+
+    public function bookingManagement(){
+        return Inertia::render('Vendors/BookingManagement');
+    }
+
+    public function earningManagement(){
+        return Inertia::render('Vendors/EarningManagement');
+    }
 
     /**
      * Show the form for creating a new resource.

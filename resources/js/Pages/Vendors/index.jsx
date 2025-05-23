@@ -27,6 +27,7 @@ export default function VendorDashboard({ user, vehicleCategories }) {
                 });
             }
         });
+        window.location.href='/vendor-dashboard';
     };
 
     return (
