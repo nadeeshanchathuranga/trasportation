@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('no_of_vehicles')->default(0);
             $table->string('air_certificate')->nullable();
             $table->string('meritime_lisence')->nullable();
+            $table->enum('status', ['accepted', 'pending', 'rejected'])->default('pending')->before('meritime_lisence');
             $table->timestamps();
         });
     }
