@@ -16,6 +16,9 @@ export default function VehicleIndex() {
             <tr>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">#</th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Model</th>
+              <th className='px-4 py-2 text-left text-sm font-medium text-gray-600'>Manufracture</th>
+              <th className='px-4 py-2 text-left text-sm font-medium text-gray-600'>Manufracture Year</th>
+              <th className='px-4 py-2 text-left text-sm font-medium text-gray-600'>Condition</th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Category</th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Vehicle No</th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Capacity</th>
@@ -29,6 +32,9 @@ export default function VehicleIndex() {
                   <tr key={vehicle?.id || index}>
                     <td className="px-4 py-2 text-sm">{index + 1}</td>
                     <td className="px-4 py-2 text-sm">{vehicle?.model || 'N/A'}</td>
+                    <td className="px-4 py-2 text-sm">{vehicle?.manufracture || 'N/A'}</td>
+                    <td className="px-4 py-2 text-sm">{vehicle?.manufracture_year || 'N/A'}</td>
+                    <td className="px-4 py-2 text-sm">{vehicle?.condition || 'N/A'}</td>
                     <td className="px-4 py-2 text-sm">{vehicle?.category || 'N/A'}</td>
                     <td className="px-4 py-2 text-sm">{vehicle?.vehicle_no || 'N/A'}</td>
                     <td className="px-4 py-2 text-sm">{vehicle?.passenger_capacity || 'N/A'}</td>
@@ -51,9 +57,9 @@ export default function VehicleIndex() {
       <div className="min-h-screen bg-gray-400 py-10 px-4">
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex justify-between items-center bg-gray-200 rounded-2xl shadow-md p-6">
-            <h1 className="text-3xl font-bold text-gray-800">🚗 Vehicle Management</h1>
+            <h1 className="text-3xl font-bold text-gray-800">🚗 My Vehicle List</h1>
             <Link href="/vehicles/create">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200">
+              <button className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200">
                 + Register New Vehicle
               </button>
             </Link>
