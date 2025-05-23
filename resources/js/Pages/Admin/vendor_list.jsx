@@ -72,7 +72,7 @@ export default function VendorList({ vendor_lists }) {
                                     <th className="px-4 py-2 border">#</th>
                                     <th className="px-4 py-2 border">Name</th>
                                     <th className="px-4 py-2 border">Business Name</th>
-                                    <th className="px-4 py-2 border">Reg No</th>
+
                                     <th className="px-4 py-2 border">Document</th>
                                     <th className="px-4 py-2 border">Logo</th>
                                     <th className="px-4 py-2 border">Category</th>
@@ -88,8 +88,10 @@ export default function VendorList({ vendor_lists }) {
                                         <tr key={vendor.id} className="border-t">
                                             <td className="px-4 py-2 border">{index + 1}</td>
                                             <td className="px-4 py-2 border">{vendor.user.name}</td>
-                                            <td className="px-4 py-2 border">{vendor.business_name}</td>
-                                            <td className="px-4 py-2 border">{vendor.business_registration_no}</td>
+                                            <td className="px-4 py-2 border">{vendor.business_name}
+                                             <p className="text-red-600 text-xs "> Reg No :   {vendor.business_registration_no}</p>
+                                            </td>
+                                      
 
 
 <td className="px-4 py-2 border">
@@ -98,7 +100,7 @@ export default function VendorList({ vendor_lists }) {
                                                     href={`/vendor/document/${vendor.id}/registration-document`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="text-blue-600 underline"
+                                                    className="text-blue-600 text-xs underline"
                                                 >
                                                      <FontAwesomeIcon icon={faFilePdf} size="lg" />
                                                 </a>
