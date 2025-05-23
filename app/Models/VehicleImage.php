@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SeaVehicle extends Model
+class VehicleImage extends Model
 {
     protected $fillable = [
         'vehicle_id',
-        'port_of_operation',
+        'image_path',
     ];
 
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
     }
-
 }

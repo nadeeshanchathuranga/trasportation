@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('land_vehicles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vehicle_id');
+            $table->string('body_type')->nullable();
+            $table->string('fuel_type')->nullable();
+            $table->string('transmission_type')->nullable();
+            $table->string('pickup_location')->nullable();
+            $table->string('drop_off_policy')->nullable();
             $table->timestamps();
         });
     }

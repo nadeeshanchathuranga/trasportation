@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class AirVehicle extends Model
 {
-      protected $fillable = [
+    protected $fillable = [
         'vehicle_id',
         'flight_fly_range_km',
         'airport_name',
     ];
+
+     public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
 }
