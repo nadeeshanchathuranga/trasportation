@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/vendor-dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
     Route::get('/booking-management', [VendorController::class, 'bookingManagement'])->name('vendor.booking');
     Route::get('/earning-management', [VendorController::class, 'earningManagement'])->name('vendor.earning');
+    Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
+    Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
+    Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
 
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
