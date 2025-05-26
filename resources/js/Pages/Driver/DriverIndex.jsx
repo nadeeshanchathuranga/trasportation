@@ -60,12 +60,12 @@ export default function DriverRegisterForm() {
   return (
     <AuthenticatedLayout>
       <div className="max-w-3xl mx-auto py-10 px-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6">🚗 Driver Registration</h2>
+        <h2 className="text-2xl font-bold mb-6">Driver Registration</h2>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6" encType="multipart/form-data">
           {/* Left Column: Personal Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-700">👤 Personal Information</h3>
+            <h3 className="text-lg font-semibold text-gray-700">Personal Information</h3>
 
             <input
               type="text"
@@ -119,7 +119,7 @@ export default function DriverRegisterForm() {
 
           {/* Right Column: File Uploads */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-700">📄 Upload Documents</h3>
+            <h3 className="text-lg font-semibold text-gray-700">Upload Documents</h3>
 
             <div>
               <label className="block font-medium mb-1">NIC (PDF or Image)</label>

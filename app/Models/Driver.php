@@ -18,4 +18,11 @@ class Driver extends Model
         'police_clearance_path',
         'certifications',
     ];
+
+
+      public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

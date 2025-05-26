@@ -67,8 +67,18 @@ Route::middleware('auth')->group(function () {
 
 
 
+
+
+
+
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
+
+
+      Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
+    Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
+    Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
+
 
 });
 
