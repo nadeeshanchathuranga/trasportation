@@ -120,6 +120,7 @@ export default function Register({ countries = [] }) {
                         <option value="admin">Admin</option>
                         <option value="superadmin">Super Admin</option>
                         <option value="vendor">Vendor</option>
+                        <option value="driver">Driver</option>
                     </select>
                     <InputError message={errors.role_type} className="mt-2" />
                 </div>

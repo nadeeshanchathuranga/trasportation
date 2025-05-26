@@ -7,6 +7,7 @@ use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\WebController;
 use Inertia\Inertia;
 
@@ -64,6 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
     ->name('vendor.document');
 
+
+
+    Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
+    Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
 
 });
 

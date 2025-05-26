@@ -12,16 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create a test user
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+       
 
         // Call your custom seeders
         $this->call([
             VehicleCategorySeeder::class,
-            UserSeeder::class,
+
             VendorSeeder::class,
         ]);
     }
