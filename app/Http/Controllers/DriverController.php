@@ -6,28 +6,33 @@ namespace App\Http\Controllers;
 use App\Models\Driver;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Storage;
 
 class DriverController extends Controller
 {
-     public function index()
-    {
 
 
-        return Inertia::render('Driver/DriverIndex');
-    }
+    public function index()
+{
+    $user = Auth::user();
 
+
+
+    return Inertia::render('Driver/DriverIndex', [
+        'user' => $user,
+    ]);
+}
 
 
 
 public function store(Request $request)
 {
     $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:drivers,email',
         'phone' => 'required|string|max:20',
         'dob' => 'required|date',
-        'address' => 'required|string',
+        'license_number' => 'required|string|max:100',
         'nic' => 'required|file|mimes:jpeg,png,pdf|max:2048',
         'license' => 'required|file|mimes:jpeg,png,pdf|max:2048',
         'police_clearance' => 'required|file|mimes:jpeg,png,pdf|max:2048',
@@ -45,11 +50,9 @@ public function store(Request $request)
 
     Driver::create([
         'user_id' => auth()->id(),
-        'name' => $request->name,
-        'email' => $request->email,
         'phone' => $request->phone,
         'dob' => $request->dob,
-        'address' => $request->address,
+        'license_number' => $request->license_number,
         'nic_path' => $nic,
         'license_path' => $license,
         'police_clearance_path' => $clearance,

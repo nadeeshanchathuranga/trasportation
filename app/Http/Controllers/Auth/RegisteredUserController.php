@@ -67,22 +67,28 @@ public function create(): Response
         'phone' => $request->phone,
         'role_type' => $request->role_type,
     ]);
- 
+
     event(new Registered($user));
     Auth::login($user);
 
     // Role-based redirection
     switch ($user->role_type) {
         case 'admin':
+            dd('1');
             return redirect()->route('admin.view');
         case 'vendor':
+            dd('2');
             return redirect()->route('vendor.dashboard');
         case 'user':
+            dd('3');
             return redirect()->route('home');
         case 'driver':
+         
             return redirect()->route('driver.view');
+
         default:
-            return redirect()->route('dashboard'); // regular user
+        dd('5');
+            return redirect()->route('dashboard');
     }
 }
 

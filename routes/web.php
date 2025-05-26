@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
+    Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
 
 
       Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');

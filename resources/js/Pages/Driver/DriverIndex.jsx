@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function DriverRegisterForm() {
+export default function DriverRegisterForm({ user }) {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
     dob: '',
-    address: '',
+    address: user?.address || '',
+    license_number: '',
     nic: null,
     license: null,
     police_clearance: null,
@@ -35,21 +36,19 @@ export default function DriverRegisterForm() {
       forceFormData: true,
       onSuccess: () => {
         alert('✅ Driver registered successfully!');
-        // Reset form state
         setFormData({
-          name: '',
-          email: '',
-          phone: '',
+          name: user?.name || '',
+          email: user?.email || '',
+          phone: user?.phone || '',
           dob: '',
-          address: '',
+          address: user?.address || '',
+          license_number: '',
           nic: null,
           license: null,
           police_clearance: null,
           certifications: null,
         });
-
-        // Clear file input fields manually
-        document.querySelectorAll('input[type="file"]').forEach(input => input.value = '');
+        document.querySelectorAll('input[type="file"]').forEach((input) => (input.value = ''));
       },
       onError: () => {
         alert('❌ Failed to register. Please check your inputs.');
@@ -75,6 +74,7 @@ export default function DriverRegisterForm() {
               required
               className="w-full border px-3 py-2 rounded"
               onChange={handleChange}
+              readOnly
             />
 
             <input
@@ -85,6 +85,7 @@ export default function DriverRegisterForm() {
               required
               className="w-full border px-3 py-2 rounded"
               onChange={handleChange}
+              readOnly
             />
 
             <input
@@ -93,9 +94,24 @@ export default function DriverRegisterForm() {
               placeholder="Phone"
               value={formData.phone}
               required
+              readOnly
               className="w-full border px-3 py-2 rounded"
               onChange={handleChange}
             />
+
+
+  <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              required
+              readOnly
+              className="w-full border px-3 py-2 rounded"
+              onChange={handleChange}
+            />
+
+
 
             <input
               type="date"
@@ -106,11 +122,13 @@ export default function DriverRegisterForm() {
               onChange={handleChange}
             />
 
+
+
             <input
               type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
+              name="license_number"
+              placeholder="License Number"
+              value={formData.license_number}
               required
               className="w-full border px-3 py-2 rounded"
               onChange={handleChange}
