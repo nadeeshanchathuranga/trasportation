@@ -13,17 +13,18 @@ use Illuminate\Support\Facades\Storage;
 class DriverController extends Controller
 {
 
-
-    public function index()
+public function index()
 {
     $user = Auth::user();
 
-
+    $drivers = Driver::with('user')->get();
 
     return Inertia::render('Driver/DriverIndex', [
         'user' => $user,
+        'driver_lists' => $drivers,
     ]);
 }
+
 
 
 
