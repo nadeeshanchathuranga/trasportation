@@ -22,4 +22,9 @@ class Driver extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function servicePackages()
+{
+    return $this->hasMany(DriverServicePackage::class);
+}
+
 }

@@ -73,8 +73,18 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
-    Route::get('/driver-serviec-pacakge', [DriverController::class, 'servicePackage'])->name('driver.serviec_pacakge');
+    Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
 
+  Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
+  Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
+    Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
+
+Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
+    ->name('service_package.update');
+
+
+
+Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
 
 
 
@@ -84,8 +94,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
 
 
-});
 
+
+
+
+});
 
 
 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Models\Driver;
+use App\Models\DriverServicePackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -40,7 +40,7 @@ class DriverController extends Controller
 
       return Inertia::render('Driver/DriverIndex', [
         'user' => $user,
-       
+
     ]);
 
 
@@ -81,5 +81,99 @@ class DriverController extends Controller
 
         return back()->with('success', 'Driver registered successfully!');
     }
+
+
+public function servicePackageForm()
+{
+    $user = Auth::user();
+    $driver = Driver::where('user_id', $user->id)->first();
+
+
+
+    return Inertia::render('Driver/ServicePackageForm', [
+        'user' => $user,
+        'driver' => $driver ?? ['id' => null], // fallback to avoid null errors
+    ]);
+}
+
+
+
+  public function servicePackageStore(Request $request)
+    {
+        $validated = $request->validate([
+            'driver_id' => 'required|exists:drivers,id',
+            'type' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'duration_in_hours' => 'required|integer|min:1',
+        ]);
+
+        DriverServicePackage::create($validated);
+
+        return redirect()->route('driver.service_package.view')->with('success', 'Service Package created successfully.');
+    }
+
+
+  public function servicePackageView()
+    {
+        $user = Auth::user();
+        $driver = Driver::where('user_id', $user->id)->first();
+
+        $packages = $driver
+            ? DriverServicePackage::where('driver_id', $driver->id)->latest()->get()
+            : collect();
+
+        return Inertia::render('Driver/ServicePackageView', [
+            'user' => $user,
+            'driver' => $driver,
+            'packages' => $packages,
+        ]);
+    }
+
+
+
+
+
+public function deleteServicePackage($id)
+{
+    $package = DriverServicePackage::findOrFail($id);
+
+
+
+    $package->delete(); // Perform the deletion
+
+    return back()->with('success', 'Service package deleted successfully.');
+}
+
+
+
+public function servicePackageUpdate(Request $request, $id)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'type' => 'required|string|max:255',
+        'price' => 'required|numeric|min:0',
+        'duration_in_hours' => 'required|numeric|min:0.5',
+        'description' => 'required|string|max:1000',
+    ]);
+
+    $servicePackage = DriverServicePackage::findOrFail($id);
+
+    $servicePackage->update([
+        'title' => $request->title,
+        'type' => $request->type,
+        'price' => $request->price,
+        'duration_in_hours' => $request->duration_in_hours,
+        'description' => $request->description,
+    ]);
+
+    return redirect()->back()->with('success', 'Service package updated successfully.');
+}
+
+
+
+
+
 
 }

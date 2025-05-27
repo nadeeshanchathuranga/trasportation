@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head ,Link } from '@inertiajs/react';
+import {  } from '@inertiajs/react';
 
 export default function ServicePackage({ user, driver }) {
     return (
@@ -21,9 +22,13 @@ export default function ServicePackage({ user, driver }) {
                 </div>
 
                 <div className="mt-6">
-                    <a href="/" className="text-blue-600 underline hover:text-blue-800">
-                        Go to Home
-                    </a>
+         <Link
+    href={route('driver.service_package_form')}
+    className="inline-block bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition duration-200"
+>
+    Enter Package
+</Link>
+
                 </div>
             </div>
         </AuthenticatedLayout>
