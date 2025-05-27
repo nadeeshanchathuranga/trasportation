@@ -17,9 +17,9 @@ public function index()
 {
     $user = Auth::user();
 
-    if ($user->role_type === 'vendor') {
-        return redirect()->route('vendor.index');
-    }
+    // if ($user->role_type === 'vendor') {
+    //     return redirect()->route('vendor.index');
+    // }
 
     return Inertia::render('Dashboard', [
         'user' => $user,

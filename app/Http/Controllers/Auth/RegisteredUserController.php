@@ -45,37 +45,51 @@ public function create(): Response
 }
 
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
+
+   public function store(Request $request)
+{
+    $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|string|lowercase|email|max:255|unique:users,email',
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
         'address' => 'required|string|max:255',
         'country' => 'required|string|max:255',
         'phone' => 'required|string|max:20',
-        'role_type' => 'required|in:admin,vendor,user',
-        ]);
+        'role_type' => 'required|in:admin,vendor,user,driver',
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'address' => $request->address,
-                'country' => $request->country,
-                'phone' => $request->phone,
-                'role_type' => $request->role_type,
-        ]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'address' => $request->address,
+        'country' => $request->country,
+        'phone' => $request->phone,
+        'role_type' => $request->role_type,
+    ]);
 
-        event(new Registered($user));
+    event(new Registered($user));
+    Auth::login($user);
 
-        Auth::login($user);
+    // Role-based redirection
+    switch ($user->role_type) {
+        case 'admin':
+            dd('1');
+            return redirect()->route('admin.view');
+        case 'vendor':
+            dd('2');
+            return redirect()->route('vendor.dashboard');
+        case 'user':
+            dd('3');
+            return redirect()->route('home');
+        case 'driver':
+         
+            return redirect()->route('driver.view');
 
-        return redirect(route('dashboard', absolute: false));
+        default:
+        dd('5');
+            return redirect()->route('dashboard');
     }
+}
+
 }

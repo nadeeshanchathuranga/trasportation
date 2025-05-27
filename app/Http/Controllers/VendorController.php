@@ -6,6 +6,7 @@ use App\Models\Vendor;
 use App\Models\VehicleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 
 class VendorController extends Controller
@@ -37,6 +38,19 @@ class VendorController extends Controller
 
     public function earningManagement(){
         return Inertia::render('Vendors/EarningManagement');
+    }
+
+    public function promotionManagement(){
+        return Inertia::render('Vendors/PromotionManagement');
+    }
+
+    public function reportManagement(){
+        return Inertia::render('Vendors/ReportsNotification');
+    }
+
+
+    public function reviewsManagement(){
+        return Inertia::render('Vendors/ReviewsRatings');
     }
 
     /**
@@ -125,4 +139,36 @@ public function store(Request $request)
     {
         //
     }
+
+
+
+    public function viewDocument(Vendor $vendor, $type)
+
+
+{
+
+    
+    $filePath = null;
+
+    switch ($type) {
+        case 'air-certificate':
+            $filePath = $vendor->air_certificate;
+            break;
+        case 'registration-document':
+            $filePath = $vendor->registration_document;
+            break;
+        case 'meritime-lisence':
+            $filePath = $vendor->meritime_lisence;
+            break;
+        default:
+            abort(404);
+    }
+
+    if (!$filePath || !Storage::exists($filePath)) {
+        abort(404, 'Document not found');
+    }
+
+    return Storage::response($filePath);
+}
+
 }

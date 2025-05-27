@@ -7,6 +7,8 @@ use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\WebController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -17,6 +19,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
+// Web
+Route::get('/', [WebController::class, 'index'])->name('home');
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
@@ -39,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/vendor-dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
     Route::get('/booking-management', [VendorController::class, 'bookingManagement'])->name('vendor.booking');
     Route::get('/earning-management', [VendorController::class, 'earningManagement'])->name('vendor.earning');
+    Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
+    Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
+    Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
 
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
@@ -51,6 +60,36 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
+
+
+    Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
+    ->name('vendor.document');
+
+
+
+
+
+
+
+    Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
+    Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
+    Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
+
+
+      Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
+    Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
+    Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
+
+
 });
+
+
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
