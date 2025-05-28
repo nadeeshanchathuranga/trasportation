@@ -6,6 +6,7 @@ use App\Models\Vendor;
 use App\Models\VehicleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -51,6 +52,10 @@ class VendorController extends Controller
 
     public function reviewsManagement(){
         return Inertia::render('Vendors/ReviewsRatings');
+    }
+
+    public function sessionManagement(){
+        return Inertia::render('Vendors/Availability');
     }
 
     /**
@@ -143,32 +148,58 @@ public function store(Request $request)
 
 
     public function viewDocument(Vendor $vendor, $type)
+    {
 
+        
+        $filePath = null;
 
-{
+        switch ($type) {
+            case 'air-certificate':
+                $filePath = $vendor->air_certificate;
+                break;
+            case 'registration-document':
+                $filePath = $vendor->registration_document;
+                break;
+            case 'meritime-lisence':
+                $filePath = $vendor->meritime_lisence;
+                break;
+            default:
+                abort(404);
+        }
 
-    
-    $filePath = null;
+        if (!$filePath || !Storage::exists($filePath)) {
+            abort(404, 'Document not found');
+        }
 
-    switch ($type) {
-        case 'air-certificate':
-            $filePath = $vendor->air_certificate;
-            break;
-        case 'registration-document':
-            $filePath = $vendor->registration_document;
-            break;
-        case 'meritime-lisence':
-            $filePath = $vendor->meritime_lisence;
-            break;
-        default:
-            abort(404);
+        return Storage::response($filePath);
     }
 
-    if (!$filePath || !Storage::exists($filePath)) {
-        abort(404, 'Document not found');
-    }
+    public function storeAvailableDates(Request $request , $vendorId)
+    {
+       $request->validate([
+        'vendor_id' => 'required|exists:vendors,id',
+        'available_dates' => 'required|array',
+        'available_dates.*'=> 'date',
+       ]);
 
-    return Storage::response($filePath);
-}
+       $vendor = Vendor::findOrFail($vendorId);
+
+       $vendor->availableDates()->delete();
+
+       foreach($request->available_dates as $date){
+           $vendor->availableDates()->create([
+            'vendor_id' => $vendorId,
+            'available_date'=> $date,
+           ]);
+       }
+
+       return response()->json([
+        'message'=> 'Available dates saved successfully!.',
+       ]);
+       
+           
+   
+            
+    }
 
 }

@@ -28,4 +28,9 @@ class Vendor extends Model
     {
         return $this->hasMany(Vehicle::class);
     }
+
+    public function available_dates()
+    {
+        return $this->hasMany(Available_date::class);
+    }
 }

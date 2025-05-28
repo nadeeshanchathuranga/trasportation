@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
     Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
+    Route::get('/bookingsession-management',[VendorController::class, 'sessionManagement'])->name('vendor.booking');
+    Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates'])->name('vendor.store');
 
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
@@ -62,8 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
 
 
-    Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
-    ->name('vendor.document');
+    Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])->name('vendor.document');
 
 
 
@@ -76,7 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
 
 
-      Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
+    Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
     Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
 
