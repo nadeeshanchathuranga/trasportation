@@ -74,6 +74,7 @@ class VendorController extends Controller
 
 public function store(Request $request)
 {
+ 
     dd($request->all());
     try {
         $validated = $request->validate([
@@ -171,9 +172,8 @@ public function store(Request $request)
                 abort(404);
         }
 
-        if (!$filePath || !Storage::exists($filePath)) {
-            abort(404, 'Document not found');
-        }
+
+    $filePath = null;
 
         return Storage::response($filePath);
     }
