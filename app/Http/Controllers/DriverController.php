@@ -174,6 +174,24 @@ public function servicePackageUpdate(Request $request, $id)
 
 
 
+public function dateRangeBooking()
+{
+    $user = Auth::user();
+    $driver = Driver::where('user_id', $user->id)->first();
+
+
+
+    return Inertia::render('Driver/CallenderBooking');
+}
+
+
+
+
+
+
+
+
+
 
 
 }

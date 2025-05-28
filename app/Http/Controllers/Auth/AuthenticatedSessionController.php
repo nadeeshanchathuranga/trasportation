@@ -53,7 +53,7 @@ class AuthenticatedSessionController extends Controller
         case 'admin':
             return redirect()->intended(route('admin.view', absolute: false));
         case 'vendor':
-            return redirect()->intended(route('vendor.dashboard', absolute: false));
+            return redirect()->intended(route('vendor.index', absolute: false));
         case 'driver':
             return redirect()->intended(route('driver.view', absolute: false));
         default:
