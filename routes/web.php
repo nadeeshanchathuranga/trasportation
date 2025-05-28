@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\ComplaintController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -75,16 +76,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
     Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
 
-  Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
-  Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
+    Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
+    Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
     Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
 
-Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
-    ->name('service_package.update');
+    Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
+        ->name('service_package.update');
 
 
 
-Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
+    Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
 
 
 
@@ -95,7 +96,14 @@ Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteS
     Route::post('/driver/{id}/suspend', [AdminController::class, 'driverSuspend']);
     Route::post('/driver/{id}/ban', [AdminController::class, 'driverBan']);
     Route::post('/driver/{id}/reactivate', [AdminController::class, 'driverReactivate']);
-});
+
+    Route::get('/complaints', [ComplaintController::class, 'index'])->name('complaints.index');
+    Route::get('/complaints/{id}', [ComplaintController::class, 'show'])->name('complaints.show');
+    Route::post('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
+    Route::post('/complaints/{id}/resolve', [ComplaintController::class, 'resolve'])->name('complaints.resolve');
+
+    // For users to submit complaints
+    Route::middleware('auth')->post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
 });
 
 
