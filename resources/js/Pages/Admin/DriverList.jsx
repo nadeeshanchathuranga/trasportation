@@ -72,94 +72,68 @@ export default function DriverList({ driver_lists }) {
                                     <th className="px-4 py-2 border">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {filteredDrivers.length > 0 ? (
-                                    filteredDrivers.map((driver, index) => (
-                                        <tr key={driver.id} className="border-t">
-                                            <td className="px-4 py-2 border">{index + 1}</td>
-                                            <td className="px-4 py-2 border">{driver.name}</td>
-                                            <td className="px-4 py-2 border">{driver.email}</td>
-                                            <td className="px-4 py-2 border">{driver.phone}</td>
+                          <tbody>
+    {filteredDrivers.length > 0 ? (
+        filteredDrivers.map((driver, index) => (
+            <tr key={driver.id} className="border-t">
+                <td className="px-4 py-2 border">{index + 1}</td>
+                <td className="px-4 py-2 border">{driver.user?.name ?? 'N/A'}</td>
+                <td className="px-4 py-2 border">{driver.user?.email ?? 'N/A'}</td>
+                <td className="px-4 py-2 border">{driver.user?.phone ?? 'N/A'}</td>
 
-                                            <td className="px-4 py-2 border">
-                                                <a
-                                                    href={`/storage/${driver.nic_path}`}
-                                                    target="_blank"
-                                                    className="text-blue-600 underline"
-                                                >
-                                                    <FontAwesomeIcon icon={faFilePdf} />
-                                                </a>
-                                            </td>
-                                            <td className="px-4 py-2 border">
-                                                <a
-                                                    href={`/storage/${driver.license_path}`}
-                                                    target="_blank"
-                                                    className="text-blue-600 underline"
-                                                >
-                                                    <FontAwesomeIcon icon={faFilePdf} />
-                                                </a>
-                                            </td>
-                                            <td className="px-4 py-2 border">
-                                                <a
-                                                    href={`/storage/${driver.police_clearance_path}`}
-                                                    target="_blank"
-                                                    className="text-blue-600 underline"
-                                                >
-                                                    <FontAwesomeIcon icon={faFilePdf} />
-                                                </a>
-                                            </td>
-                                            <td className="px-4 py-2 border">
-                                                {driver.certifications ? (
-                                                    <a
-                                                        href={`/storage/${driver.certifications}`}
-                                                        target="_blank"
-                                                        className="text-blue-600 underline"
-                                                    >
-                                                        <FontAwesomeIcon icon={faFilePdf} />
-                                                    </a>
-                                                ) : (
-                                                    'Not Available'
-                                                )}
-                                            </td>
-                                            <td className="px-4 py-2 border capitalize">{driver.status}</td>
-                                            <td className="px-4 py-2 border">
-                                                {driver.status === 'pending' ? (
-                                                    <div className="flex gap-2">
-                                                        <button
-                                                            onClick={() => handleApprove(driver.id)}
-                                                            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
-                                                        >
-                                                            Approve
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleReject(driver.id)}
-                                                            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                                                        >
-                                                            Reject
-                                                        </button>
-                                                    </div>
-                                                ) : (
-                                                    <span
-                                                        className={`font-semibold ${
-                                                            driver.status === 'accepted'
-                                                                ? 'text-green-600'
-                                                                : 'text-red-600'
-                                                        }`}
-                                                    >
-                                                        {driver.status.charAt(0).toUpperCase() + driver.status.slice(1)}
-                                                    </span>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="10" className="text-center text-gray-500 py-6">
-                                            No drivers found for selected filter.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
+                {/* rest unchanged */}
+                <td className="px-4 py-2 border">
+                    <a href={`/storage/${driver.nic_path}`} target="_blank" className="text-blue-600 underline">
+                        <FontAwesomeIcon icon={faFilePdf} />
+                    </a>
+                </td>
+                <td className="px-4 py-2 border">
+                    <a href={`/storage/${driver.license_path}`} target="_blank" className="text-blue-600 underline">
+                        <FontAwesomeIcon icon={faFilePdf} />
+                    </a>
+                </td>
+                <td className="px-4 py-2 border">
+                    <a href={`/storage/${driver.police_clearance_path}`} target="_blank" className="text-blue-600 underline">
+                        <FontAwesomeIcon icon={faFilePdf} />
+                    </a>
+                </td>
+                <td className="px-4 py-2 border">
+                    {driver.certifications ? (
+                        <a href={`/storage/${driver.certifications}`} target="_blank" className="text-blue-600 underline">
+                            <FontAwesomeIcon icon={faFilePdf} />
+                        </a>
+                    ) : (
+                        'Not Available'
+                    )}
+                </td>
+                <td className="px-4 py-2 border capitalize">{driver.status}</td>
+                <td className="px-4 py-2 border">
+                    {driver.status === 'pending' ? (
+                        <div className="flex gap-2">
+                            <button onClick={() => handleApprove(driver.id)} className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                                Approve
+                            </button>
+                            <button onClick={() => handleReject(driver.id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                Reject
+                            </button>
+                        </div>
+                    ) : (
+                        <span className={`font-semibold ${driver.status === 'accepted' ? 'text-green-600' : 'text-red-600'}`}>
+                            {driver.status.charAt(0).toUpperCase() + driver.status.slice(1)}
+                        </span>
+                    )}
+                </td>
+            </tr>
+        ))
+    ) : (
+        <tr>
+            <td colSpan="10" className="text-center text-gray-500 py-6">
+                No drivers found for selected filter.
+            </td>
+        </tr>
+    )}
+</tbody>
+
                         </table>
                     </div>
                 </div>
