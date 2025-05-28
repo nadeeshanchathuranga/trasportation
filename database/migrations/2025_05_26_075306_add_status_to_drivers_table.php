@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('drivers', function (Blueprint $table) {
-           $table->enum('status', ['accepted', 'pending', 'rejected'])
+           $table->enum('status', ['accepted', 'pending', 'rejected', 'suspended', 'banned'])
                   ->default('pending')
                   ->after('police_clearance_path');
         });

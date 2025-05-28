@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
-    ->name('vendor.document');
+        ->name('vendor.document');
 
 
 
@@ -89,15 +89,13 @@ Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteS
 
 
 
-      Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
+    Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
     Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
-
-
-
-
-
-
+    Route::post('/driver/{id}/suspend', [AdminController::class, 'driverSuspend']);
+    Route::post('/driver/{id}/ban', [AdminController::class, 'driverBan']);
+    Route::post('/driver/{id}/reactivate', [AdminController::class, 'driverReactivate']);
+});
 });
 
 

@@ -44,7 +44,7 @@ class AdminController extends Controller
     }
 
 
-     // This function is used to display the list of vendors
+    // This function is used to display the list of vendors
     public function driverList()
     {
         $driver_lists = Driver::with('user')->get();
@@ -55,22 +55,48 @@ class AdminController extends Controller
 
 
 
-   public function driverApprove($id)
-{
-    $driver = Driver::findOrFail($id);
-    $driver->status = 'accepted';
-    $driver->save();
+    public function driverApprove($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = 'accepted';
+        $driver->save();
 
-    return back()->with('success', ' Driver approved successfully.');
-}
+        return back()->with('success', ' Driver approved successfully.');
+    }
 
-public function driverReject($id)
-{
-    $driver = Driver::findOrFail($id);
-    $driver->status = 'rejected';
-    $driver->save();
+    public function driverReject($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = 'rejected';
+        $driver->save();
 
-    return back()->with('success', '  Driver rejected successfully.');
-}
+        return back()->with('success', '  Driver rejected successfully.');
+    }
 
+    public function driverSuspend($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = 'suspended';
+        $driver->save();
+
+        return back()->with('success', 'Driver has been suspended.');
+    }
+
+    public function driverBan($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = 'banned';
+        $driver->save();
+
+        return back()->with('success', 'Driver has been permanently banned.');
+    }
+
+    public function driverReactivate($id)
+    {
+        $driver = Driver::findOrFail($id);
+        $driver->status = 'accepted';
+        $driver->save();
+
+        return back()->with('success', 'Driver has been reactivated.');
+    }
 }
