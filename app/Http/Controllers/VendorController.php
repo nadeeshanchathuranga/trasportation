@@ -6,7 +6,9 @@ use App\Models\Vendor;
 use App\Models\VehicleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -19,10 +21,10 @@ class VendorController extends Controller
 
     public function index()
         {
+            
             $vehicle_categories = VehicleCategory::all();
-
             return Inertia::render('Vendors/index', [
-                'user' => auth()->user(),
+                'user' => Auth::user(),
                 'vehicleCategories' => $vehicle_categories,
             ]);
         }
@@ -72,6 +74,7 @@ class VendorController extends Controller
 
 public function store(Request $request)
 {
+    
     try {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -111,6 +114,7 @@ public function store(Request $request)
 
         return redirect()->back()->with('error', 'Something went wrong while submitting the form. Please try again.');
     }
+    
 }
 
     /**
