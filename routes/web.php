@@ -1,25 +1,24 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\WebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\DriverController;
-use App\Http\Controllers\WebController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        'canLogin'       => Route::has('login'),
+        'canRegister'    => Route::has('register'),
         'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'phpVersion'     => PHP_VERSION,
     ]);
 });
-
 
 // Web
 Route::get('/', [WebController::class, 'index'])->name('home');
@@ -49,53 +48,44 @@ Route::middleware('auth')->group(function () {
     Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
 
-
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
-
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
 
-
     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
         ->name('vendor.document');
-
-
-
-
-
-
 
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
     Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
 
-  Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
-  Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
+    Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
+    Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
     Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
 
-Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
-    ->name('service_package.update');
+    Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
+        ->name('service_package.update');
+    Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
 
 
 
-Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
-
-
-
+    Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
 
     Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
     Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
-    Route::post('/driver/{id}/suspend', [AdminController::class, 'driverSuspend']);
-    Route::post('/driver/{id}/ban', [AdminController::class, 'driverBan']);
-    Route::post('/driver/{id}/reactivate', [AdminController::class, 'driverReactivate']);
-});
+
+
+
+
+
+
 });
 
 

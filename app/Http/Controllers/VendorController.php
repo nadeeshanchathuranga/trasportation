@@ -67,6 +67,7 @@ class VendorController extends Controller
 
 public function store(Request $request)
 {
+ 
     try {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -147,7 +148,7 @@ public function store(Request $request)
 
 {
 
-    
+
     $filePath = null;
 
     switch ($type) {

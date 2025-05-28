@@ -18,16 +18,32 @@ export default function VendorDashboard({ user, vehicleCategories }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // Create FormData for file upload
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+            if (data[key] !== null && data[key] !== '') {
+                formData.append(key, data[key]);
+            }
+        });
+
         post(route('vendor.store'), {
+            data: formData,
+            forceFormData: true,
             onSuccess: () => {
                 reset(); // Reset all fields including text and selects
                 // Reset file inputs manually (Inertia doesn't auto-clear them)
                 document.querySelectorAll('input[type="file"]').forEach((input) => {
-                    input.value = null;
+                    input.value = '';
                 });
+            },
+            onError: (errors) => {
+                console.log('Form errors:', errors);
             }
         });
-        window.location.href='/vendor-dashboard';
+
+        // Remove this redirect - let Inertia handle the response
+        // window.location.href='/vendor-dashboard';
     };
 
     return (
@@ -55,11 +71,10 @@ export default function VendorDashboard({ user, vehicleCategories }) {
 
             <div className="py-12">
                 <div className="max-w-4xl mx-auto sm:px-6 lg:px-8 bg-white p-6 rounded shadow">
-                    <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                            <input type="hidden" name="user_id" value={data.user_id} />
-
+                            {/* Text Fields */}
                             {[
                                 { label: 'Business Name', key: 'business_name' },
                                 { label: 'Registration No', key: 'business_registration_no' },
@@ -71,9 +86,10 @@ export default function VendorDashboard({ user, vehicleCategories }) {
                                         type={type}
                                         value={data[key]}
                                         onChange={(e) => setData(key, e.target.value)}
-                                        className="mt-1 block w-full border-gray-300 rounded"
+                                        className="mt-1 block w-full border-gray-300 rounded px-3 py-2"
+                                        required={['business_name', 'business_registration_no', 'no_of_vehicles'].includes(key)}
                                     />
-                                    {errors[key] && <p className="text-red-600 text-sm">{errors[key]}</p>}
+                                    {errors[key] && <p className="text-red-600 text-sm mt-1">{errors[key]}</p>}
                                 </div>
                             ))}
 
@@ -83,16 +99,17 @@ export default function VendorDashboard({ user, vehicleCategories }) {
                                 <select
                                     value={data.category_id}
                                     onChange={(e) => setData('category_id', e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded"
+                                    className="mt-1 block w-full border-gray-300 rounded px-3 py-2"
+                                    required
                                 >
                                     <option value="">-- Select Category --</option>
-                                    {vehicleCategories.map((category) => (
+                                    {vehicleCategories?.map((category) => (
                                         <option key={category.id} value={category.id}>
                                             {category.name}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.category_id && <p className="text-red-600 text-sm">{errors.category_id}</p>}
+                                {errors.category_id && <p className="text-red-600 text-sm mt-1">{errors.category_id}</p>}
                             </div>
 
                             {/* File Fields */}
@@ -100,16 +117,17 @@ export default function VendorDashboard({ user, vehicleCategories }) {
                                 { label: 'Registration Document', key: 'registration_document' },
                                 { label: 'Business Logo', key: 'business_logo' },
                                 { label: 'Air Certificate', key: 'air_certificate' },
-                                { label: 'Meritime License', key: 'meritime_lisence' },
+                                { label: 'Maritime License', key: 'meritime_lisence' },
                             ].map(({ label, key }) => (
                                 <div key={key}>
                                     <label className="block text-sm font-medium">{label}</label>
                                     <input
                                         type="file"
-                                        onChange={(e) => setData(key, e.target.files[0])}
+                                        onChange={(e) => setData(key, e.target.files[0] || null)}
                                         className="mt-1 block w-full"
+                                        accept={key === 'business_logo' ? 'image/*' : '.pdf,.jpg,.jpeg,.png'}
                                     />
-                                    {errors[key] && <p className="text-red-600 text-sm">{errors[key]}</p>}
+                                    {errors[key] && <p className="text-red-600 text-sm mt-1">{errors[key]}</p>}
                                 </div>
                             ))}
                         </div>
@@ -117,7 +135,7 @@ export default function VendorDashboard({ user, vehicleCategories }) {
                         <div className="mt-6">
                             <button
                                 type="submit"
-                                className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                                className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
                                 disabled={processing}
                             >
                                 {processing ? 'Submitting...' : 'Submit Vendor Info'}
