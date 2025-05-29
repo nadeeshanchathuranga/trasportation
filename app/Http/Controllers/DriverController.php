@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Driver;
+use App\Models\DriverBooking;
 use App\Models\DriverServicePackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -186,7 +187,33 @@ public function dateRangeBooking()
 
 
 
+public function dateRangeBookingStore(Request $request)
+{
+    // Validate incoming request
+    $validated = $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'pickup_location' => 'required|string|max:255',
+        'start_date' => 'required|date|after_or_equal:today',
+        'end_date' => 'required|date|after_or_equal:start_date',
+        'description' => 'nullable|string',
+    ]);
 
+    // Create new booking
+    $booking = DriverBooking::create([
+        'user_id' => $validated['user_id'],
+        'pickup_location' => $validated['pickup_location'],
+        'start_date' => $validated['start_date'],
+        'end_date' => $validated['end_date'],
+        'description' => $validated['description'] ?? null,
+        'status' => 'pending', // default
+    ]);
+
+    // Return response
+    return response()->json([
+        'message' => 'Booking created successfully.',
+        'booking' => $booking
+    ], 201);
+}
 
 
 
