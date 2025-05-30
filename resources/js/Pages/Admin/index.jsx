@@ -61,6 +61,17 @@ export default function Dashboard() {
                                     View all complaints
                                 </Link>
                             </div>
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
+                                <h3 className="text-lg font-semibold mb-1">
+                                    Total Activities
+                                </h3>
+                                <Link
+                                    href={route("admin.activity-logs")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    View all activities
+                                </Link>
+                            </div>
                             {/* Add more dashboard stats here */}
                         </div>
                     </div>

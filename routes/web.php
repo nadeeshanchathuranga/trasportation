@@ -119,6 +119,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/packages', [AdminController::class, 'packageList'])->name('admin.packages');
     Route::post('/admin/packages/{id}/approve', [AdminController::class, 'approvePackage'])->name('admin.packages.approve');
     Route::post('/admin/packages/{id}/reject', [AdminController::class, 'rejectPackage'])->name('admin.packages.reject');
+
+    Route::get('/admin/activity-logs', [AdminController::class, 'activityLogs'])->name('admin.activity-logs');
 });
 
 require __DIR__ . '/auth.php';
