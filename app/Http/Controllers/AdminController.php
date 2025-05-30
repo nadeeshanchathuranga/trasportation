@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Driver;
 use App\Models\DriverComplaint;
+use App\Models\DriverServicePackage;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -51,19 +52,17 @@ class AdminController extends Controller
     }
 
 
-    // This function is used to display the list of vendors
-public function driverList()
-{
-    $driver_lists = Driver::whereHas('user', function($query) {
-        $query->where('role_type', 'driver');
-    })->with('user')->get();
+    // This function is used to display the list of drivers
+    public function driverList()
+    {
+        $driver_lists = Driver::whereHas('user', function ($query) {
+            $query->where('role_type', 'driver');
+        })->with('user')->get();
 
-    return Inertia::render('Admin/DriverList', [
-        'driver_lists' => $driver_lists,
-    ]);
-}
-
-
+        return Inertia::render('Admin/DriverList', [
+            'driver_lists' => $driver_lists,
+        ]);
+    }
 
     public function driverApprove($id)
     {
@@ -108,5 +107,38 @@ public function driverList()
         $driver->save();
 
         return back()->with('success', 'Driver has been reactivated.');
+    }
+
+    // This function is used to display the list of driver's packages
+    public function packageList()
+    {
+        $packages = DriverServicePackage::with(['driver.user'])->orderBy('created_at', 'desc')->get();
+
+        return Inertia::render('Admin/PackageList', [
+            'packages' => $packages
+        ]);
+    }
+
+    public function approvePackage($id)
+    {
+        $package = DriverServicePackage::findOrFail($id);
+        $package->status = 'approved';
+        $package->save();
+
+        return back()->with('success', 'Service package approved successfully.');
+    }
+
+    public function rejectPackage(Request $request, $id)
+    {
+        $request->validate([
+            'rejection_reason' => 'required|string|min:5'
+        ]);
+
+        $package = DriverServicePackage::findOrFail($id);
+        $package->status = 'rejected';
+        $package->rejection_reason = $request->rejection_reason;
+        $package->save();
+
+        return back()->with('success', 'Service package rejected successfully.');
     }
 }

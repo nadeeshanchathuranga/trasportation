@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             DriverSeeder::class,
             ComplaintsSeeder::class,
             VehicleTypeSeeder::class,
+            DriverServicePackageSeeder::class,
         ]);
     }
 }

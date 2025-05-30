@@ -13,6 +13,8 @@ class DriverServicePackage extends Model
         'description',
         'price',
         'duration_in_hours',
+        'status',
+        'rejection_reason'
     ];
 
     public function driver()

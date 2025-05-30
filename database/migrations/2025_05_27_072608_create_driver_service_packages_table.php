@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title'); // e.g., "Colombo to Kandy Route"
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->text('rejection_reason')->nullable();
             $table->integer('duration_in_hours')->nullable(); // for hourly type
             $table->timestamps();
         });
