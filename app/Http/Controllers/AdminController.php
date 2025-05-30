@@ -48,6 +48,7 @@ class AdminController extends Controller
     public function driverList()
     {
         $driver_lists = Driver::with('user')->get();
+       
         return Inertia::render('Admin/DriverList', [
             'driver_lists' => $driver_lists,
         ]);
