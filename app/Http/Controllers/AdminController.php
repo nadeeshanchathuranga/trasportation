@@ -16,7 +16,7 @@ class AdminController extends Controller
     {
         $pendingComplaints = DriverComplaint::where('status', 'pending')->count();
         $totalComplaints = DriverComplaint::count();
-        
+
         return Inertia::render('Admin/index', [
             'pendingComplaints' => $pendingComplaints,
             'totalComplaints' => $totalComplaints
@@ -52,13 +52,16 @@ class AdminController extends Controller
 
 
     // This function is used to display the list of vendors
-    public function driverList()
-    {
-        $driver_lists = Driver::with('user')->get();
-        return Inertia::render('Admin/DriverList', [
-            'driver_lists' => $driver_lists,
-        ]);
-    }
+public function driverList()
+{
+    $driver_lists = Driver::whereHas('user', function($query) {
+        $query->where('role_type', 'driver');
+    })->with('user')->get();
+
+    return Inertia::render('Admin/DriverList', [
+        'driver_lists' => $driver_lists,
+    ]);
+}
 
 
 
