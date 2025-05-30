@@ -24,10 +24,10 @@ Route::get('/', function () {
 
 // Web
 Route::get('/', [WebController::class, 'index'])->name('home');
-
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -49,12 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
     Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
-    Route::get('/bookingsession-management',[VendorController::class, 'sessionManagement'])->name('vendor.session');
-    Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
-    Route::post('/customer/store',[CustomerController::class,'store'])->name('customer.store');
-    Route::get('/customerform',[CustomerController::class,'create'])->name('customer.create');
-    // Route::get('/customer',[CustomerController::class,'index'])->name('customer.index');
-
 
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
@@ -62,18 +56,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
 
-
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
 
-
     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
         ->name('vendor.document');
 
 
-
+    // Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
 
 
 
@@ -81,20 +73,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
     Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
-    Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
-
-    Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
-    Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
-    Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
-
-    Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
-        ->name('service_package.update');
-
-
-
-Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
-
-
 
 
     Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
@@ -103,15 +81,9 @@ Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteS
     Route::post('/driver/{id}/suspend', [AdminController::class, 'driverSuspend']);
     Route::post('/driver/{id}/ban', [AdminController::class, 'driverBan']);
     Route::post('/driver/{id}/reactivate', [AdminController::class, 'driverReactivate']);
+
+
+
 });
-
-
-
-
-
-
-
-
-
 
 require __DIR__ . '/auth.php';

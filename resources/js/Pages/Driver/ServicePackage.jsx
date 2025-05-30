@@ -28,11 +28,28 @@ export default function ServicePackage({ user, driver }) {
         Enter Package
     </Link>
 
+
+    <Link
+        href={route('driver.service_package.view')}
+        className="inline-block text-center bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition duration-200"
+    >
+     Package View
+    </Link>
+
     <Link
         href={route('driver.date_range_booking.view')}
         className="inline-block text-center bg-orange-600 text-white px-5 py-2 rounded hover:bg-orange-700 transition duration-200"
     >
         Date Range Booking
+    </Link>
+
+
+
+       <Link
+        href={route('driver.booking.view')}
+        className="inline-block text-center bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700 transition duration-200"
+    >
+     Booking View
     </Link>
 </div>
 
