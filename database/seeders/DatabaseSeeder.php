@@ -13,13 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         // Call your custom seeders
         $this->call([
             VehicleCategorySeeder::class,
             VendorSeeder::class,
             DriverSeeder::class,
             ComplaintsSeeder::class,
+            VehicleTypeSeeder::class,
         ]);
     }
 }

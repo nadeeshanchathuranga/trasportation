@@ -105,7 +105,6 @@ export default function Register({ countries = [] }) {
                     />
                     <InputError message={errors.phone} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="role_type" value="Role Type" />
                     <select

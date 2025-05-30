@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Driver;
+use App\Models\DriverBooking;
 use App\Models\DriverServicePackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -173,6 +174,117 @@ public function servicePackageUpdate(Request $request, $id)
 
 
 
+
+
+public function dateRangeBooking()
+{
+    $user = Auth::user();
+
+    $bookings = DriverBooking::where('user_id', $user->id)->get();
+
+    $bookedDays = [];
+
+    foreach ($bookings as $booking) {
+        $start = new \DateTime($booking->start_date);
+        $end = new \DateTime($booking->end_date);
+        while ($start <= $end) {
+            $bookedDays[] = [
+                'date' => $start->format('Y-m-d'),
+                'title' => $booking->description ?? 'Booking',
+                'status' => $booking->status ?? 'pending',
+            ];
+            $start->modify('+1 day');
+        }
+    }
+
+    return Inertia::render('Driver/CallenderBooking', [
+        'bookedDates' => $bookedDays,
+    ]);
+}
+
+
+
+
+public function driverBookingView()
+{
+    $user = Auth::user();
+
+    // Fetch only the authenticated user's bookings
+    $bookings = DriverBooking::where('user_id', $user->id)->latest()->get();
+
+   $bookedDates = $bookings->map(function ($booking) {
+    return [
+        'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
+        'end' => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
+    ];
+});
+
+
+    return Inertia::render('Driver/DriverBookingView', [
+        'bookings' => $bookings,
+        'bookedDates' => $bookedDates,
+    ]);
+}
+
+
+public function deleteBooking($id)
+{
+    // Ensure the booking belongs to the logged-in user
+    $booking = DriverBooking::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->firstOrFail();
+
+    // Set the status to 'cancelled' instead of deleting the record
+    $booking->update(['status' => 'cancelled']);
+
+    return back()->with('message', 'Driver Booking has been cancelled.');
+}
+
+
+
+public function acceptBooking($id)
+{
+
+
+    $booking = DriverBooking::findOrFail($id);
+
+    $booking->update(['status' => 'confirmed']);
+
+    return back()->with('message', 'Driver Booking confirmed.');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+public function dateRangeBookingStore(Request $request)
+{
+    $request->validate([
+        'start_date' => 'required|date',
+        'end_date' => 'required|date|after_or_equal:start_date',
+    ]);
+
+    $userId = auth()->id();
+
+    DriverBooking::create([
+        'user_id' => $userId,
+        'pickup_location' => 'Personal for Driver',
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date,
+        'description' => 'Driver Entered Booking',
+        'status' => 'pending',
+    ]);
+
+    // Return JSON instead of redirect for API
+    return response()->json(['message' => 'Driver Booking created successfully!']);
+}
 
 
 

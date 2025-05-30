@@ -6,6 +6,10 @@ use App\Models\Vendor;
 use App\Models\VehicleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Exception;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -18,10 +22,10 @@ class VendorController extends Controller
 
     public function index()
         {
-            $vehicle_categories = VehicleCategory::all();
 
+            $vehicle_categories = VehicleCategory::all();
             return Inertia::render('Vendors/index', [
-                'user' => auth()->user(),
+                'user' => Auth::user(),
                 'vehicleCategories' => $vehicle_categories,
             ]);
         }
@@ -53,6 +57,10 @@ class VendorController extends Controller
         return Inertia::render('Vendors/ReviewsRatings');
     }
 
+    public function sessionManagement(){
+        return Inertia::render('Vendors/Availability');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -67,6 +75,7 @@ class VendorController extends Controller
 
 public function store(Request $request)
 {
+ 
     try {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -106,6 +115,7 @@ public function store(Request $request)
 
         return redirect()->back()->with('error', 'Something went wrong while submitting the form. Please try again.');
     }
+    
 }
 
     /**
@@ -143,32 +153,72 @@ public function store(Request $request)
 
 
     public function viewDocument(Vendor $vendor, $type)
+    {
+
+        
+        $filePath = null;
+
+        switch ($type) {
+            case 'air-certificate':
+                $filePath = $vendor->air_certificate;
+                break;
+            case 'registration-document':
+                $filePath = $vendor->registration_document;
+                break;
+            case 'meritime-lisence':
+                $filePath = $vendor->meritime_lisence;
+                break;
+            default:
+                abort(404);
+        }
 
 
-{
-
-    
     $filePath = null;
 
-    switch ($type) {
-        case 'air-certificate':
-            $filePath = $vendor->air_certificate;
-            break;
-        case 'registration-document':
-            $filePath = $vendor->registration_document;
-            break;
-        case 'meritime-lisence':
-            $filePath = $vendor->meritime_lisence;
-            break;
-        default:
-            abort(404);
+        return Storage::response($filePath);
     }
 
-    if (!$filePath || !Storage::exists($filePath)) {
-        abort(404, 'Document not found');
+    public function storeAvailableDates(Request $request , $vendorId)
+    {
+       $request->validate([
+        'vendor_id' => 'required|exists:vendors,id',
+        'available_dates' => 'required|array',
+        'available_dates.*'=> 'date',
+       ]);
+
+       $vendor = Vendor::findOrFail($vendorId);
+
+       $vendor->availableDates()->delete();
+
+       foreach($request->available_dates as $date){
+           $vendor->availableDates()->create([
+            'vendor_id' => $vendorId,
+            'available_date'=> $date,
+           ]);
+       }
+
+       return response()->json([
+        'message'=> 'Available dates saved successfully!.',
+       ]);
+            
     }
 
-    return Storage::response($filePath);
-}
+    public function getVendorCalender($vendorId)
+    {
+        $customers = Customer::with('user')
+             ->where('vendor_id',$vendorId)
+             ->get();
+        return response()->json($customers);
+
+    }
+
+    public function getVendorBookings($vendorId)
+    {
+        $bookings = Customer::with(['user','vehicleType'])
+                ->where('vendor_id',$vendorId)
+                ->get();
+
+        return response()->json($bookings);
+    }
 
 }

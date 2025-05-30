@@ -20,16 +20,40 @@ export default function ServicePackage({ user, driver }) {
                 <div className="bg-gray-100 p-4 rounded">
                     <p>This is where you can display available service packages, pricing, subscriptions, or any relevant features.</p>
                 </div>
+<div className="mt-6 grid grid-cols-2 gap-4">
+    <Link
+        href={route('driver.service_package_form')}
+        className="inline-block text-center bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition duration-200"
+    >
+        Enter Package
+    </Link>
 
-                <div className="mt-6">
-         <Link
-    href={route('driver.service_package_form')}
-    className="inline-block bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition duration-200"
->
-    Enter Package
-</Link>
 
-                </div>
+    <Link
+        href={route('driver.service_package.view')}
+        className="inline-block text-center bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition duration-200"
+    >
+     Package View
+    </Link>
+
+    <Link
+        href={route('driver.date_range_booking.view')}
+        className="inline-block text-center bg-orange-600 text-white px-5 py-2 rounded hover:bg-orange-700 transition duration-200"
+    >
+        Date Range Booking
+    </Link>
+
+
+
+       <Link
+        href={route('driver.booking.view')}
+        className="inline-block text-center bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700 transition duration-200"
+    >
+     Booking View
+    </Link>
+</div>
+
+
             </div>
         </AuthenticatedLayout>
     );

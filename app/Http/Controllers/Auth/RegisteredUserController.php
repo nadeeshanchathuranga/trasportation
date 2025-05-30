@@ -78,7 +78,7 @@ public function create(): Response
             return redirect()->route('admin.view');
         case 'vendor':
 
-            return redirect()->route('vendor.dashboard');
+            return redirect()->route('vendor.index');
         case 'user':
 
             return redirect()->route('home');
@@ -87,7 +87,7 @@ public function create(): Response
             return redirect()->route('driver.view');
 
         default:
-       
+
             return redirect()->route('dashboard');
     }
 }

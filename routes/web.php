@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
@@ -24,10 +25,10 @@ Route::get('/', function () {
 
 // Web
 Route::get('/', [WebController::class, 'index'])->name('home');
-
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -56,25 +57,24 @@ Route::middleware('auth')->group(function () {
     Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
 
-
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
 
-
     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
         ->name('vendor.document');
 
 
-
+    // Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
 
 
 
 
     Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
-    Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
+    Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
+     Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
 
     Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
     Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
@@ -83,11 +83,22 @@ Route::middleware('auth')->group(function () {
     Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
         ->name('service_package.update');
 
+    Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
+Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
+    ->name('driver.booking.store');
 
 
-    Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
 
+// View
+Route::get('/driver/driver-booking-view', [DriverController::class, 'driverBookingView'])->name('driver.booking.view');
+Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
+Route::delete('/driver/booking/{id}', [DriverController::class, 'deleteBooking'])->name('driver.booking.delete');
 
+// Accept
+Route::put('/driver/booking/accept/{id}', [DriverController::class, 'acceptBooking'])->name('driver.booking.accept');
+
+// (Optional) Edit/Update
+Route::put('/driver/booking/update/{id}', [DriverController::class, 'updateBooking'])->name('driver.booking.update');
 
 
     Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
@@ -104,14 +115,7 @@ Route::middleware('auth')->group(function () {
 
     // For users to submit complaints
     Route::middleware('auth')->post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
+
 });
-
-
-
-
-
-
-
-
 
 require __DIR__ . '/auth.php';
