@@ -75,8 +75,27 @@ Route::middleware('auth')->group(function () {
   Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
 
     Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
+Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
+    ->name('driver.booking.store');
 
-Route::post('/date-range-booking', [DriverController::class, 'dateRangeBookingStore']);
+
+// View
+Route::get('/driver/driver-booking-view', [DriverController::class, 'driverBookingView'])->name('driver.booking.view');
+
+// Delete
+Route::delete('/driver/booking/{id}', [DriverController::class, 'deleteBooking'])->name('driver.booking.delete');
+
+// Accept
+Route::put('/driver/booking/accept/{id}', [DriverController::class, 'acceptBooking'])->name('driver.booking.accept');
+
+// (Optional) Edit/Update
+Route::put('/driver/booking/update/{id}', [DriverController::class, 'updateBooking'])->name('driver.booking.update');
+
+
+
+
+
+
 
   Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
     Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
