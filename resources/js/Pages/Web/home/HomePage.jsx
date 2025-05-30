@@ -79,11 +79,13 @@ const HomePage = () => {
           <img src="https://www.hyundaiusa.com/images/vehicles/2022/tucson/overview/2022-Hyundai-Tucson-SEL-Silver.png" alt="Car" class="mx-auto h-40 object-contain mb-4"/>
           <h3 class="font-bold text-lg">HYUNDAI TUCSON</h3>
           <p class="text-gray-600 font-semibold text-xl mt-2 mb-4">$89.00</p> 
-          <div class="space-y-2">
-              
+             <div class="space-y-2">
+             <a href="/customerform" >
               <button class="bg-blue-600 text-white px-4 py-2 rounded col-span-1">Book now</button><br></br>
+             </a> 
               <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium">Rent Now</button>
-          </div>
+             </div>
+        
         </div>
 
      
@@ -91,10 +93,13 @@ const HomePage = () => {
           <img src="https://www.hyundaiusa.com/images/vehicles/2022/tucson/overview/2022-Hyundai-Tucson-SEL-Silver.png" alt="Car" class="mx-auto h-40 object-contain mb-4"/>
           <h3 class="font-bold text-lg">HYUNDAI TUCSON</h3>
           <p class="text-gray-600 font-semibold text-xl mt-2 mb-4">$89.00</p> 
-          <div class="space-y-2">
+            <div class="space-y-2">
+             <a href="/customerform" >
               <button class="bg-blue-600 text-white px-4 py-2 rounded col-span-1">Book now</button><br></br>
+              </a>
               <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium">Rent Now</button>
-          </div>
+             </div>
+         
         </div>
 
 

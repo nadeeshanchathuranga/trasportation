@@ -7,6 +7,7 @@ use App\Models\VehicleCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Exception;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -75,7 +76,6 @@ class VendorController extends Controller
 public function store(Request $request)
 {
  
-    dd($request->all());
     try {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -200,10 +200,25 @@ public function store(Request $request)
        return response()->json([
         'message'=> 'Available dates saved successfully!.',
        ]);
-       
-           
-   
             
+    }
+
+    public function getVendorCalender($vendorId)
+    {
+        $customers = Customer::with('user')
+             ->where('vendor_id',$vendorId)
+             ->get();
+        return response()->json($customers);
+
+    }
+
+    public function getVendorBookings($vendorId)
+    {
+        $bookings = Customer::with(['user','vehicleType'])
+                ->where('vendor_id',$vendorId)
+                ->get();
+
+        return response()->json($bookings);
     }
 
 }

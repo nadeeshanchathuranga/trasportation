@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Foundation\Application;
@@ -50,6 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
     Route::get('/bookingsession-management',[VendorController::class, 'sessionManagement'])->name('vendor.session');
     Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
+    Route::post('/customer/store',[CustomerController::class,'store'])->name('customer.store');
+    Route::get('/customerform',[CustomerController::class,'create'])->name('customer.create');
+    // Route::get('/customer',[CustomerController::class,'index'])->name('customer.index');
+
 
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
