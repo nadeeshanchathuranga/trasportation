@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\DriverComplaint;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,8 +20,6 @@ class DatabaseSeeder extends Seeder
             VehicleCategorySeeder::class,
             VendorSeeder::class,
             DriverSeeder::class,
-            UserSeeder::class,
-            DriverServicePackagesTypesTableSeeder::class,
         ]);
     }
 }
