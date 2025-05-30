@@ -105,6 +105,8 @@ public function servicePackageForm()
 
 public function servicePackageStore(Request $request)
 {
+
+
     try {
         // Get the driver record linked to the currently logged-in user
         $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
@@ -221,34 +223,28 @@ public function deleteServicePackage($id)
 }
 
 
-
-
 public function dateRangeBooking()
 {
-    $user = Auth::user();
 
+
+    $user = Auth::user();
     $bookings = DriverBooking::where('user_id', $user->id)->get();
 
     $bookedDays = [];
-
     foreach ($bookings as $booking) {
-        $start = new \DateTime($booking->start_date);
-        $end = new \DateTime($booking->end_date);
-        while ($start <= $end) {
-            $bookedDays[] = [
-                'date' => $start->format('Y-m-d'),
-                'title' => $booking->description ?? 'Booking',
-                'status' => $booking->status ?? 'pending',
-            ];
-            $start->modify('+1 day');
-        }
+        $bookedDays[] = [
+            'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
+            'end' => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
+            'status' => $booking->status,
+            'description' => $booking->description,
+        ];
     }
 
     return Inertia::render('Driver/CallenderBooking', [
+        'bookings' => $bookings,
         'bookedDates' => $bookedDays,
     ]);
 }
-
 
 
 
@@ -313,6 +309,8 @@ public function acceptBooking($id)
 
 public function dateRangeBookingStore(Request $request)
 {
+
+
     $request->validate([
         'start_date' => 'required|date',
         'end_date' => 'required|date|after_or_equal:start_date',

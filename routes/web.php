@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
 
     Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
-Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
+Route::post('/driver/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
     ->name('driver.booking.store');
 
 
