@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\ComplaintController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -82,8 +83,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
         ->name('service_package.update');
 
-
-
     Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
 Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
     ->name('driver.booking.store');
@@ -92,8 +91,7 @@ Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBoo
 
 // View
 Route::get('/driver/driver-booking-view', [DriverController::class, 'driverBookingView'])->name('driver.booking.view');
-
-// Delete
+Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
 Route::delete('/driver/booking/{id}', [DriverController::class, 'deleteBooking'])->name('driver.booking.delete');
 
 // Accept
@@ -110,7 +108,13 @@ Route::put('/driver/booking/update/{id}', [DriverController::class, 'updateBooki
     Route::post('/driver/{id}/ban', [AdminController::class, 'driverBan']);
     Route::post('/driver/{id}/reactivate', [AdminController::class, 'driverReactivate']);
 
+    Route::get('/complaints', [ComplaintController::class, 'index'])->name('complaints.index');
+    Route::get('/complaints/{id}', [ComplaintController::class, 'show'])->name('complaints.show');
+    Route::post('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
+    Route::post('/complaints/{id}/resolve', [ComplaintController::class, 'resolve'])->name('complaints.resolve');
 
+    // For users to submit complaints
+    Route::middleware('auth')->post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
 
 });
 

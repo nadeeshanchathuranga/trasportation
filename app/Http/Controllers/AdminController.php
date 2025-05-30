@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Driver;
+use App\Models\DriverComplaint;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -13,7 +14,13 @@ class AdminController extends Controller
 
     public function index()
     {
-        return Inertia::render('Admin/index');
+        $pendingComplaints = DriverComplaint::where('status', 'pending')->count();
+        $totalComplaints = DriverComplaint::count();
+
+        return Inertia::render('Admin/index', [
+            'pendingComplaints' => $pendingComplaints,
+            'totalComplaints' => $totalComplaints
+        ]);
     }
 
     // This function is used to display the list of vendors
@@ -45,13 +52,16 @@ class AdminController extends Controller
 
 
     // This function is used to display the list of vendors
-    public function driverList()
-    {
-        $driver_lists = Driver::with('user')->get();
-        return Inertia::render('Admin/DriverList', [
-            'driver_lists' => $driver_lists,
-        ]);
-    }
+public function driverList()
+{
+    $driver_lists = Driver::whereHas('user', function($query) {
+        $query->where('role_type', 'driver');
+    })->with('user')->get();
+
+    return Inertia::render('Admin/DriverList', [
+        'driver_lists' => $driver_lists,
+    ]);
+}
 
 
 
