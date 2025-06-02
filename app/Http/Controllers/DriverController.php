@@ -225,10 +225,12 @@ public function deleteServicePackage($id)
 
 public function dateRangeBooking()
 {
-
-
     $user = Auth::user();
-    $bookings = DriverBooking::where('user_id', $user->id)->get();
+
+    // Fetch only 'pending' and 'confirmed' bookings
+    $bookings = DriverBooking::where('user_id', $user->id)
+        ->whereIn('status', ['pending', 'confirmed'])
+        ->get();
 
     $bookedDays = [];
     foreach ($bookings as $booking) {
@@ -245,6 +247,7 @@ public function dateRangeBooking()
         'bookedDates' => $bookedDays,
     ]);
 }
+
 
 
 
@@ -309,7 +312,7 @@ public function acceptBooking($id)
 
 public function dateRangeBookingStore(Request $request)
 {
-
+// dd($request->all());
 
     $request->validate([
         'start_date' => 'required|date',

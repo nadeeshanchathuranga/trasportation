@@ -20,14 +20,17 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
 
   const normalizeDate = (date) => date.toISOString().split('T')[0];
 
-  const isDateBooked = (date) => {
-    const checkDateStr = normalizeDate(date);
-    return bookedDateRanges.some(range => {
-      const startStr = normalizeDate(range.start);
-      const endStr = normalizeDate(range.end);
-      return checkDateStr >= startStr && checkDateStr <= endStr;
+  const getBookingStatusForDate = (date) => {
+    const dateStr = normalizeDate(date);
+    const match = bookedDateRanges.find(range => {
+      const start = normalizeDate(range.start);
+      const end = normalizeDate(range.end);
+      return dateStr >= start && dateStr <= end;
     });
+    return match ? match.status : null;
   };
+
+  const isDateBooked = (date) => !!getBookingStatusForDate(date);
 
   const hasConflictWithBookedDates = (startDate, endDate) => {
     const startStr = normalizeDate(startDate);
@@ -123,7 +126,7 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/driver/date-range-booking-store', {
+      const res = await fetch('/date-range-booking-store', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -136,14 +139,25 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
         }),
       });
 
-      const result = await res.json();
+      let result;
+      try {
+        result = await res.clone().json();
+      } catch (jsonError) {
+        const fallbackText = await res.text();
+        console.error('Non-JSON response from server:', fallbackText);
+        setBookingStatus({ type: 'error', message: 'Unexpected response from server.' });
+        return;
+      }
 
       if (res.ok) {
-        setBookedDateRanges(prev => [...prev, {
-          start: new Date(startDate),
-          end: new Date(effectiveEndDate),
-          status: 'confirmed',
-        }]);
+        setBookedDateRanges(prev => [
+          ...prev,
+          {
+            start: new Date(startDate),
+            end: new Date(effectiveEndDate),
+            status: 'confirmed',
+          },
+        ]);
         setBookingStatus({ type: 'success', message: result.message || 'Booking successful!' });
 
         setTimeout(() => {
@@ -156,8 +170,8 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
         setBookingStatus({ type: 'error', message: result.message || 'Booking failed.' });
       }
     } catch (err) {
-      console.error(err);
-      setBookingStatus({ type: 'error', message: 'Network error.' });
+      console.error('Network error:', err);
+      setBookingStatus({ type: 'error', message: 'Network error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -193,14 +207,16 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
           const inRange = isInRange(date) || isInHoverRange(date);
           const isToday = isSameDay(date, new Date());
           const isPast = date < new Date().setHours(0, 0, 0, 0);
-          const isBooked = isDateBooked(date);
+          const status = getBookingStatusForDate(date);
 
           let className = "h-12 flex items-center justify-center rounded-lg transition text-sm ";
 
           if (isPast) {
             className += "bg-gray-100 text-gray-400 cursor-not-allowed";
-          } else if (isBooked) {
-            className += "bg-red-500 text-white cursor-not-allowed";
+          } else if (status === 'confirmed') {
+            className += "bg-green-500 text-white cursor-not-allowed";
+          } else if (status === 'pending') {
+            className += "bg-yellow-400 text-white cursor-not-allowed";
           } else if (isStart || isEnd) {
             className += "bg-blue-600 text-white font-bold";
           } else if (inRange) {
@@ -214,10 +230,10 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
           return (
             <div
               key={index}
-              title={isBooked ? "Already booked" : ""}
+              title={status ? `${status} booking` : ""}
               className={className}
-              onClick={() => !isPast && !isBooked && handleDateClick(date)}
-              onMouseEnter={() => !isPast && !isBooked && handleDateHover(date)}
+              onClick={() => !isPast && !status && handleDateClick(date)}
+              onMouseEnter={() => !isPast && !status && handleDateHover(date)}
             >
               {date.getDate()}
             </div>
@@ -232,10 +248,21 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
       )}
 
       <div className="mt-4 flex justify-center gap-4">
-        <button onClick={handleBooking} disabled={isLoading || !startDate} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50">
+        <button
+          onClick={handleBooking}
+          disabled={isLoading || !startDate}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50"
+        >
           {isLoading ? 'Processing...' : 'Create Booking'}
         </button>
-        <button onClick={() => { setStartDate(null); setEndDate(null); setHoveredDate(null); }} className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+        <button
+          onClick={() => {
+            setStartDate(null);
+            setEndDate(null);
+            setHoveredDate(null);
+          }}
+          className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+        >
           Clear
         </button>
       </div>
