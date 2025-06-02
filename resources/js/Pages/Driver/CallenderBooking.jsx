@@ -55,29 +55,31 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
     if (!date || isDateBooked(date)) return;
     setBookingStatus(null);
 
+    const selectedDate = new Date(date);
+
+    // First or reset click
     if (!startDate || (startDate && endDate)) {
-      setStartDate(new Date(date));
+      setStartDate(selectedDate);
       setEndDate(null);
       setHoveredDate(null);
-    } else {
-      const start = new Date(startDate);
-      const end = new Date(date);
-
-      const proposedStart = start <= end ? start : end;
-      const proposedEnd = start <= end ? end : start;
-
-      if (hasConflictWithBookedDates(proposedStart, proposedEnd)) {
-        setBookingStatus({
-          type: 'error',
-          message: 'Selected date range conflicts with existing bookings.',
-        });
-        return;
-      }
-
-      setStartDate(proposedStart);
-      setEndDate(proposedEnd);
-      setHoveredDate(null);
+      return;
     }
+
+    // Select range
+    const proposedStart = selectedDate < startDate ? selectedDate : startDate;
+    const proposedEnd = selectedDate > startDate ? selectedDate : startDate;
+
+    if (hasConflictWithBookedDates(proposedStart, proposedEnd)) {
+      setBookingStatus({
+        type: 'error',
+        message: 'Selected date range conflicts with existing bookings.',
+      });
+      return;
+    }
+
+    setStartDate(proposedStart);
+    setEndDate(proposedEnd);
+    setHoveredDate(null);
   };
 
   const handleDateHover = (date) => {
@@ -145,7 +147,7 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
       } catch (jsonError) {
         const fallbackText = await res.text();
         console.error('Non-JSON response from server:', fallbackText);
-        setBookingStatus({ type: 'error', message: 'Unexpected response from server.' });
+        setBookingStatus({ type: 'error', message: 'Unexpected server response.' });
         return;
       }
 
@@ -171,7 +173,7 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
       }
     } catch (err) {
       console.error('Network error:', err);
-      setBookingStatus({ type: 'error', message: 'Network error occurred. Please try again.' });
+      setBookingStatus({ type: 'error', message: 'Network error occurred.' });
     } finally {
       setIsLoading(false);
     }
