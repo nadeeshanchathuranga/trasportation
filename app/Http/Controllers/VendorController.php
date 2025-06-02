@@ -57,8 +57,34 @@ class VendorController extends Controller
         return Inertia::render('Vendors/ReviewsRatings');
     }
 
-    public function sessionManagement(){
-        return Inertia::render('Vendors/Availability');
+    public function sessionManagement($vendorId)
+    {
+        
+        $customers = Customer::with(['user','vehicleType'])
+                ->where('vendor_id',$vendorId)
+                ->get();
+
+        return Inertia::render('Vendors/Availability', [
+                'customers'=> $customers,
+        ]);
+        
+    }
+
+    public function availability(){
+        $user = Auth::user();
+        $vendor = $user->vendor;
+        
+        if(!$vendor){
+            abort(403,'Access denied. You are not a vendor');
+        }
+
+        $customers = $vendor->customers()
+                   ->with(['vehicleType','user'])
+                   ->latest()
+                   ->get();
+        return inertia('Vendors/Availability',[
+            'customers'=> $customers
+        ]);
     }
 
     /**
@@ -203,22 +229,25 @@ public function store(Request $request)
             
     }
 
-    public function getVendorCalender($vendorId)
-    {
-        $customers = Customer::with('user')
-             ->where('vendor_id',$vendorId)
-             ->get();
-        return response()->json($customers);
+    // public function getVendorCalender($vendorId)
+    // {
+    //     $customers = Customer::with('user')
+    //          ->where('vendor_id',$vendorId)
+    //          ->get();
+    //     return response()->json($customers);
 
-    }
+    // }
 
-    public function getVendorBookings($vendorId)
-    {
-        $bookings = Customer::with(['user','vehicleType'])
-                ->where('vendor_id',$vendorId)
-                ->get();
+    // public function getVendorBookings($vendorId)
+    // {
+    //     $bookings = Customer::with(['user','vehicleType'])
+    //             ->where('vendor_id',$vendorId)
+    //             ->get();
 
-        return response()->json($bookings);
-    }
+    //     return Inertia::render('Vendors/index', [
+    //                 'vendor_id'=> $vendorId,
+    //                 'bookings'=> $bookings,
+    //     ]);
+    // }
 
 }

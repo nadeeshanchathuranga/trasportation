@@ -29,5 +29,7 @@ class Customer extends Model
         return $this->belongsTo(Vendor::class);
     }
 
+    
+
 
 }

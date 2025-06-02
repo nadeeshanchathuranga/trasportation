@@ -10,4 +10,12 @@ class VehicleType extends Model
         'type',
        
     ];
+
+    public function customers(){
+        return $this->hasMany(Customer::class);
+    }
+    
+    public function vehicle(){
+        return $this->belongsTo(Vehicle::class);
+    }
 }

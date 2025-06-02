@@ -33,4 +33,9 @@ class Vendor extends Model
     {
         return $this->hasMany(Available_date::class);
     }
+
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
 }

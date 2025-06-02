@@ -1,156 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import axios from 'axios';
 
-const AvailabilityPicker = ({ vendorId }) => {
-    const [selectedDates, setSelectedDates] = useState([]);
-    const [bookedDates, setBookedDates] = useState([]);
-    const [bookingsInfo, setBookingInfo] = useState({});
-    const [showModal, setShowModal] = useState(false);
-    const [currentBooking, setCurrentBooking] = useState(null);
-  
-    useEffect(()=> {
-      const fetchBookedDates = async () => {
-        try{
-          const response = await axios.get(`/vendors/${vendorId}/bookings`);
-          const bookings = response.data;
+import { Link, usePage } from "@inertiajs/react";
+import { BookImageIcon } from "lucide-react";
+import React,{useState,useEffect} from "react";
+import { useCalendarApp,ScheduleXCalendar } from "@schedule-x/react";
+import {
+  createViewDay,
+  createViewMonthAgenda,
+  createViewMonthGrid,
+  createViewWeek,
+} from "@schedule-x/calendar";
+import { createEventsServicePlugin } from "@schedule-x/events-service";
+import "@schedule-x/theme-default/dist/index.css";
+import "./AvailabilityPicker.css";
 
-          const dates = bookings.map(booking => new Date(booking.date));
-          setBookedDates(dates);
 
-          const infoMap = {};
-          bookings.forEach(booking => {
-            infoMap[ new Date(booking.date).toDateString()] = booking;
-          });
-          setBookingInfo(infoMap);
-        } catch (err){
-          console.error('Failed to fetch bookings', err);
-        }
-      };
-      fetchBookedDates();
-    }, [vendorId]);
-    // Toggle date selection
-    const handleDateChange = (date) => {
-      const isBooked = bookedDates.some(
-        (d) => d.toDateString() === date.toDateString()
-      );
+const AvailableList = () => {
 
-      if (isBooked) {
-        // Show booking details if date is booked
-        setCurrentBooking(bookingsInfo[date.toDateString()]);
-        setShowModal(true);
-        return;
-    }
+  const { customers = [] } = usePage().props;
+  const [data, setData] = useState({ vendor_id: " " });
 
-    const exists = selectedDates.some(
-       (d) => d.toDateString() === date.toDateString()
-    );
 
-    setSelectedDates((prev) =>
-      exists
-         ? prev.filter((d) => d.toDateString() !== date.toDateString())
-         : [...prev, date]
-    );
+  // Calendar Setup
+  const eventsService = useState(() => createEventsServicePlugin())[0];
+  const calendar = useCalendarApp({
+    views: [
+      createViewDay(),
+      createViewWeek(),
+      createViewMonthGrid(),
+      createViewMonthAgenda(),
+    ],
+    events: [
+      {
+        id: "1",
+        title: "Event 1",
+        start: "2023-12-16",
+        end: "2023-12-16",
+      },
+      // You can add dynamic events here if needed
+    ],
+    plugins: [eventsService],
+  });
 
-  };
+  useEffect(() => {
+    eventsService.getAll();
+  }, [eventsService]);
 
-    const handleSubmit = async () => {
-      const formattedDates = selectedDates.map((d) =>
-        d.toISOString().split('T')[0]
-      );
-      try {
-        await axios.post(`/vendors/${vendorId}/available_dates`, {
-            vendor_id: vendorId,
-            available_dates: formattedDates,
-        });
-        alert('Availability updated!');
-        setSelectedDates([]);
-    } catch (err) {
-        alert('Failed to save availability.');
-        console.error(err);
-    }
-};
+  return (
+    <div className= "p-4">
+      <div className="table-responsive bg-white p-3 rounded shadow-sm mb-4">
+        <table className="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Customer Name</th>
+              <th>Pick up location</th>
+              <th>Date</th>
+              <th>Vehicle Type</th>
+              <th>Contact Info</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {customers.map((customer, index) => (
+                <tr key={customer.id}>
+                  <th>{index + 1}</th>
+                  <td>{customer.user.name}</td>
+                  <td>{customer.pick_up_location}</td>
+                  <td>{customer.date}</td>
+                  <td>{customer.vehicle_type?.type}</td>
+                  <td>
+                    {customer.user?.phone}
+                    <br />
+                    {customer.user?.email}
+                  </td>
+                  <td>
+                  <div className="flex justify-end space-x-4">
+                       <button type="button" className="px-4 py-2 bg-gray-300 rounded">Accept</button>
+                      <button type="button" className="px-4 py-2 bg-blue-600 text-white rounded">Reject</button>
+                  </div>
+                  </td>
+                </tr>
+                ))}
+          </tbody>
+        </table>
+    </div> 
 
-// Custom date styling
-const dayClassName = (date) => {
-    const isBooked = bookedDates.some(
-        (d) => d.toDateString() === date.toDateString()
-    );
-    
-    const isSelected = selectedDates.some(
-        (d) => d.toDateString() === date.toDateString()
-    );
-
-    if (isBooked) return 'bg-red-100 text-red-600';
-    if (isSelected) return 'bg-blue-100 text-blue-600';
-    return '';
-};
-
-return (
-    <div className="max-w-md mx-auto p-4 rounded-xl shadow-md border bg-white">
-        <h2 className="text-xl font-semibold mb-4 text-center">Manage Your Availability</h2>
-
-        <div className="mb-2 text-sm">
-            <span className="inline-block w-3 h-3 bg-red-100 mr-1"></span> Booked dates
-            <span className="inline-block w-3 h-3 bg-blue-100 ml-3 mr-1"></span> Selected dates
-        </div>
-
-        <DatePicker
-            inline
-            onChange={handleDateChange}
-            selected={null}
-            highlightDates={[...selectedDates, ...bookedDates]}
-            minDate={new Date()}
-            dayClassName={dayClassName}
-            placeholderText="Select dates"
-        />
-
-        {selectedDates.length > 0 && (
-            <div className="mt-4">
-                <h4 className="text-sm font-medium mb-2">Selected Dates:</h4>
-                <ul className="list-disc list-inside text-sm">
-                    {selectedDates.map((date, i) => (
-                        <li key={i}>{date.toDateString()}</li>
-                    ))}
-                </ul>
-            </div>
-        )}
-
-        <button
-            onClick={handleSubmit}
-            disabled={selectedDates.length === 0}
-            className={`mt-4 w-full py-2 px-4 rounded ${selectedDates.length === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
-        >
-            Save Availability
-        </button>
-
-        {/* Booking Details Modal */}
-        {showModal && currentBooking && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                <div className="bg-white rounded-lg p-6 max-w-md w-full">
-                    <h3 className="text-lg font-semibold mb-4">Booking Details</h3>
-                    
-                    <div className="space-y-2">
-                        <p><span className="font-medium">Date:</span> {new Date(currentBooking.date).toDateString()}</p>
-                        <p><span className="font-medium">Customer:</span> {currentBooking.user?.name || 'N/A'}</p>
-                        <p><span className="font-medium">Pickup Location:</span> {currentBooking.pick_up_location}</p>
-                        <p><span className="font-medium">Vehicle Type:</span> {currentBooking.vehicletype?.name || 'N/A'}</p>
-                        <p><span className="font-medium">Contact:</span> {currentBooking.user?.email || 'N/A'}</p>
-                    </div>
-                    
-                    <button
-                        onClick={() => setShowModal(false)}
-                        className="mt-4 w-full bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"
-                    >
-                        Close
-                    </button>
-                </div>
-            </div>
-        )}
+    <div className="bg-white p-3 rounded shadow-sm">
+       <h4 className="mb-3">Calendar</h4>
+       <ScheduleXCalendar calendarApp={calendar}/>
     </div>
-);
+    </div>  
+      
+  );
 };
 
-export default AvailabilityPicker;
-    
+export default AvailableList;

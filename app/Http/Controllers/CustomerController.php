@@ -65,9 +65,4 @@ class CustomerController extends Controller
     public function edit(){
 
     }
-
-    public function index(){
-
-    }
-
 }
