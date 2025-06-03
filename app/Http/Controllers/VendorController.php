@@ -59,7 +59,6 @@ class VendorController extends Controller
 
     public function sessionManagement($vendorId)
     {
-        
         $customers = Customer::with(['user','vehicleType'])
                 ->where('vendor_id',$vendorId)
                 ->get();
@@ -210,6 +209,7 @@ public function store(Request $request)
         'vendor_id' => 'required|exists:vendors,id',
         'available_dates' => 'required|array',
         'available_dates.*'=> 'date',
+        'description'=>'required',
        ]);
 
        $vendor = Vendor::findOrFail($vendorId);
@@ -220,6 +220,7 @@ public function store(Request $request)
            $vendor->availableDates()->create([
             'vendor_id' => $vendorId,
             'available_date'=> $date,
+            'description'=> $request->description,
            ]);
        }
 
@@ -229,6 +230,43 @@ public function store(Request $request)
             
     }
 
+    public function accept($vendorId){
+        $vendor = Vendor::findOrFail($vendorId);
+        $vendor->status = 'accepted'; // Note: Fix spelling: "accepted"
+        $vendor->save();
+    
+        // Get the customers again for refreshing the page
+        $customers = $vendor->customers()->with(['vehicleType', 'user'])->latest()->get();
+    
+        return Inertia::render('Vendors/Availability', [
+            'customers' => $customers,
+            'vendorId' => $vendorId,
+        ]);
+    }
+
+
+    public function reject($vendorId){
+        $vendor = Vendor::findOrFail($vendorId);
+        $vendor->status = 'rejected';
+        $vendor->save();
+    
+        // Get the customers again for refreshing the page
+        $customers = $vendor->customers()->with(['vehicleType', 'user'])->latest()->get();
+    
+        return Inertia::render('Vendors/Availability', [
+            'customers' => $customers,
+            'vendorId' => $vendorId,
+        ]);
+    }
+
+    public function showbookings($vendorId){
+         $customercount=Customer::count();
+         return Inertia::render('Vendors/Showbooking',[
+             
+         ]);
+    }
+
+  
     // public function getVendorCalender($vendorId)
     // {
     //     $customers = Customer::with('user')

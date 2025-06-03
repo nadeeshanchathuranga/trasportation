@@ -55,8 +55,13 @@ Route::middleware('auth')->group(function () {
     // Route::get('/vendors/{vendorId}/bookinngs',[CustomerController::class,'getVendorBookings'])->name('vendor.bookings');
     // Route::get('/vendor/{vendorId}/bookings',[VendorController::class,'getVendorBookings'])->name('customer.bookings');
     Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
+    Route::post('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
+    Route::post('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
+    Route::get('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
+    Route::get('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
     Route::post('/customer/store',[CustomerController::class,'store'])->name('customer.store');
     Route::get('/customerform',[CustomerController::class,'create'])->name('customer.create');
+   
     // Route::get('/customer',[CustomerController::class,'index'])->name('customer.index');
 
 
@@ -69,8 +74,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
-    Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
-    Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
+    // Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
+    // Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
 
 
     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])

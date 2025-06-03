@@ -8,7 +8,8 @@ class Available_date extends Model
 {
     protected $fillable = [
         'vendor_id',
-        'available_dates',
+        'Event_name',
+        'description',
     ];
 
     public function vendor(){

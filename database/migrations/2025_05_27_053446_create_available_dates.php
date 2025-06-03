@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
             $table->date('available_dates');
+            $table->text('description');
             $table->timestamps();
         });
     }
