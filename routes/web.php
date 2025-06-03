@@ -99,6 +99,8 @@ Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBoo
 
     // (Optional) Edit/Update
     Route::put('/driver/booking/update/{id}', [DriverController::class, 'updateBooking'])->name('driver.booking.update');
+    Route::put('/driver-bookings/complete/{id}', [DriverController::class, 'markAsCompleted'])->name('driver.booking.complete');
+
 
 
     Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');

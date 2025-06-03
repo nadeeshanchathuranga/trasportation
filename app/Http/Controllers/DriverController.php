@@ -336,4 +336,19 @@ public function dateRangeBookingStore(Request $request)
 
 
 
+public function markAsCompleted(Request $request, $id)
+{
+    $booking = DriverBooking::findOrFail($id);
+   
+
+    if ($booking->status !== 'confirmed') {
+        return back()->with('message', 'Only confirmed bookings can be completed.');
+    }
+
+    $booking->status = 'completed';
+    $booking->save();
+
+    return back()->with('message', 'Booking marked as completed.');
+}
+
 }

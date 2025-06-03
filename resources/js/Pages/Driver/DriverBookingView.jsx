@@ -14,6 +14,25 @@ const DriverBookingView = () => {
     router.put(route('driver.booking.accept', id));
   };
 
+  const statusColorMap = {
+  pending: 'bg-yellow-200 text-yellow-800',
+  confirmed: 'bg-green-200 text-green-800',
+  completed: 'bg-blue-200 text-blue-800',
+  cancelled: 'bg-red-200 text-red-800',
+
+};
+
+  const handleComplete = (id) => {
+    router.put(route('driver.booking.complete', id), {
+      onSuccess: () => {
+        alert('Booking marked as completed.');
+      },
+      onError: () => {
+        alert('Failed to mark booking as completed.');
+      },
+    });
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">My Driver Bookings</h1>
@@ -44,33 +63,46 @@ const DriverBookingView = () => {
                 <td className="p-2 border">{booking.end_date}</td>
                 <td className="p-2 border">{booking.description || '-'}</td>
                 <td className="p-2 border capitalize text-sm font-semibold">
-                  <span className={`inline-block px-2 py-1 rounded ${
-                    booking.status === 'pending'
-                      ? 'bg-yellow-200 text-yellow-800'
-                      : booking.status === 'confirmed'
-                      ? 'bg-green-200 text-green-800'
-                      : 'bg-red-200 text-red-800'
-                  }`}>
-                    {booking.status}
-                  </span>
+                 <span
+  className={`inline-block px-2 py-1 rounded text-sm font-semibold ${
+    statusColorMap[booking.status] || 'bg-gray-200 text-gray-800'
+  }`}
+>
+  {booking.status}
+</span>
                 </td>
-                <td className="p-2 border space-x-2">
-                  {booking.status !== 'confirmed' && (
-                    <button
-                      onClick={() => handleAccept(booking.id)}
-                      className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
-                    >
-                      Accept
-                    </button>
-                  )}
-                  <button
-                    onClick={() => handleDelete(booking.id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                  {/* Optional edit button here */}
-                </td>
+        <td className="p-2 border space-x-2">
+  {booking.status === 'pending' && (
+    <button
+      onClick={() => handleAccept(booking.id)}
+      className="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600"
+    >
+      Accept
+    </button>
+  )}
+
+  {booking.status === 'confirmed' && (
+    <button
+      onClick={() => handleComplete(booking.id)}
+      className="bg-orange-500 text-white px-2 py-1 rounded hover:bg-orange-600"
+    >
+      Complete
+    </button>
+  )}
+
+  {booking.status === 'completed' ? (
+    <span className="text-green-600 font-semibold">Trip Done</span>
+  ) : (
+    <button
+      onClick={() => handleDelete(booking.id)}
+      className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+    >
+      Delete
+    </button>
+  )}
+</td>
+
+
               </tr>
             ))}
           </tbody>
