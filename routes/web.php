@@ -103,6 +103,7 @@ Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBoo
 
     Route::post('/driver-bookings/chat', [DriverController::class, 'driverChat'])->name('driver.booking.chat');
 
+    Route::get('/driver/payout', [DriverController::class, 'driverPayOut'])->name('driver.payout');
 
 
 
