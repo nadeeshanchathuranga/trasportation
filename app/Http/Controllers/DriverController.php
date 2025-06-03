@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\Driver;
 use App\Models\DriverBooking;
+use App\Models\DriverBookingComment;
 use App\Models\DriverServicePackage;
 use App\Models\DriverServicePackagesType;
 use Illuminate\Http\Request;
@@ -256,8 +257,10 @@ public function driverBookingView()
     $user = Auth::user();
 
     // Fetch only the authenticated user's bookings
-    $bookings = DriverBooking::where('user_id', $user->id)->latest()->get();
+    $bookings = DriverBooking::with('comments')->where('user_id', $user->id)->latest()->get();
 
+
+    
    $bookedDates = $bookings->map(function ($booking) {
     return [
         'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
@@ -339,7 +342,7 @@ public function dateRangeBookingStore(Request $request)
 public function markAsCompleted(Request $request, $id)
 {
     $booking = DriverBooking::findOrFail($id);
-   
+
 
     if ($booking->status !== 'confirmed') {
         return back()->with('message', 'Only confirmed bookings can be completed.');
@@ -350,5 +353,36 @@ public function markAsCompleted(Request $request, $id)
 
     return back()->with('message', 'Booking marked as completed.');
 }
+
+
+
+
+
+public function driverChat(Request $request)
+{
+
+
+    $request->validate([
+        'driver_booking_id' => 'required|exists:driver_bookings,id',
+        'comment' => 'required|string|max:10000',
+    ]);
+
+    DriverBookingComment::create([
+        'driver_booking_id' => $request->driver_booking_id,
+        'comment' => $request->comment,
+        // optionally add: 'user_id' => auth()->id()
+    ]);
+
+
+     return back()->with('message', 'Chat message sent successfully.');
+
+}
+
+
+
+
+
+
+
 
 }
