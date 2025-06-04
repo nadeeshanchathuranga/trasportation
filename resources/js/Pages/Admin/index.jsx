@@ -72,6 +72,15 @@ export default function Dashboard() {
                                     View all activities
                                 </Link>
                             </div>
+                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-purple-500">
+                                <h3 className="text-lg font-semibold mb-1">
+                                    Courier Pickups
+                                </h3>
+                                <Link
+                                    href={route("admin.couriers")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    Manage Courier Pickups
 
 
 

@@ -10,6 +10,11 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\WebController;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\CourierController;
 use Inertia\Inertia;
 
 // Public Route
@@ -75,8 +80,8 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () 
         ->name('service_package.update');
 
     Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
-Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
-    ->name('driver.booking.store');
+    Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
+        ->name('driver.booking.store');
 
 
 
@@ -120,6 +125,24 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::post('/admin/packages/{id}/reject', [AdminController::class, 'rejectPackage'])->name('admin.packages.reject');
 
     Route::get('/admin/activity-logs', [AdminController::class, 'activityLogs'])->name('admin.activity-logs');
+
+    // For courier management
+    Route::get('/couriers', [CourierController::class, 'index'])->name('couriers.index');
+    Route::get('/couriers/create', [CourierController::class, 'create'])->name('couriers.create');  //make courier pickup request
+    Route::post('/couriers', [CourierController::class, 'store'])->name('couriers.store');
+    Route::get('/couriers/{courier}', [CourierController::class, 'show'])->name('couriers.show');
+
+    // Courier tracking
+    Route::get('/track', function () {
+        return Inertia::render('Courier/TrackForm');
+    })->name('couriers.track-form');
+    Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
+
+    // Admin courier management
+    Route::get('/admin/couriers', [CourierController::class, 'adminIndex'])
+        ->name('admin.couriers');
+    Route::get('/admin/couriers/clear', [CourierController::class, 'clearFilters'])
+        ->name('admin.couriers.clear');
        Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
