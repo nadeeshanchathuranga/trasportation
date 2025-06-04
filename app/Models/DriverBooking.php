@@ -17,4 +17,11 @@ class DriverBooking extends Model
         'description',
         'status',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(DriverBookingComment::class, 'driver_booking_id');
+    }
+
+
 }

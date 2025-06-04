@@ -51,6 +51,17 @@ export default function ServicePackage({ user, driver }) {
     >
      Booking View
     </Link>
+
+
+       <Link
+        href={route('driver.payout')}
+        className="inline-block text-center bg-rose-600 text-white px-5 py-2 rounded hover:bg-rose-700 transition duration-200"
+    >
+    Driver Payout
+    </Link>
+
+
+
 </div>
 
 

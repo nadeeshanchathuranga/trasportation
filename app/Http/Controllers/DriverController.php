@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\Driver;
 use App\Models\DriverBooking;
+use App\Models\DriverBookingComment;
 use App\Models\DriverServicePackage;
 use App\Models\DriverServicePackagesType;
 use Illuminate\Http\Request;
@@ -17,9 +19,6 @@ class DriverController extends Controller
 
         // Check if this user is a driver
         $driver = Driver::where('user_id', $user->id)->first();
-;
-
-
 
         // If the user has a driver profile
         if ($driver) {
@@ -44,12 +43,10 @@ class DriverController extends Controller
             }
         }
 
-      return Inertia::render('Driver/DriverIndex', [
-        'user' => $user,
+        return Inertia::render('Driver/DriverIndex', [
+            'user' => $user,
 
-    ]);
-
-
+        ]);
 
     }
 
@@ -88,252 +85,255 @@ class DriverController extends Controller
         return back()->with('success', 'Driver registered successfully!');
     }
 
-
-public function servicePackageForm()
-{
-    $user = Auth::user();
-    $driver = Driver::where('user_id', $user->id)->first();
+    public function servicePackageForm()
+    {
+        $user   = Auth::user();
+        $driver = Driver::where('user_id', $user->id)->first();
 
         $servicePackageTypes = DriverServicePackagesType::where('is_active', true)->get();
 
-    return Inertia::render('Driver/ServicePackageForm', [
-        'user' => $user,
-        'servicePackageTypes' =>  $servicePackageTypes,
-        'driver' => $driver ?? ['id' => null], // fallback to avoid null errors
-    ]);
-}
+        return Inertia::render('Driver/ServicePackageForm', [
+            'user'                => $user,
+            'servicePackageTypes' => $servicePackageTypes,
+            'driver'              => $driver ?? ['id' => null], // fallback to avoid null errors
+        ]);
+    }
 
-public function servicePackageStore(Request $request)
-{
+    public function servicePackageStore(Request $request)
+    {
 
+        try {
+            // Get the driver record linked to the currently logged-in user
+            $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
 
-    try {
-        // Get the driver record linked to the currently logged-in user
-        $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
+            // If driver not found, return with error
+            if (! $driver) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'You must be a registered driver to create a service package.');
+            }
 
-        // If driver not found, return with error
-        if (!$driver) {
+            // Merge driver_id into request for validation
+            $request->merge(['driver_id' => $driver->id]);
+
+            // Validate request
+            $validated = $request->validate([
+                'driver_id'         => 'required|exists:drivers,id',
+                'type_id'           => 'required|exists:driver_service_packages_types,id',
+                'title'             => 'required|string|max:255',
+                'description'       => 'required|string',
+                'price'             => 'required|numeric|min:0',
+                'duration_in_hours' => 'required|numeric|min:0.5',
+            ]);
+
+            // Create the service package
+            \App\Models\DriverServicePackage::create($validated);
+
+            return redirect()->route('driver.service_package.view')
+                ->with('success', 'Service Package created successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Service Package Creation Error: ' . $e->getMessage());
+
             return redirect()->back()
                 ->withInput()
-                ->with('error', 'You must be a registered driver to create a service package.');
+                ->with('error', 'Something went wrong. Please try again.');
         }
-
-        // Merge driver_id into request for validation
-        $request->merge(['driver_id' => $driver->id]);
-
-        // Validate request
-        $validated = $request->validate([
-            'driver_id' => 'required|exists:drivers,id',
-            'type_id' => 'required|exists:driver_service_packages_types,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'duration_in_hours' => 'required|numeric|min:0.5',
-        ]);
-
-        // Create the service package
-        \App\Models\DriverServicePackage::create($validated);
-
-        return redirect()->route('driver.service_package.view')
-            ->with('success', 'Service Package created successfully.');
-    } catch (\Exception $e) {
-        \Log::error('Service Package Creation Error: ' . $e->getMessage());
-
-        return redirect()->back()
-            ->withInput()
-            ->with('error', 'Something went wrong. Please try again.');
     }
-}
 
+    public function servicePackageUpdate(Request $request, $id)
+    {
+        try {
+            // Validate incoming request
+            $validated = $request->validate([
+                'title'             => 'required|string|max:255',
+                'type_id'           => 'required|exists:driver_service_packages_types,id',
+                'price'             => 'required|numeric|min:0',
+                'duration_in_hours' => 'required|numeric|min:0.5',
+                'description'       => 'required|string|max:1000',
+            ]);
 
+            // Find the service package
+            $servicePackage = DriverServicePackage::findOrFail($id);
 
+            // Optional: Ensure the logged-in user owns this service package
+            $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
+            if (! $driver || $driver->id !== $servicePackage->driver_id) {
+                return redirect()->back()
+                    ->with('error', 'Unauthorized to update this service package.');
+            }
 
+            // Update the package
+            $servicePackage->update($validated);
 
+            return redirect()->back()->with('success', 'Service package updated successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Service Package Update Error: ' . $e->getMessage());
 
-public function servicePackageUpdate(Request $request, $id)
-{
-    try {
-        // Validate incoming request
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'type_id' => 'required|exists:driver_service_packages_types,id',
-            'price' => 'required|numeric|min:0',
-            'duration_in_hours' => 'required|numeric|min:0.5',
-            'description' => 'required|string|max:1000',
-        ]);
-
-        // Find the service package
-        $servicePackage = DriverServicePackage::findOrFail($id);
-
-        // Optional: Ensure the logged-in user owns this service package
-        $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
-        if (!$driver || $driver->id !== $servicePackage->driver_id) {
             return redirect()->back()
-                ->with('error', 'Unauthorized to update this service package.');
+                ->withInput()
+                ->with('error', 'Something went wrong while updating the service package.');
         }
-
-        // Update the package
-        $servicePackage->update($validated);
-
-        return redirect()->back()->with('success', 'Service package updated successfully.');
-    } catch (\Exception $e) {
-        \Log::error('Service Package Update Error: ' . $e->getMessage());
-
-        return redirect()->back()
-            ->withInput()
-            ->with('error', 'Something went wrong while updating the service package.');
     }
-}
 
+    public function servicePackageView()
+    {
+        $user   = Auth::user();
+        $driver = Driver::where('user_id', $user->id)->first();
 
-
-
-
- public function servicePackageView()
-{
-    $user = Auth::user();
-    $driver = Driver::where('user_id', $user->id)->first();
-
-    $packages = $driver
+        $packages = $driver
         ? DriverServicePackage::with('type')->where('driver_id', $driver->id)->latest()->get()
         : collect();
 
-    $servicePackageTypes = DriverServicePackagesType::where('is_active', true)->get();
+        $servicePackageTypes = DriverServicePackagesType::where('is_active', true)->get();
 
-    return Inertia::render('Driver/ServicePackageView', [
-        'user' => $user,
-        'driver' => $driver,
-        'packages' => $packages,
-        'servicePackageTypes' => $servicePackageTypes, // ✅ added
-    ]);
-}
-
-
-
-
-public function deleteServicePackage($id)
-{
-    $package = DriverServicePackage::findOrFail($id);
-
-
-
-    $package->delete(); // Perform the deletion
-
-    return back()->with('success', 'Service package deleted successfully.');
-}
-
-
-public function dateRangeBooking()
-{
-    $user = Auth::user();
-
-    // Fetch only 'pending' and 'confirmed' bookings
-    $bookings = DriverBooking::where('user_id', $user->id)
-        ->whereIn('status', ['pending', 'confirmed'])
-        ->get();
-
-    $bookedDays = [];
-    foreach ($bookings as $booking) {
-        $bookedDays[] = [
-            'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
-            'end' => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
-            'status' => $booking->status,
-            'description' => $booking->description,
-        ];
+        return Inertia::render('Driver/ServicePackageView', [
+            'user'                => $user,
+            'driver'              => $driver,
+            'packages'            => $packages,
+            'servicePackageTypes' => $servicePackageTypes, // ✅ added
+        ]);
     }
 
-    return Inertia::render('Driver/CallenderBooking', [
-        'bookings' => $bookings,
-        'bookedDates' => $bookedDays,
-    ]);
-}
+    public function deleteServicePackage($id)
+    {
+        $package = DriverServicePackage::findOrFail($id);
 
+        $package->delete(); // Perform the deletion
 
+        return back()->with('success', 'Service package deleted successfully.');
+    }
 
+    public function dateRangeBooking()
+    {
+        $user = Auth::user();
 
-public function driverBookingView()
-{
-    $user = Auth::user();
+        // Fetch only 'pending' and 'confirmed' bookings
+        $bookings = DriverBooking::where('user_id', $user->id)
+            ->whereIn('status', ['pending', 'confirmed'])
+            ->get();
 
-    // Fetch only the authenticated user's bookings
-    $bookings = DriverBooking::where('user_id', $user->id)->latest()->get();
+        $bookedDays = [];
+        foreach ($bookings as $booking) {
+            $bookedDays[] = [
+                'start'       => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
+                'end'         => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
+                'status'      => $booking->status,
+                'description' => $booking->description,
+            ];
+        }
 
-   $bookedDates = $bookings->map(function ($booking) {
-    return [
-        'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
-        'end' => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
-    ];
-});
+        return Inertia::render('Driver/CallenderBooking', [
+            'bookings'    => $bookings,
+            'bookedDates' => $bookedDays,
+        ]);
+    }
 
+    public function driverBookingView()
+    {
+        $user = Auth::user();
 
-    return Inertia::render('Driver/DriverBookingView', [
-        'bookings' => $bookings,
-        'bookedDates' => $bookedDates,
-    ]);
-}
+        // Fetch only the authenticated user's bookings
+        $bookings = DriverBooking::with('comments')->where('user_id', $user->id)->latest()->get();
 
+        $bookedDates = $bookings->map(function ($booking) {
+            return [
+                'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
+                'end'   => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
+            ];
+        });
 
-public function deleteBooking($id)
-{
-    // Ensure the booking belongs to the logged-in user
-    $booking = DriverBooking::where('id', $id)
-        ->where('user_id', auth()->id())
-        ->firstOrFail();
+        return Inertia::render('Driver/DriverBookingView', [
+            'bookings'    => $bookings,
+            'bookedDates' => $bookedDates,
+        ]);
+    }
 
-    // Set the status to 'cancelled' instead of deleting the record
-    $booking->update(['status' => 'cancelled']);
+    public function deleteBooking($id)
+    {
+        // Ensure the booking belongs to the logged-in user
+        $booking = DriverBooking::where('id', $id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
 
-    return back()->with('message', 'Driver Booking has been cancelled.');
-}
+        // Set the status to 'cancelled' instead of deleting the record
+        $booking->update(['status' => 'cancelled']);
 
+        return back()->with('message', 'Driver Booking has been cancelled.');
+    }
 
+    public function acceptBooking($id)
+    {
 
-public function acceptBooking($id)
-{
+        $booking = DriverBooking::findOrFail($id);
 
+        $booking->update(['status' => 'confirmed']);
 
-    $booking = DriverBooking::findOrFail($id);
+        return back()->with('message', 'Driver Booking confirmed.');
+    }
 
-    $booking->update(['status' => 'confirmed']);
-
-    return back()->with('message', 'Driver Booking confirmed.');
-}
-
-
-
-
-
-
-
-
-
-
-
-
-public function dateRangeBookingStore(Request $request)
-{
+    public function dateRangeBookingStore(Request $request)
+    {
 // dd($request->all());
 
-    $request->validate([
-        'start_date' => 'required|date',
-        'end_date' => 'required|date|after_or_equal:start_date',
-    ]);
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date'   => 'required|date|after_or_equal:start_date',
+        ]);
 
-    $userId = auth()->id();
+        $userId = auth()->id();
 
-    DriverBooking::create([
-        'user_id' => $userId,
-        'pickup_location' => 'Personal for Driver',
-        'start_date' => $request->start_date,
-        'end_date' => $request->end_date,
-        'description' => 'Driver Entered Booking',
-        'status' => 'pending',
-    ]);
+        DriverBooking::create([
+            'user_id'         => $userId,
+            'pickup_location' => 'Personal for Driver',
+            'start_date'      => $request->start_date,
+            'end_date'        => $request->end_date,
+            'description'     => 'Driver Entered Booking',
+            'status'          => 'pending',
+        ]);
 
-    // Return JSON instead of redirect for API
-    return response()->json(['message' => 'Driver Booking created successfully!']);
-}
+        // Return JSON instead of redirect for API
+        return response()->json(['message' => 'Driver Booking created successfully!']);
+    }
 
+    public function markAsCompleted(Request $request, $id)
+    {
+        $booking = DriverBooking::findOrFail($id);
 
+        if ($booking->status !== 'confirmed') {
+            return back()->with('message', 'Only confirmed bookings can be completed.');
+        }
+
+        $booking->status = 'completed';
+        $booking->save();
+
+        return back()->with('message', 'Booking marked as completed.');
+    }
+
+    public function driverChat(Request $request)
+    {
+
+        $request->validate([
+            'driver_booking_id' => 'required|exists:driver_bookings,id',
+            'comment'           => 'required|string|max:10000',
+        ]);
+
+        DriverBookingComment::create([
+            'driver_booking_id' => $request->driver_booking_id,
+            'comment'           => $request->comment,
+            // optionally add: 'user_id' => auth()->id()
+        ]);
+
+        return back()->with('message', 'Chat message sent successfully.');
+
+    }
+
+    public function driverPayOut()
+    {
+
+        return Inertia::render('Driver/DriverPayOut', [
+
+        ]);
+
+    }
 
 }

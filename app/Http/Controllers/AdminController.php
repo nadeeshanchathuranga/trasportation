@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Driver;
 use App\Models\DriverComplaint;
+use App\Models\FlightSearch;
 use App\Models\DriverServicePackage;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Storage;
@@ -233,4 +234,24 @@ class AdminController extends Controller
             'filters' => $request->only(['action', 'user_type', 'search_name'])
         ]);
     }
+
+
+
+    public function flightLists()
+{
+    $flights = FlightSearch::orderBy('created_at', 'desc')->get();
+
+    $pendingComplaints = FlightSearch::where('status', 'pending')->count();
+    $totalComplaints = FlightSearch::count();
+
+    return Inertia::render('Admin/FlightLists', [
+        'flights' => $flights,
+        'pendingComplaints' => $pendingComplaints,
+        'totalComplaints' => $totalComplaints,
+    ]);
+}
+
+
+
+
 }
