@@ -58,7 +58,7 @@ export default function FlightLists({ flights, pendingComplaints, totalComplaint
                                     <th className="px-4 py-2 border">Travel Date</th>
                                     <th className="px-4 py-2 border">Passengers</th>
                                     <th className="px-4 py-2 border">Status</th>
-                                    <th className="px-4 py-2 border">Created At</th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,7 +79,7 @@ export default function FlightLists({ flights, pendingComplaints, totalComplaint
                                             }`}>
                                                 {flight.status}
                                             </td>
-                                            <td className="px-4 py-2 border">{flight.created_at}</td>
+
                                         </tr>
                                     ))
                                 ) : (

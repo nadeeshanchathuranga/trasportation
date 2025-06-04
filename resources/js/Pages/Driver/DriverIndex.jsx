@@ -32,7 +32,7 @@ export default function DriverRegisterForm({ user }) {
       if (value) form.append(key, value);
     });
 
-    router.post('/driver-store', form, {
+    router.post('/driver/driver-store', form, {
       forceFormData: true,
       onSuccess: () => {
         alert('✅ Driver registered successfully!');

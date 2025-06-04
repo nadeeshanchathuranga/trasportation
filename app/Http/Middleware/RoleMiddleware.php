@@ -16,11 +16,9 @@ class RoleMiddleware
 
         $user = Auth::user();
 
-        if (!in_array($user->role_type, $roles)) {
-
-            // dd($user->role_type);
-            abort(403, 'Unauthorized access.');
-        }
+       if (!$user || !in_array($user->role_type, $roles)) {
+        return redirect('/unauthorized')->with('error', 'You are not authorized to access this page.');
+    }
 
         return $next($request);
     }

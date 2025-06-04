@@ -1,48 +1,47 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\WebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\DriverController;
-use App\Http\Controllers\WebController;
-use App\Http\Controllers\ComplaintController;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-
-// Web
+// Public Route
 Route::get('/', [WebController::class, 'index'])->name('home');
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/unauthorized', function () {
+    return Inertia::render('Unauthorized', [
+        'error' => session('error'),
+    ]);
+})->name('unauthorized');
+
+// Dashboard (for all logged-in users)
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+// Profile & Vehicles (for all authenticated users)
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
-    Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
-    Route::post('/vehicles/store', [VehicleController::class, 'store'])->name('vehicles.store');
 
-    Route::get('/vendor', [VendorController::class, 'index'])->name('vendor.index');
+});
+
+
+
+// -------------------------------
+// ✅ Vendor Routes
+// -------------------------------
+Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () {
+     Route::get('/vendor', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('/vendor-store', [VendorController::class, 'store'])->name('vendor.store');
     Route::get('/vendor-dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
     Route::get('/booking-management', [VendorController::class, 'bookingManagement'])->name('vendor.booking');
@@ -50,31 +49,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
     Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
-
-
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
-    Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
-    Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
-    Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
-
-
-      Route::get('/flight-list', [AdminController::class, 'flightLists'])->name('admin.flight_list');
-
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
-    Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
-    Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
-    Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
-
-    Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
+     Route::get('/vendor/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])
         ->name('vendor.document');
 
+            Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
+    Route::post('/vehicles/store', [VehicleController::class, 'store'])->name('vehicles.store');
+});
 
-    // Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
+// -------------------------------
+// ✅ Driver Routes
+// -------------------------------
+Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () {
 
-
-
-
-    Route::get('/driver', [DriverController::class, 'index'])->name('driver.view');
+       Route::get('/dashboard', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
     Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
     Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
@@ -107,10 +95,12 @@ Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBoo
     Route::post('/driver-bookings/chat', [DriverController::class, 'driverChat'])->name('driver.booking.chat');
 
     Route::get('/driver/payout', [DriverController::class, 'driverPayOut'])->name('driver.payout');
+});
 
-
-
-    Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
+// -------------------------------
+// ✅ Complaints (Admin only)
+Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
+        Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
     Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
     Route::post('/driver/{id}/suspend', [AdminController::class, 'driverSuspend']);
@@ -130,6 +120,18 @@ Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBoo
     Route::post('/admin/packages/{id}/reject', [AdminController::class, 'rejectPackage'])->name('admin.packages.reject');
 
     Route::get('/admin/activity-logs', [AdminController::class, 'activityLogs'])->name('admin.activity-logs');
+       Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+    Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
+    Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
+    Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
+
+
+      Route::get('/flight-list', [AdminController::class, 'flightLists'])->name('admin.flight_list');
+
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+    Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
+    Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
+    Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
 });
 
 require __DIR__ . '/auth.php';

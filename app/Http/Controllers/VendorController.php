@@ -23,6 +23,8 @@ class VendorController extends Controller
     public function index()
         {
 
+
+
             $vehicle_categories = VehicleCategory::all();
             return Inertia::render('Vendors/index', [
                 'user' => Auth::user(),
@@ -75,7 +77,7 @@ class VendorController extends Controller
 
 public function store(Request $request)
 {
- 
+
     try {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
@@ -115,7 +117,7 @@ public function store(Request $request)
 
         return redirect()->back()->with('error', 'Something went wrong while submitting the form. Please try again.');
     }
-    
+
 }
 
     /**
@@ -155,7 +157,7 @@ public function store(Request $request)
     public function viewDocument(Vendor $vendor, $type)
     {
 
-        
+
         $filePath = null;
 
         switch ($type) {
@@ -200,7 +202,7 @@ public function store(Request $request)
        return response()->json([
         'message'=> 'Available dates saved successfully!.',
        ]);
-            
+
     }
 
     public function getVendorCalender($vendorId)

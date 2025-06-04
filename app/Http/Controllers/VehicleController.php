@@ -41,7 +41,7 @@ class VehicleController extends Controller
     public function store(Request $request)
 {
 
-    dd($request->all());
+  
     $vendor = auth()->user();
 
     $validatedData = $request->validate([
