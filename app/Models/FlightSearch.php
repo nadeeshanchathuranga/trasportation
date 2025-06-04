@@ -14,5 +14,6 @@ class FlightSearch extends Model
         'destination',
         'travel_date',
         'passenger_count',
+        'status',
     ];
 }

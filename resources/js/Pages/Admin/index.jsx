@@ -72,6 +72,20 @@ export default function Dashboard() {
                                     View all activities
                                 </Link>
                             </div>
+
+
+
+                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-rose-500">
+                                <h3 className="text-lg font-semibold mb-1">
+Flight Search
+                                </h3>
+                                <Link
+                                    href={route("admin.flight_list")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    View all activities
+                                </Link>
+                            </div>
                             {/* Add more dashboard stats here */}
                         </div>
                     </div>

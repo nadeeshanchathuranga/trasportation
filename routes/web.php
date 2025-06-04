@@ -57,6 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
 
+
+      Route::get('/flight-list', [AdminController::class, 'flightLists'])->name('admin.flight_list');
+
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
