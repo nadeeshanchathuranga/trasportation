@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             DriverServicePackagesTypesTableSeeder::class,
             VehicleTypeSeeder::class,
             DriverServicePackageSeeder::class,
+            CourierSeeder::class,
         ]);
     }
 }
