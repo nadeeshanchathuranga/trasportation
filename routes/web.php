@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\CourierController;
@@ -10,7 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\LogUserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +31,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+     Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
+    Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
+
+
 // -------------------------------
 // 👤 Profile (authenticated users)
 // -------------------------------
@@ -39,6 +42,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
+});
+
+// -------------------------------
+// 🚚 Vendor Routes
+// -------------------------------
+Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
+    Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
+
 });
 
 // -------------------------------
@@ -88,13 +102,12 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () 
     Route::get('/payout', [DriverController::class, 'driverPayOut'])->name('driver.payout');
 });
 
-
 // -------------------------------
 // ✅ Driver Routes
 // -------------------------------
 Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () {
 
-       Route::get('/dashboard', [DriverController::class, 'index'])->name('driver.view');
+    Route::get('/dashboard', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
     Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
     Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
@@ -109,8 +122,6 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () 
     Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
     Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
         ->name('driver.booking.store');
-
-
 
     // View
     Route::get('/driver/driver-booking-view', [DriverController::class, 'driverBookingView'])->name('driver.booking.view');
@@ -173,7 +184,7 @@ Route::post('/couriers', [CourierController::class, 'store'])->name('couriers.st
 Route::get('/couriers/{courier}', [CourierController::class, 'show'])->name('couriers.show');
 
 // Tracking
-Route::get('/track', fn () => Inertia::render('Courier/TrackForm'))->name('couriers.track-form');
+Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form');
 Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
 
 // -------------------------------

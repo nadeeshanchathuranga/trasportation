@@ -15,5 +15,11 @@ class Flight extends Model
         'departure_time',
         'arrival_time',
         'status',
+        'user_id',
     ];
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }
