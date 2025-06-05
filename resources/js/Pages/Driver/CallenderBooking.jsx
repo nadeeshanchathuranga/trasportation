@@ -128,7 +128,7 @@ const EnhancedDateRangeCalendar = ({ bookings = [], bookedDates = [] }) => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/date-range-booking-store', {
+      const res = await fetch('/driver/date-range-booking-store', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

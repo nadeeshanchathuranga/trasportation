@@ -87,104 +87,114 @@ class DriverController extends Controller
 
     public function servicePackageForm()
     {
-        $user   = Auth::user();
-        $driver = Driver::where('user_id', $user->id)->first();
+
+
+    $driver = Driver::where('user_id', auth()->id())->first();
+
+
 
         $servicePackageTypes = DriverServicePackagesType::where('is_active', true)->get();
 
         return Inertia::render('Driver/ServicePackageForm', [
-            'user'                => $user,
+
             'servicePackageTypes' => $servicePackageTypes,
-            'driver'              => $driver ?? ['id' => null], // fallback to avoid null errors
+          'driver' => $driver ?? ['user_id' => null], // sends { id: value } to frontend
         ]);
     }
 
-    public function servicePackageStore(Request $request)
-    {
 
-        try {
-            // Get the driver record linked to the currently logged-in user
-            $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
 
-            // If driver not found, return with error
-            if (! $driver) {
-                return redirect()->back()
-                    ->withInput()
-                    ->with('error', 'You must be a registered driver to create a service package.');
-            }
+public function servicePackageStore(Request $request)
+{
+    try {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'driver_id' => 'required|exists:drivers,user_id',
+            'type_id' => 'required|integer|exists:driver_service_packages_types,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'duration_in_hours' => 'required|numeric|min:0.5',
+        ]);
 
-            // Merge driver_id into request for validation
-            $request->merge(['driver_id' => $driver->id]);
+        // Set default status
+        $validated['status'] = 'pending';
 
-            // Validate request
-            $validated = $request->validate([
-                'driver_id'         => 'required|exists:drivers,id',
-                'type_id'           => 'required|exists:driver_service_packages_types,id',
-                'title'             => 'required|string|max:255',
-                'description'       => 'required|string',
-                'price'             => 'required|numeric|min:0',
-                'duration_in_hours' => 'required|numeric|min:0.5',
-            ]);
+        // Create the service package
+        DriverServicePackage::create($validated);
 
-            // Create the service package
-            \App\Models\DriverServicePackage::create($validated);
+        return redirect()->route('driver.service_package.view')
+            ->with('success', 'Service Package created successfully.');
 
-            return redirect()->route('driver.service_package.view')
-                ->with('success', 'Service Package created successfully.');
-        } catch (\Exception $e) {
-            \Log::error('Service Package Creation Error: ' . $e->getMessage());
+    } catch (\Exception $e) {
+        \Log::error('Service Package Creation Error: ' . $e->getMessage());
 
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Something went wrong. Please try again.');
-        }
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Something went wrong. Please try again.');
     }
+}
 
-    public function servicePackageUpdate(Request $request, $id)
-    {
-        try {
-            // Validate incoming request
-            $validated = $request->validate([
-                'title'             => 'required|string|max:255',
-                'type_id'           => 'required|exists:driver_service_packages_types,id',
-                'price'             => 'required|numeric|min:0',
-                'duration_in_hours' => 'required|numeric|min:0.5',
-                'description'       => 'required|string|max:1000',
-            ]);
 
-            // Find the service package
-            $servicePackage = DriverServicePackage::findOrFail($id);
 
-            // Optional: Ensure the logged-in user owns this service package
-            $driver = \App\Models\Driver::where('user_id', auth()->id())->first();
-            if (! $driver || $driver->id !== $servicePackage->driver_id) {
-                return redirect()->back()
-                    ->with('error', 'Unauthorized to update this service package.');
-            }
 
-            // Update the package
-            $servicePackage->update($validated);
 
-            return redirect()->back()->with('success', 'Service package updated successfully.');
-        } catch (\Exception $e) {
-            \Log::error('Service Package Update Error: ' . $e->getMessage());
 
+
+public function servicePackageUpdate(Request $request, $id)
+{
+    try {
+        // Validate incoming request
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'type_id' => 'required|integer|exists:driver_service_packages_types,id', // Added integer validation for consistency
+            'price' => 'required|numeric|min:0',
+            'duration_in_hours' => 'required|numeric|min:0.5',
+            'description' => 'required|string|max:1000',
+        ]);
+
+        // Find the service package
+        $servicePackage = DriverServicePackage::findOrFail($id);
+
+        // Optional: Ensure the logged-in user owns this service package
+        $driver = Driver::where('user_id', auth()->id())->first();
+        if (!$driver || $servicePackage->driver_id !== $driver->user_id) { // Fixed comparison logic
             return redirect()->back()
-                ->withInput()
-                ->with('error', 'Something went wrong while updating the service package.');
+                ->with('error', 'Unauthorized to update this service package.');
         }
+
+        // Update the package
+        $servicePackage->update($validated);
+
+        return redirect()->back()->with('success', 'Service package updated successfully.');
+    } catch (\Exception $e) {
+
+
+        \Log::error('Service Package Update Error: ' . $e->getMessage());
+
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'Something went wrong while updating the service package.');
     }
+}
+
+
+
 
     public function servicePackageView()
     {
         $user   = Auth::user();
         $driver = Driver::where('user_id', $user->id)->first();
 
-        $packages = $driver
-        ? DriverServicePackage::with('type')->where('driver_id', $driver->id)->latest()->get()
-        : collect();
 
-        $servicePackageTypes = DriverServicePackagesType::where('is_active', true)->get();
+        $packages= DriverServicePackage::where('status', 'approved')->get();
+        // $packages = $driver
+        // ? DriverServicePackage::with('type')->where('driver_id', $driver->id)->latest()->get()
+        // : collect();
+
+
+        $servicePackageTypes = DriverServicePackagesType::where('is_active', 1)->get();
+
 
         return Inertia::render('Driver/ServicePackageView', [
             'user'                => $user,
@@ -273,7 +283,7 @@ class DriverController extends Controller
 
     public function dateRangeBookingStore(Request $request)
     {
-// dd($request->all());
+ 
 
         $request->validate([
             'start_date' => 'required|date',
