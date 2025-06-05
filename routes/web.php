@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\CourierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
@@ -10,11 +11,6 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\DriverController;
-use App\Http\Controllers\WebController;
-use App\Http\Controllers\ComplaintController;
-use App\Http\Controllers\CourierController;
 use Inertia\Inertia;
 
 // Public Route
