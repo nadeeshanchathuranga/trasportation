@@ -100,7 +100,7 @@ Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBoo
 // -------------------------------
 // ✅ Complaints (Admin only)
 Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
-        Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
+    Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
     Route::post('/driver/{id}/approve', [AdminController::class, 'driverApprove']);
     Route::post('/driver/{id}/suspend', [AdminController::class, 'driverSuspend']);
@@ -111,22 +111,27 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/complaints/{id}', [ComplaintController::class, 'show'])->name('complaints.show');
     Route::post('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
     Route::post('/complaints/{id}/resolve', [ComplaintController::class, 'resolve'])->name('complaints.resolve');
+      Route::middleware('auth')->post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
 
     // For users to submit complaints
-    Route::middleware('auth')->post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
+
 
     Route::get('/admin/packages', [AdminController::class, 'packageList'])->name('admin.packages');
     Route::post('/admin/packages/{id}/approve', [AdminController::class, 'approvePackage'])->name('admin.packages.approve');
     Route::post('/admin/packages/{id}/reject', [AdminController::class, 'rejectPackage'])->name('admin.packages.reject');
 
     Route::get('/admin/activity-logs', [AdminController::class, 'activityLogs'])->name('admin.activity-logs');
-       Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+
+
+
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
     Route::post('/vendors/{id}/approve', [AdminController::class, 'approve']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
 
+    Route::get('/flight-list', [AdminController::class, 'flightLists'])->name('admin.flight_list');
 
-      Route::get('/flight-list', [AdminController::class, 'flightLists'])->name('admin.flight_list');
+    Route::get('/flight-list', [AdminController::class, 'flightLists'])->name('admin.flight_list');
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
