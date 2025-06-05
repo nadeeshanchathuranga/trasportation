@@ -13,10 +13,27 @@ class DriverServicePackage extends Model
         'description',
         'price',
         'duration_in_hours',
+        'status',
+        'rejection_reason'
     ];
+
+
 
     public function driver()
     {
         return $this->belongsTo(Driver::class);
     }
+
+
+    public function type()
+{
+    return $this->belongsTo(DriverServicePackagesType::class, 'type_id');
+}
+
+
+
+
+
+
+
 }

@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage, Link, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function ServicePackageView({ user, driver, packages }) {
+export default function ServicePackageView({ user, driver, packages,servicePackageTypes  }) {
     const { props } = usePage();
     const success = props.flash?.success;
 
@@ -11,7 +11,7 @@ export default function ServicePackageView({ user, driver, packages }) {
 
     const { data, setData, put, processing, errors, reset } = useForm({
         title: '',
-        type: '',
+         type_id: '',
         price: '',
         duration_in_hours: '',
         description: ''
@@ -27,7 +27,7 @@ export default function ServicePackageView({ user, driver, packages }) {
         setEditingPackage(pkg);
         setData({
             title: pkg.title,
-            type: pkg.type,
+               type_id: pkg.type?.id || '',
             price: pkg.price,
             duration_in_hours: pkg.duration_in_hours,
             description: pkg.description
@@ -87,7 +87,7 @@ export default function ServicePackageView({ user, driver, packages }) {
                                 {packages.map(pkg => (
                                     <tr key={pkg.id}>
                                         <td className="px-4 py-2 text-sm text-gray-800">{pkg.title}</td>
-                                        <td className="px-4 py-2 text-sm text-gray-700">{pkg.type}</td>
+                                     <td className="px-4 py-2 text-sm text-gray-700">{pkg.type?.name}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">LKR {pkg.price}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">{pkg.duration_in_hours}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">{pkg.description}</td>
@@ -150,20 +150,24 @@ export default function ServicePackageView({ user, driver, packages }) {
 
 
 
+<div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+    <select
+        value={data.type_id}
+        onChange={e => setData('type_id', e.target.value)}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+        required
+    >
+        <option value="">-- Select Package Type --</option>
+        {servicePackageTypes?.map(type => (
+            <option key={type.id} value={type.id}>
+                {type.name}
+            </option>
+        ))}
+    </select>
+    {errors.type_id && <p className="text-red-500 text-xs mt-1">{errors.type_id}</p>}
+</div>
 
-  <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Type
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={data.type}
-                                        onChange={e => setData('type', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                                        required
-                                    />
-                                    {errors.type && <p className="text-red-500 text-xs mt-1">{errors.type}</p>}
-                                </div>
 
 
 
