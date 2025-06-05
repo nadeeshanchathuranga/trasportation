@@ -48,6 +48,9 @@ const AvailableList = ({ bookings = [], bookedDates = [] }) => {
     return date >= minDate && date <= maxDate;
   };
 
+  const isDateBooked = (date) => {
+    return getBookingStatusForDate(date) !== null;
+  };
   const handleDateClick = (date) => {
     if (!date || isDateBooked(date)) return;
     setBookingStatus(null);
@@ -232,7 +235,7 @@ const handleBooking = async () => {
                 <td>{customer.user.name}</td>
                 <td>{customer.pick_up_location}</td>
                 <td>{customer.date}</td>
-                <td>{customer.vehicle_type?.type}</td>
+                <td>{customer.vehicleType?.type}</td>
                 <td>
                   {customer.user?.phone}
                   <br />

@@ -10,6 +10,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WebController;
 
 // -------------------------------
@@ -38,20 +39,35 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+ 
 
+Route::post('/customer/store',[CustomerController::class,'store'])->name('customer.store');
+Route::get('/customerform',[CustomerController::class,'create'])->name('customer.create');
 // -------------------------------
 // 🚚 Vendor Routes
 // -------------------------------
 Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () {
     Route::get('/', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('/store', [VendorController::class, 'store'])->name('vendor.store');
-    Route::get('/dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
+    Route::get('/vendor-dashboard/{vendorId}', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
+    //Route::get('/dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
     Route::get('/booking-management', [VendorController::class, 'bookingManagement'])->name('vendor.booking');
     Route::get('/earning-management', [VendorController::class, 'earningManagement'])->name('vendor.earning');
     Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
     Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
     Route::get('/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])->name('vendor.document');
+    Route::get('/availability/bookings',[VendorController::class,'VendorBookingView'])->name('vendor.bookingview');
+    // Route::post('/vendors/{vendorId}/bookings',[VendorController::class,'getVendorCalender'])->name('vendor.calender');
+    // Route::get('/vendors/{vendorId}/bookinngs',[CustomerController::class,'getVendorBookings'])->name('vendor.bookings');
+    // Route::get('/vendor/{vendorId}/bookings',[VendorController::class,'getVendorBookings'])->name('customer.bookings')
+    Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
+    Route::get('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
+    Route::post('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
+    Route::post('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
+    Route::get('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
+    Route::get('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
+
 
     // Vehicle management
     Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');

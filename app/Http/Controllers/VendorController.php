@@ -23,9 +23,6 @@ class VendorController extends Controller
 
     public function index()
         {
-
-
-
             $vehicle_categories = VehicleCategory::all();
             return Inertia::render('Vendors/index', [
                 'user' => Auth::user(),
@@ -35,7 +32,7 @@ class VendorController extends Controller
 
 
     public function vendorDashboard($vendorId){
-        $customers = Customer::with(['user','vehicleType'])
+         $customers = Customer::with(['user','vehicleType'])
         ->where('vendor_id',$vendorId)
         ->get();
         $customerCount= Customer::where('vendor_id',$vendorId)->count();
@@ -83,43 +80,38 @@ class VendorController extends Controller
         
     }
 
-    public function availability(){
-        
-        $user = Auth::user();
-        $vendor = $user->vendor;
-        
-        if(!$vendor){
-            abort(403,'Access denied. You are not a vendor');
-        }
 
-
-        $customers = $vendor->customers()
-                   ->with(['user','vehicleType'])
-                   ->latest()
-                   ->get();
-        return inertia('Vendors/Availability',[
-            'customers'=> $customers,
-        ]);
-    }
 
     
     public function VendorBookingView()
     {
         $user = Auth::user();
+        $vendor = $user->vendor;
 
         // Fetch only the authenticated user's bookings
         $bookings = Available_date::where('vendor_id', $user->id)->latest()->get();
-
         $bookedDates = $bookings->map(function ($booking) {
             return [
                 'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
                 'end'   => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
             ];
         });
+        
+        // Fetch vendor's customers with related user and vehicle type
+        $customers = Customer::all();
+        // $customers = Customer::with(['user', 'vehicleType'])
+        //     ->where('vendor_id', $user->id)
+        //     ->latest()
+        //     ->get();
+
+        //  dd($customers);
 
         return Inertia::render('Vendors/Availability', [
             'bookings'    => $bookings,
             'bookedDates' => $bookedDates,
+            'customers' => $customers,
+            'vendor'   => $vendor,
+        
         ]);
     }
 
