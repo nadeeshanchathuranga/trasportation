@@ -12,6 +12,7 @@ export default function Dashboard() {
                         <h2 className="text-lg font-bold mb-4">Admin Dashboard</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            {/* Total Vendors */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-red-500">
                                 <h3 className="text-lg font-semibold mb-1">Total Vendors</h3>
                                 <Link
@@ -22,6 +23,7 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Total Drivers */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
                                 <h3 className="text-lg font-semibold mb-1">Total Drivers</h3>
                                 <Link
@@ -32,6 +34,7 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Service Packages */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-yellow-500">
                                 <h3 className="text-lg font-semibold mb-1">Service Packages</h3>
                                 <Link
@@ -42,6 +45,7 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Complaints */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
                                 <h3 className="text-lg font-semibold mb-1">Total Complaints</h3>
                                 <Link
@@ -52,6 +56,7 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Activity Logs */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
                                 <h3 className="text-lg font-semibold mb-1">Total Activities</h3>
                                 <Link
@@ -62,6 +67,7 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Courier Pickups */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-purple-500">
                                 <h3 className="text-lg font-semibold mb-1">Courier Pickups</h3>
                                 <Link
@@ -72,13 +78,14 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Flight Search */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-rose-500">
                                 <h3 className="text-lg font-semibold mb-1">Flight Search</h3>
                                 <Link
                                     href={route("admin.flight_list")}
                                     className="text-sm text-blue-600 hover:underline mt-2 block"
                                 >
-                                    View all activities
+                                    View Flight List
                                 </Link>
                             </div>
                         </div>
