@@ -2,14 +2,15 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 
 export default function ServicePackageForm({ user, driver, servicePackageTypes = [] }) {
-    const { data, setData, post, processing, errors } = useForm({
-        driver_id: user?.id || '', // 👈 Set driver_id to authenticated user ID
-        type_id: '',
-        title: '',
-        description: '',
-        price: '',
-        duration_in_hours: '',
-    });
+const { data, setData, post, processing, errors } = useForm({
+    driver_id: driver?.user_id || '',  // set from props
+    type_id: '',
+    title: '',
+    description: '',
+    price: '',
+    duration_in_hours: '',
+});
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,9 +27,8 @@ export default function ServicePackageForm({ user, driver, servicePackageTypes =
                 </h1>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-
-                    {/* Show driver_id (readonly for visibility) */}
-                <input type="hidden" name="driver_id" value={data.driver_id} />
+                    {/* Hidden Driver ID Field */}
+            <input type="hidden" name="driver_id" value={data.driver_id} />
 
                     {/* Grid layout for other fields */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

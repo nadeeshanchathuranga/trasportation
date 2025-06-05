@@ -23,17 +23,18 @@ export default function ServicePackageView({ user, driver, packages,servicePacka
         }
     };
 
-    const openEditModal = (pkg) => {
-        setEditingPackage(pkg);
-        setData({
-            title: pkg.title,
-               type_id: pkg.type?.id || '',
-            price: pkg.price,
-            duration_in_hours: pkg.duration_in_hours,
-            description: pkg.description
-        });
-        setShowEditModal(true);
-    };
+   const openEditModal = (pkg) => {
+    setEditingPackage(pkg);
+    setData({
+        title: pkg.title,
+        type_id: pkg.type_id || pkg.type?.id || '', // <== SAFE fallback
+        price: pkg.price,
+        duration_in_hours: pkg.duration_in_hours,
+        description: pkg.description
+    });
+    setShowEditModal(true);
+};
+
 
     const closeEditModal = () => {
         setShowEditModal(false);
@@ -151,20 +152,23 @@ export default function ServicePackageView({ user, driver, packages,servicePacka
 
 
 <div>
+
     <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-    <select
-        value={data.type_id}
-        onChange={e => setData('type_id', e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-        required
-    >
-        <option value="">-- Select Package Type --</option>
-        {servicePackageTypes?.map(type => (
-            <option key={type.id} value={type.id}>
-                {type.name}
-            </option>
-        ))}
-    </select>
+   <select
+    value={data.type_id}
+    onChange={e => setData('type_id', e.target.value)}
+    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+    required
+>
+    <option value="">-- Select Package Type --</option>
+    {servicePackageTypes?.map(type => (
+        <option key={type.id} value={type.id}>
+            {type.name}
+        </option>
+    ))}
+</select>
+
+
     {errors.type_id && <p className="text-red-500 text-xs mt-1">{errors.type_id}</p>}
 </div>
 
