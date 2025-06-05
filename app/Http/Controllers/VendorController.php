@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Exception;
 use App\Models\Customer;
+use App\Models\Available_date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -31,8 +32,16 @@ class VendorController extends Controller
         }
 
 
-    public function vendorDashboard(){
-        return Inertia::render('Vendors/VendorDashboard');
+    public function vendorDashboard($vendorId){
+        $customers = Customer::with(['user','vehicleType'])
+        ->where('vendor_id',$vendorId)
+        ->get();
+        $customerCount= Customer::where('vendor_id',$vendorId)->count();
+        return Inertia::render('Vendors/VendorDashboard',[
+            'customers'=> $customers,
+            'customerCount'=> $customerCount,
+           
+        ]);
     }
 
 
@@ -62,14 +71,18 @@ class VendorController extends Controller
         $customers = Customer::with(['user','vehicleType'])
                 ->where('vendor_id',$vendorId)
                 ->get();
+        $customerCount= Customer::where('vendor_id',$vendorId)->count();
 
         return Inertia::render('Vendors/Availability', [
                 'customers'=> $customers,
-        ]);
+                'customerCount'=> $customerCount,
+                
+         ]);
         
     }
 
     public function availability(){
+        
         $user = Auth::user();
         $vendor = $user->vendor;
         
@@ -77,14 +90,38 @@ class VendorController extends Controller
             abort(403,'Access denied. You are not a vendor');
         }
 
+
         $customers = $vendor->customers()
-                   ->with(['vehicleType','user'])
+                   ->with(['user','vehicleType'])
                    ->latest()
                    ->get();
         return inertia('Vendors/Availability',[
-            'customers'=> $customers
+            'customers'=> $customers,
         ]);
     }
+
+    
+    public function VendorBookingView()
+    {
+        $user = Auth::user();
+
+        // Fetch only the authenticated user's bookings
+        $bookings = Available_date::where('vendor_id', $user->id)->latest()->get();
+
+        $bookedDates = $bookings->map(function ($booking) {
+            return [
+                'start' => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
+                'end'   => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
+            ];
+        });
+
+        return Inertia::render('Vendors/Availability', [
+            'bookings'    => $bookings,
+            'bookedDates' => $bookedDates,
+        ]);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -203,13 +240,12 @@ public function store(Request $request)
         return Storage::response($filePath);
     }
 
-    public function storeAvailableDates(Request $request , $vendorId)
+    public function storeAvailableDates(Request $request,$vendorId)
     {
        $request->validate([
         'vendor_id' => 'required|exists:vendors,id',
-        'available_dates' => 'required|array',
-        'available_dates.*'=> 'date',
-        'description'=>'required',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
        ]);
 
        $vendor = Vendor::findOrFail($vendorId);
@@ -229,6 +265,7 @@ public function store(Request $request)
        ]);
             
     }
+
 
     public function accept($vendorId){
         $vendor = Vendor::findOrFail($vendorId);
@@ -259,12 +296,12 @@ public function store(Request $request)
         ]);
     }
 
-    public function showbookings($vendorId){
-         $customercount=Customer::count();
-         return Inertia::render('Vendors/Showbooking',[
+    // public function showbookings($vendorId){
+    //      $customercount=Customer::count();
+    //      return Inertia::render('Vendors/Showbooking',[
              
-         ]);
-    }
+    //      ]);
+    // }
 
   
     // public function getVendorCalender($vendorId)

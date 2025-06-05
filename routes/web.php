@@ -43,18 +43,19 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/vendor', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('/vendor-store', [VendorController::class, 'store'])->name('vendor.store');
-    Route::get('/vendor-dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
+    Route::get('/vendor-dashboard/{vendorId}', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
     Route::get('/booking-management', [VendorController::class, 'bookingManagement'])->name('vendor.booking');
     Route::get('/earning-management', [VendorController::class, 'earningManagement'])->name('vendor.earning');
     Route::get('/promotion-management', [VendorController::class, 'promotionManagement'])->name('vendor.promotion');
     Route::get('/report-management', [VendorController::class, 'reportManagement'])->name('vendor.report');
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
     // Route::get('/bookingsession-management/{vendorId}/bookings',[VendorController::class, 'sessionManagement'])->name('vendor.session');
-    Route::get('/availability/bookings',[VendorController::class,'availability'])->name('vendor.availability');
+    Route::get('/availability/bookings',[VendorController::class,'VendorBookingView'])->name('vendor.bookingview');
     // Route::post('/vendors/{vendorId}/bookings',[VendorController::class,'getVendorCalender'])->name('vendor.calender');
     // Route::get('/vendors/{vendorId}/bookinngs',[CustomerController::class,'getVendorBookings'])->name('vendor.bookings');
-    // Route::get('/vendor/{vendorId}/bookings',[VendorController::class,'getVendorBookings'])->name('customer.bookings');
+    // Route::get('/vendor/{vendorId}/bookings',[VendorController::class,'getVendorBookings'])->name('customer.bookings')
     Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
+    Route::get('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
     Route::post('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
     Route::post('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
     Route::get('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('available_dates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
-            $table->date('available_dates');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->text('description');
             $table->timestamps();
         });
