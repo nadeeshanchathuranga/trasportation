@@ -187,7 +187,7 @@ public function servicePackageUpdate(Request $request, $id)
         $driver = Driver::where('user_id', $user->id)->first();
 
 
-        $packages= DriverServicePackage::where('status', 'approved')->get();
+        $packages= DriverServicePackage::with('type')->where('status', 'approved')->get();
         // $packages = $driver
         // ? DriverServicePackage::with('type')->where('driver_id', $driver->id)->latest()->get()
         // : collect();
@@ -283,7 +283,7 @@ public function servicePackageUpdate(Request $request, $id)
 
     public function dateRangeBookingStore(Request $request)
     {
- 
+
 
         $request->validate([
             'start_date' => 'required|date',

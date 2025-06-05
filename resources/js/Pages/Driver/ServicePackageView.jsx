@@ -88,7 +88,7 @@ export default function ServicePackageView({ user, driver, packages,servicePacka
                                 {packages.map(pkg => (
                                     <tr key={pkg.id}>
                                         <td className="px-4 py-2 text-sm text-gray-800">{pkg.title}</td>
-                                     <td className="px-4 py-2 text-sm text-gray-700">{pkg.type?.name}</td>
+         <td className="px-4 py-2 text-sm text-gray-700"> {pkg.type?.name}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">LKR {pkg.price}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">{pkg.duration_in_hours}</td>
                                         <td className="px-4 py-2 text-sm text-gray-700">{pkg.description}</td>
