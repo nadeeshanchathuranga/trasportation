@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Flight;
 use App\Models\Driver;
 use App\Models\DriverBooking;
 use App\Models\DriverBookingComment;
@@ -345,5 +346,10 @@ public function servicePackageUpdate(Request $request, $id)
         ]);
 
     }
+
+
+
+
+
 
 }
