@@ -42,24 +42,26 @@ class AuthenticatedSessionController extends Controller
 
 
     public function store(LoginRequest $request): RedirectResponse
-{
-    $request->authenticate();
-    $request->session()->regenerate();
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
 
-    $user = $request->user();
+        $user = $request->user();
 
-    // Redirect based on role_type
-    switch ($user->role_type) {
-        case 'admin':
-            return redirect()->intended(route('admin.view', absolute: false));
-        case 'vendor':
-            return redirect()->intended(route('vendor.index', absolute: false));
-        case 'driver':
-            return redirect()->intended(route('driver.view', absolute: false));
-        default:
-            return redirect()->intended(route('home', absolute: false)); // For 'user'
+        // Redirect based on role_type
+        switch ($user->role_type) {
+            case 'admin':
+                return redirect()->intended(route('admin.view', absolute: false));
+            case 'vendor':
+                return redirect()->intended(route('vendor.index', absolute: false));
+            case 'driver':
+                return redirect()->intended(route('driver.view', absolute: false));
+            case 'freight':
+                return redirect()->intended(route('freight.dashboard', absolute: false));
+            default:
+                return redirect()->intended(route('home', absolute: false)); // For 'user'
+        }
     }
-}
 
 
     /**

@@ -55,7 +55,7 @@ public function create(): Response
         'address' => 'required|string|max:255',
         'country' => 'required|string|max:255',
         'phone' => 'required|string|max:20',
-        'role_type' => 'required|in:admin,vendor,user,driver',
+        'role_type' => 'required|in:admin,vendor,user,driver,freight',
     ]);
 
     $user = User::create([
@@ -74,20 +74,16 @@ public function create(): Response
     // Role-based redirection
     switch ($user->role_type) {
         case 'admin':
-
             return redirect()->route('admin.view');
         case 'vendor':
-
             return redirect()->route('vendor.index');
         case 'user':
-
             return redirect()->route('home');
         case 'driver':
-
             return redirect()->route('driver.view');
-
+        case 'freight':
+            return redirect()->route('freight.dashboard');
         default:
-
             return redirect()->route('dashboard');
     }
 }

@@ -34,6 +34,17 @@ export default function Dashboard() {
                                 </Link>
                             </div>
 
+                            {/* Freight Companies */}
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-indigo-500">
+                                <h3 className="text-lg font-semibold mb-1">Freight Companies</h3>
+                                <Link
+                                    href={route("admin.freight.index")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    Manage Freight Companies
+                                </Link>
+                            </div>
+
                             {/* Service Packages */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-yellow-500">
                                 <h3 className="text-lg font-semibold mb-1">Service Packages</h3>
