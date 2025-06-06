@@ -12,6 +12,7 @@ class Customer extends Model
         'user_id',
         'date',
         'vendor_id',
+        'status',
     ];
 
     public function user()

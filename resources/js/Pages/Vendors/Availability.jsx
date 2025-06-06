@@ -8,14 +8,16 @@ import "./AvailabilityPicker.css";
 
 
 const AvailableList = ({ bookings = [], bookedDates = [] }) => {
-  const { customers = []} = usePage().props;
+  const customers = usePage().props.customers || [];
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [hoveredDate, setHoveredDate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [bookingStatus, setBookingStatus] = useState(null);
-  const [bookedDateRanges, setBookedDateRanges] = useState([]);
+  const [bookedDateRanges, setBookedDateRanges] = useState([])
+
+ 
 
   useEffect(() => {
     const processedDates = bookedDates.map(dateRange => ({
@@ -70,6 +72,7 @@ const AvailableList = ({ bookings = [], bookedDates = [] }) => {
   const proposedStart = selectedDate < startDate ? selectedDate : startDate;
   const proposedEnd = selectedDate > startDate ? selectedDate : startDate;
 
+
   if (hasConflictWithBookedDates(proposedStart, proposedEnd)) {
     setBookingStatus({
       type: 'error',
@@ -108,6 +111,22 @@ const getDaysInMonth = (date) => {
 };
 
 
+const hasConflictWithBookedDates = (start, end) => {
+  const normalizedStart = normalizeDate(start);
+  const normalizedEnd = normalizeDate(end);
+
+  return bookedDateRanges.some(range => {
+    const rangeStart = normalizeDate(range.start);
+    const rangeEnd = normalizeDate(range.end);
+    
+    // Check if the selected range overlaps with any booked range
+    return (
+      (normalizedStart >= rangeStart && normalizedStart <= rangeEnd) ||
+      (normalizedEnd >= rangeStart && normalizedEnd <= rangeEnd) ||
+      (normalizedStart <= rangeStart && normalizedEnd >= rangeEnd)
+    );
+  });
+};
 const handleBooking = async () => {
   if (!startDate) {
     setBookingStatus({ type: 'error', message: 'Please select a start date.' });
@@ -131,7 +150,7 @@ const handleBooking = async () => {
   setIsLoading(true);
 
   try {
-    const res = await fetch('/date-range-booking-store', {
+    const res = await fetch('/vendor/date-range-booking-store', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -140,7 +159,7 @@ const handleBooking = async () => {
       body: JSON.stringify({
         start_date: normalizeDate(startDate),
         end_date: normalizeDate(effectiveEndDate),
-        description: 'Driver Entered Booking',
+        description: 'Vendor Entered Booking',
       }),
     });
 
@@ -189,29 +208,58 @@ const handleBooking = async () => {
   ];
   const days = getDaysInMonth(currentMonth);
 
-    const handleAccept = (vendorId) => {
-      router.post(`/vendors/${vendorId}/accept`, {}, {
-        onSuccess: () => {
-          console.log("Accepted successfully!");
-          // Optionally refresh the page or show a success message
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    };
-
-    const handleReject = (vendorId) => {
-      router.post(`/vendors/${vendorId}/reject`, {}, {
-        onSuccess: () => {
-          console.log("Rejected successfully!");
-          // Optionally refresh the page or show a success message
-        },
-        onError: (errors) => {
-          console.error(errors);
-        },
-      });
-    };
+  const handleAccept = (customerId) => {
+    router.post(`/vendor/vendor/customers/${customerId}/accept`, {}, {
+      onSuccess: () => {
+        // Update the local state to reflect the change
+        const updatedCustomers = customers.map(customer => 
+          customer.id === customerId 
+            ? { ...customer, status: 'accepted' } 
+            : customer
+        );
+        usePage().props.customers = updatedCustomers;
+        
+        // Show success message
+        setBookingStatus({
+          type: 'success',
+          message: 'Booking accepted successfully!'
+        });
+      },
+      onError: (errors) => {
+        console.error(errors);
+        setBookingStatus({
+          type: 'error',
+          message: 'Failed to accept booking'
+        });
+      },
+    });
+  };
+  const handleReject = (customerId) => {
+    router.post(`/vendor/vendor/customers/${customerId}/reject`, {}, {
+      onSuccess: () => {
+        // Update the local state to reflect the change
+        const updatedCustomers = customers.map(customer => 
+          customer.id === customerId 
+            ? { ...customer, status: 'rejected' } 
+            : customer
+        );
+        usePage().props.customers = updatedCustomers;
+        
+        // Show success message
+        setBookingStatus({
+          type: 'success',
+          message: 'Booking rejected successfully!'
+        });
+      },
+      onError: (errors) => {
+        console.error(errors);
+        setBookingStatus({
+          type: 'error',
+          message: 'Failed to reject booking'
+        });
+      },
+    });
+  };
 
   return (
     <div className="p-4">
@@ -225,6 +273,7 @@ const handleBooking = async () => {
               <th>Date</th>
               <th>Vehicle Type</th>
               <th>Contact Info</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -235,12 +284,13 @@ const handleBooking = async () => {
                 <td>{customer.user.name}</td>
                 <td>{customer.pick_up_location}</td>
                 <td>{customer.date}</td>
-                <td>{customer.vehicleType?.type}</td>
+                <td>{customer.vehicle_type?.type}</td>
                 <td>
                   {customer.user?.phone}
                   <br />
                   {customer.user?.email}
                 </td>
+                <td>{customer.status}</td>
                 <td>
                   <div className="flex justify-end space-x-4">
                     <button
@@ -253,7 +303,7 @@ const handleBooking = async () => {
                     <button
                       type="button"
                       className="px-4 py-2 bg-blue-600 text-white rounded"
-                      onClick={() => handleReject(customer.id)}
+                      onClick={() =>  handleReject(customer.id)}
                     >
                       Reject
                     </button>

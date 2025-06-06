@@ -98,12 +98,11 @@ class VendorController extends Controller
         });
         
         // Fetch vendor's customers with related user and vehicle type
-        $customers = Customer::all();
-        // $customers = Customer::with(['user', 'vehicleType'])
-        //     ->where('vendor_id', $user->id)
-        //     ->latest()
-        //     ->get();
-
+       $customers = Customer::with(['user', 'vehicleType'])
+          ->where('vendor_id', $vendor->id)
+           ->latest()
+          ->get();
+      
         //  dd($customers);
 
         return Inertia::render('Vendors/Availability', [
@@ -165,7 +164,7 @@ public function store(Request $request)
          $validated['status'] = 'pending';
         Vendor::create($validated);
 
-        return redirect()->route('vendor.index')->with('success', 'Vendor registered successfully!');
+        return redirect()->route('vendor.dashboard')->with('success', 'Vendor registered successfully!');
     } catch (Exception $e) {
         Log::error('Vendor Store Error: ' . $e->getMessage());
 
@@ -260,35 +259,139 @@ public function store(Request $request)
 
     }
 
+    public function dateRangeBookingStore(Request $request)
+{
+    // Validate request
+    $validated = $request->validate([
+        'start_date' => 'required|date|after_or_equal:today',
+        'end_date' => 'required|date|after_or_equal:start_date',
+        'description' => 'nullable|string|max:255',
+    ]);
 
-    public function accept($vendorId){
-        $vendor = Vendor::findOrFail($vendorId);
-        $vendor->status = 'accepted'; // Note: Fix spelling: "accepted"
-        $vendor->save();
+    try {
+        // Get authenticated vendor
+        $vendor = auth()->user()->vendor;
+        
+        // Check for existing bookings in this range
+        $conflictingBookings = $vendor->bookings()
+            ->where(function($query) use ($validated) {
+                $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
+                      ->orWhereBetween('end_date', [$validated['start_date'], $validated['end_date']])
+                      ->orWhere(function($query) use ($validated) {
+                          $query->where('start_date', '<=', $validated['start_date'])
+                                ->where('end_date', '>=', $validated['end_date']);
+                      });
+            })
+            ->exists();
+
+        if ($conflictingBookings) {
+            return response()->json([
+                'message' => 'The selected dates conflict with existing bookings',
+                'errors' => ['date_range' => 'Conflict with existing bookings']
+            ], 422);
+        }
+
+        // Create new booking
+        $booking = $vendor->bookings()->create([
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'description' => $validated['description'] ?? 'Vendor Entered Booking',
+            'status' => 'confirmed',
+        ]);
+
+        return response()->json([
+            'message' => 'Booking created successfully',
+            'booking' => $booking,
+        ]);
+
+    } catch (\Exception $e) {
+        \Log::error('Booking store error: ' . $e->getMessage());
+        return response()->json([
+            'message' => 'Server error occurred',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+//     public function dateRangevendorBookingStore(Request $request)
+//     {
+// // dd($request->all());
+
     
-        // Get the customers again for refreshing the page
-        $customers = $vendor->customers()->with(['vehicleType', 'user'])->latest()->get();
-    
+//         $request->validate([
+//             'start_date' => 'required|date',
+//             'end_date'   => 'required|date|after_or_equal:start_date',
+//             'description' => 'required',
+//         ]);
+
+//          $userId = auth()->id();
+   
+//         Available_date::create([
+//             'user_id'         => $userId,
+//             'start_date'      => $request->start_date,
+//             'end_date'        => $request->end_date,
+//             'description'     => 'Vendor Entered Booking',
+//             'status' => 'confirmed',
+            
+//         ]);
+
+//         // Return JSON instead of redirect for API
+//         return response()->json(['message' => 'Vendor Booking created successfully!']);
+//     }
+    public function dateRangevendorBooking()
+    {
+        $user = Auth::user();
+
+        // Fetch only 'pending' and 'confirmed' bookings
+        $bookings = Available_date::where('user_id', $user->id)->get();
+        $bookedDays = [];
+
+        
+
+        foreach ($bookings as $booking) {
+            $bookedDays[] = [
+                'start'       => \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d'),
+                'end'         => \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d'),
+                'description' => $booking->description,
+            ];
+        }
+
         return Inertia::render('Vendors/Availability', [
-            'customers' => $customers,
-            'vendorId' => $vendorId,
+            'bookings'    => $bookings,
+            'bookedDates' => $bookedDays,
         ]);
     }
 
 
-    public function reject($vendorId){
-        $vendor = Vendor::findOrFail($vendorId);
-        $vendor->status = 'rejected';
-        $vendor->save();
+
+    // public function accept($vendorId){
+  
+    //     $vendor = Vendor::findOrFail($vendorId);
+    //     $vendor->status = 'accepted'; // Note: Fix spelling: "accepted"
+    //     $vendor->save();
+    //     // Get the customers again for refreshing the page
+    //     $customers = $vendor->customers()->with(['vehicleType', 'user'])->latest()->get();
     
-        // Get the customers again for refreshing the page
-        $customers = $vendor->customers()->with(['vehicleType', 'user'])->latest()->get();
+    //     return Inertia::render('Vendors/Availability', [
+    //         'customers' => $customers,
+    //         'vendorId' => $vendorId,
+    //     ]);
+    // }
+
+
+    // public function reject($vendorId){
+    //     $vendor = Vendor::findOrFail($vendorId);
+    //     $vendor->status = 'rejected';
+    //     $vendor->save();
     
-        return Inertia::render('Vendors/Availability', [
-            'customers' => $customers,
-            'vendorId' => $vendorId,
-        ]);
-    }
+    //     // Get the customers again for refreshing the page
+    //     $customers = $vendor->customers()->with(['vehicleType', 'user'])->latest()->get();
+    
+    //     return Inertia::render('Vendors/Availability', [
+    //         'customers' => $customers,
+    //         'vendorId' => $vendorId,
+    //     ]);
+    // }
 
     // public function showbookings($vendorId){
     //      $customercount=Customer::count();

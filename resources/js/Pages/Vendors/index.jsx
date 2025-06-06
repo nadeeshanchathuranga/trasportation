@@ -1,8 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 
+
 export default function VendorDashboard({ user, vehicleCategories }) {
     const { flash } = usePage().props;
+
+
 
     const { data, setData, post, processing, errors, reset } = useForm({
         user_id: user.id,
@@ -16,8 +19,11 @@ export default function VendorDashboard({ user, vehicleCategories }) {
         meritime_lisence: null,
     });
 
+   
+
     const handleSubmit = (e) => {
         e.preventDefault();
+       
 
         // Create FormData for file upload
         const formData = new FormData();

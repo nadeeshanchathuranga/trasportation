@@ -63,10 +63,13 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
     // Route::get('/vendor/{vendorId}/bookings',[VendorController::class,'getVendorBookings'])->name('customer.bookings')
     Route::post('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
     Route::get('/vendors/{vendorId}/available_dates',[VendorController::class,'storeAvailableDates']);
-    Route::post('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
-    Route::post('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
-    Route::get('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
-    Route::get('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
+    Route::post('/vendor/customers/{customer}/accept', [CustomerController::class, 'accept'])->name('vendor.customers.accept');
+    Route::post('/vendors/customers/{customer}/reject', [CustomerController::class, 'reject'])->name('vendor.customers.reject');
+    Route::get('/date-range-booking', [VendorController::class, 'dateRangeBooking'])->name('vendor.date_range_booking.view');
+    Route::post('/date-range-booking-store', [VendorController::class, 'dateRangeBookingStore'])->name('vendor.booking.store');
+
+    // Route::get('/vendors/{vendorId}/accept', [VendorController::class, 'accept'])->name('vendor.accept');
+    // Route::get('/vendors/{vendorId}/reject', [VendorController::class, 'reject'])->name('vendor.reject');
 
 
     // Vehicle management

@@ -34,6 +34,8 @@ public function create(): Response
                 ->values();
         }
 
+    
+
 
 
         return collect(); // return empty collection if failed
@@ -53,7 +55,7 @@ public function create(): Response
         'email' => 'required|string|lowercase|email|max:255|unique:users,email',
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
         'address' => 'required|string|max:255',
-        'country' => 'required|string|max:255',
+        'country' => 'nullable|string|max:255',
         'phone' => 'required|string|max:20',
         'role_type' => 'required|in:admin,vendor,user,driver',
     ]);

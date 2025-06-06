@@ -20,6 +20,7 @@ class CustomerController extends Controller
                 'pick_up_location'=> 'required|string|max:255',
                 'vehicle_type_id'=>'required|exists:vehicle_types,id',
                 'vendor_id'=>'required|exists:vendors,id',
+
             ]);
            
            $customer = Customer::create([
@@ -64,5 +65,49 @@ class CustomerController extends Controller
 
     public function edit(){
 
+    }
+
+    public function accept(Customer $customer)
+    {
+        try {
+            // Verify the customer belongs to the authenticated vendor
+            if ($customer->vendor_id !== auth()->user()->vendor->id) {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+
+            $customer->update(['status' => 'accepted']);
+            
+            // return response()->json([
+            //     'message' => 'Customer booking accepted successfully',
+            //     'customer' => $customer->fresh()
+            // ]);
+
+        } catch (Exception $e) {
+            Log::error('Customer Accept Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to accept booking'], 500);
+        }
+        
+    }
+
+    public function reject(Customer $customer)
+    {
+        try {
+            // Verify the customer belongs to the authenticated vendor
+            if ($customer->vendor_id !== auth()->user()->vendor->id) {
+                return response()->json(['message' => 'Unauthorized'], 403);
+            }
+
+            $customer->update(['status' => 'rejected']);
+            
+            // return response()->json([
+            //     'message' => 'Customer booking rejected successfully',
+            //     'customer' => $customer->fresh()
+            // ]);
+        
+
+        } catch (Exception $e) {
+            Log::error('Customer Reject Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Failed to reject booking'], 500);
+        }
     }
 }

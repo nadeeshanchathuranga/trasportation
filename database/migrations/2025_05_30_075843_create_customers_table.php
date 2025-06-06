@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('vehicle_type_id')->constrained('vehicle_types')->onDelete('cascade');
             $table->foreignId('vendor_id')->constrained('vendors')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->enum('status', ['accepted', 'pending', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
