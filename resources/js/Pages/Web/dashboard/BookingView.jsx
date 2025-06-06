@@ -24,6 +24,9 @@ const BookingView = ({ auth, bookings }) => {
                   <th className="px-4 py-2 border">Departure</th>
                   <th className="px-4 py-2 border">Arrival</th>
                   <th className="px-4 py-2 border">Status</th>
+            {user_type === 'user' && (
+  <th className="px-4 py-2 border">E-Ticket</th>
+)}
                 </tr>
               </thead>
               <tbody>
@@ -38,6 +41,34 @@ const BookingView = ({ auth, bookings }) => {
                     <td className="px-4 py-2 border">{booking.departure_time}</td>
                     <td className="px-4 py-2 border">{booking.arrival_time ?? 'N/A'}</td>
                     <td className="px-4 py-2 border capitalize">{booking.status}</td>
+    {user_type === 'user' && (
+  <td className="px-4 py-2 border capitalize">
+    {(booking.status === 'completed' || booking.status === 'confirmed') ? (
+      <a
+        href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-green-600 rounded hover:bg-green-700 transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-4 h-4 mr-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        PDF
+      </a>
+    ) : (
+      <span className="text-gray-400 italic">Pending</span>
+    )}
+  </td>
+)}
+
+
                   </tr>
                 ))}
               </tbody>
