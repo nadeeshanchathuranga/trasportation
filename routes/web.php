@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\CourierController;
@@ -11,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -60,6 +59,16 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
     Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
     Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
     Route::post('/vehicles/store', [VehicleController::class, 'store'])->name('vehicles.store');
+
+    // Warehouse management
+    Route::get('/warehouses', [WarehouseController::class, 'index'])->name('vendor.warehouses.index');
+    Route::get('/warehouses/create', [WarehouseController::class, 'create'])->name('vendor.warehouses.create');
+    Route::post('/warehouses', [WarehouseController::class, 'store'])->name('vendor.warehouses.store');
+    Route::get('/warehouses/{warehouse}/edit', [WarehouseController::class, 'edit'])->name('vendor.warehouses.edit');
+    Route::put('/warehouses/{warehouse}', [WarehouseController::class, 'update'])->name('vendor.warehouses.update');
+    Route::delete('/warehouses/{warehouse}', [WarehouseController::class, 'destroy'])->name('vendor.warehouses.destroy');
+    Route::post('/warehouses/{warehouse}/availability', [WarehouseController::class, 'updateAvailability'])->name('vendor.warehouses.availability.update');
+    Route::delete('/warehouses/{warehouse}/availability/{availability}', [WarehouseController::class, 'deleteAvailability'])->name('vendor.warehouses.availability.destroy');
 });
 
 // -------------------------------
