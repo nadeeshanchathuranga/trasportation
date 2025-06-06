@@ -50,9 +50,18 @@ public function flightView()
         $flightView = collect();
     }
 
+    // return Inertia::render('Web/dashboard/FlightView', [
+    //     'flight' => $flightView,
+    //     'user' => $user,
+    // ]);
+
     return Inertia::render('Web/dashboard/FlightView', [
-        'flight' => $flightView
-    ]);
+    'bookings' => $bookings,
+    'auth' => [
+        'user' => $user,
+        'user_type' => $user->role_type, // Pass user role type
+    ],
+]);
 }
 
 
@@ -82,9 +91,23 @@ public function bookingView()
         $bookings = collect();
     }
 
+    // return Inertia::render('Web/dashboard/BookingView', [
+    //     'bookings' => $bookings,
+    //      'user' => $user,
+    // ]);
+
+
     return Inertia::render('Web/dashboard/BookingView', [
-        'bookings' => $bookings
-    ]);
+    'bookings' => $bookings,
+    'auth' => [
+        'user' => $user,
+        'user_type' => $user->role_type, // Pass user role type
+    ],
+]);
+
+
+
+
 }
 
 

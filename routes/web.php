@@ -9,9 +9,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
-use App\Http\Controllers\WarehouseController;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\LogUserController;
+use App\Http\Controllers\FreightController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -185,6 +186,11 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::post('/complaints/{id}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.update-status');
     Route::post('/complaints/{id}/resolve', [ComplaintController::class, 'resolve'])->name('complaints.resolve');
     Route::post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
+
+    // Freight Company Management
+    Route::get('/freight-companies', [FreightController::class, 'index'])->name('admin.freight.index');
+    Route::post('/freight-companies/{id}/approve', [FreightController::class, 'approve'])->name('admin.freight.approve');
+    Route::post('/freight-companies/{id}/reject', [FreightController::class, 'reject'])->name('admin.freight.reject');
 });
 
 // -------------------------------
@@ -206,6 +212,15 @@ Route::get('/warehouses', [WarehouseController::class, 'search'])->name('warehou
 Route::get('/warehouses/{warehouse}', [WarehouseController::class, 'show'])->name('warehouses.show');
 
 
+// 🚛 Freight Company Routes
+// -------------------------------
+Route::middleware(['auth', 'role:freight'])->prefix('freight')->group(function () {
+    Route::get('/dashboard', [FreightController::class, 'dashboard'])->name('freight.dashboard');
+});
+
+// Public freight registration route
+Route::get('/freight/register', [FreightController::class, 'showRegistrationForm'])->name('freight.register');
+Route::post('/freight/register', [FreightController::class, 'register'])->name('freight.register.store');
 
 // -------------------------------
 // 🔐 Auth Routes
