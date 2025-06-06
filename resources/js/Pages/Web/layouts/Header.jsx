@@ -28,6 +28,30 @@ const Header = () => {
         </Link>
       )}
 
+
+
+
+
+       {/* User Dashboard */}
+  {auth.user.role_type === 'user' && (
+    <Link
+      href="/view"
+      className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
+    >
+      User Dashboard
+    </Link>
+  )}
+
+  {/* Admin or Superadmin Dashboard */}
+  {['admin', 'superadmin'].includes(auth.user.role_type) && (
+    <Link
+      href="/admin"
+      className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium"
+    >
+      Admin Dashboard
+    </Link>
+  )}
+
             {/* Show freight company dashboard link if role is 'freight' */}
             {auth.user.role_type === 'freight' && (
               <Link
