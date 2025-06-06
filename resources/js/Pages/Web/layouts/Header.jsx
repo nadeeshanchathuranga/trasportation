@@ -38,7 +38,7 @@ const Header = () => {
               </Link>
             )}
 
-<<<<<<<<< Temporary merge branch 1
+
             <button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-medium"
@@ -131,7 +131,7 @@ const Header = () => {
   )}
 </div>
 
->>>>>>>>> Temporary merge branch 2
+
     </header>
   );
 };
