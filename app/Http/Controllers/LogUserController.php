@@ -67,51 +67,72 @@ public function flightView()
 
 
 
-
-
-
 public function bookingView()
 {
-
     $user = Auth::user();
 
     if ($user->role_type === 'user') {
         $bookings = BookingSummary::with('flight')
             ->where('user_id', $user->id)
             ->get();
-
-
     } elseif (in_array($user->role_type, ['admin', 'superadmin'])) {
-
-        $bookings = BookingSummary::with(['flight'])->get();
-
-
+        $bookings = BookingSummary::with('flight')->get();
     } else {
-
         $bookings = collect();
     }
 
-    // return Inertia::render('Web/dashboard/BookingView', [
-    //     'bookings' => $bookings,
-    //      'user' => $user,
-    // ]);
-
+    $flights = Flight::all(); // <- always get flights
 
     return Inertia::render('Web/dashboard/BookingView', [
-    'bookings' => $bookings,
-    'auth' => [
-        'user' => $user,
-        'user_type' => $user->role_type, // Pass user role type
-    ],
-]);
-
-
-
-
+        'bookings' => $bookings,
+        'flights' => $flights,
+        'auth' => [
+            'user' => $user,
+            'user_type' => $user->role_type,
+        ],
+    ]);
 }
 
 
 
+
+public function destroy($id)
+{
+
+
+   $booking = BookingSummary::findOrFail($id);
+
+
+    if ($booking->status !== 'cancelled') {
+        $booking->status = 'cancelled';
+        $booking->save();
+    }
+
+    return redirect()->back()->with('success', 'Booking has been cancelled.');
+}
+
+
+
+
+public function edit(Request $request, $id)
+{
+    $booking = BookingSummary::findOrFail($id);
+ 
+    $validated = $request->validate([
+        'flight_id' => 'required|exists:flights,id',
+        'seat_number' => 'required|string|max:10',
+        'price' => 'required|numeric|min:0',
+        'tax' => 'required|numeric|min:0',
+        'baggage' => 'nullable|string|max:255',
+        'departure_time' => 'required',
+        'arrival_time' => 'nullable',
+        'status' => 'required|in:pending,confirmed,cancelled',
+    ]);
+
+    $booking->update($validated);
+
+    return redirect()->back()->with('success', 'Booking updated successfully!');
+}
 
 
 

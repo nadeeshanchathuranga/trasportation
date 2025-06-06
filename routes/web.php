@@ -38,6 +38,14 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
+
+Route::post('/edit_bookings/{id}', [LogUserController::class, 'edit'])->name('user.booking_view.edit');
+Route::delete('/delete_bookings/{id}', [LogUserController::class, 'destroy'])->name('user.booking_view.destroy');
+
+
+
+
+
 Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
 
 
