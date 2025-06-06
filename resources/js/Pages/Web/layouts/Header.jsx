@@ -31,6 +31,17 @@ const Header = () => {
         </Link>
       )}
 
+{auth.user.role_type === 'user' && (
+        <Link
+          href="/user/view"
+          className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
+        >
+          user Dashboard
+        </Link>
+      )}
+
+
+
       {/* You can add similar links for admin/vendor here if needed */}
 
       <button
