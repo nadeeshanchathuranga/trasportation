@@ -1,8 +1,8 @@
 import React from "react";
 
-import linkedin from "../assets/rentAVehicle/footer/linkedin.png";
-import fb from "../assets/rentAVehicle/footer/fb.png";
-import twitter from "../assets/rentAVehicle/footer/twitter.png";
+import linkedin from "../../assets/rentAVehicle/footer/linkedin.png";
+import fb from "../../assets/rentAVehicle/footer/fb.png";
+import twitter from "../../assets/rentAVehicle/footer/twitter.png";
 
 const Footer = () => {
   return (

@@ -1,3 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bebas-neue {
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.figtree {
+  font-family: "Figtree", sans-serif;
+}
+
+.inter {
+  font-family: "Inter", sans-serif;
+}
+
+.work-sans {
+  font-family: "Work Sans", sans-serif;
+}
