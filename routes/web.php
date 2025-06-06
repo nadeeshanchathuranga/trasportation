@@ -9,13 +9,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
 use App\Http\Controllers\FreightController;
-=======
+=========
 use App\Http\Controllers\WarehouseController;
->>>>>>> 770f9fdea81d4be02e48a26f1971af80c464190d
+>>>>>>>>> Temporary merge branch 2
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\LogUserController;
+use App\Http\Controllers\FreightController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

@@ -18,15 +18,15 @@ const Header = () => {
           <>
             <span className="mr-2">Hello, {auth.user.name}</span>
 
-            {/* Show driver dashboard link if role is 'driver' */}
-            {auth.user.role_type === 'driver' && (
-              <Link
-                href="/driver/dashboard"
-                className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
-              >
-                Driver Dashboard
-              </Link>
-            )}
+      {/* ✅ Show driver dashboard link if role is 'driver' */}
+      {auth.user.role_type === 'driver' && (
+        <Link
+          href="/driver/dashboard"
+          className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
+        >
+          Driver Dashboard
+        </Link>
+      )}
 
             {/* Show freight company dashboard link if role is 'freight' */}
             {auth.user.role_type === 'freight' && (
@@ -38,7 +38,7 @@ const Header = () => {
               </Link>
             )}
 
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
             <button
               onClick={handleLogout}
               className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-medium"
@@ -69,7 +69,7 @@ const Header = () => {
           </>
         )}
       </div>
-=======
+=========
        <div className="space-x-4">
   {auth?.user ? (
     <>
@@ -131,7 +131,7 @@ const Header = () => {
   )}
 </div>
 
->>>>>>> 770f9fdea81d4be02e48a26f1971af80c464190d
+>>>>>>>>> Temporary merge branch 2
     </header>
   );
 };
