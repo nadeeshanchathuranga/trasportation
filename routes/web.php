@@ -11,6 +11,8 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\LogUserController;
+use App\Http\Controllers\FreightController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
