@@ -9,10 +9,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
+
+use App\Http\Controllers\FreightController;
+
+use App\Http\Controllers\WarehouseController;
+
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\LogUserController;
-use App\Http\Controllers\FreightController;
-use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
