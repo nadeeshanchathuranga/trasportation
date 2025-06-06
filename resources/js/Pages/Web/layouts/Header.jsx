@@ -49,7 +49,7 @@ const Header = () => {
 
               {auth.user.role_type === 'user' && (
                 <Link
-                  href="/view"
+                  href="/user/view"
                   className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
                 >
                   User Dashboard

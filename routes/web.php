@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
 // -------------------------------
 // 🚚 Vendor Routes
-// -------------------------------
+// -------------------------------   
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
 });
