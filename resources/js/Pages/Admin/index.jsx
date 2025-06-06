@@ -99,6 +99,28 @@ export default function Dashboard() {
                                     View Warehouse List
                                 </Link>
                             </div>
+  {/* Flight Search */}
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-rose-500">
+                                <h3 className="text-lg font-semibold mb-1">Booking Summary</h3>
+                                <Link
+                                   href={route('user.booking_view')}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    Booking Flight List
+                                </Link>
+                            </div>
+
+
+        <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-rose-500">
+                                <h3 className="text-lg font-semibold mb-1">Flights Section</h3>
+                                <Link
+                                   href={route('user.fight_view')}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                Flights Section
+                                </Link>
+                            </div>
+
                         </div>
                     </div>
                 </div>

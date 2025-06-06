@@ -11,6 +11,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\LogUserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +33,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+     Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
+    Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
+
+
 // -------------------------------
 // 👤 Profile (authenticated users)
 // -------------------------------
@@ -39,6 +44,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+
+});
+
+// -------------------------------
+// 🚚 Vendor Routes
+// -------------------------------
+Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
+    Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
+
 });
 
 // -------------------------------
@@ -99,6 +115,44 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () 
 });
 
 // -------------------------------
+// ✅ Driver Routes
+// -------------------------------
+Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () {
+
+    Route::get('/dashboard', [DriverController::class, 'index'])->name('driver.view');
+    Route::post('/driver-store', [DriverController::class, 'store'])->name('driver.store');
+    Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
+    Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
+
+    Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
+    Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
+    Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
+
+    Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])
+        ->name('service_package.update');
+
+    Route::get('/driver/date-range-booking', [DriverController::class, 'dateRangeBooking'])->name('driver.date_range_booking.view');
+    Route::post('/date-range-booking-store', [DriverController::class, 'dateRangeBookingStore'])
+        ->name('driver.booking.store');
+
+    // View
+    Route::get('/driver/driver-booking-view', [DriverController::class, 'driverBookingView'])->name('driver.booking.view');
+    Route::delete('/driver/service-package/{id}', [DriverController::class, 'deleteServicePackage'])->name('driver.service_package.delete');
+    Route::delete('/driver/booking/{id}', [DriverController::class, 'deleteBooking'])->name('driver.booking.delete');
+
+    // Accept
+    Route::put('/driver/booking/accept/{id}', [DriverController::class, 'acceptBooking'])->name('driver.booking.accept');
+
+    // (Optional) Edit/Update
+    Route::put('/driver/booking/update/{id}', [DriverController::class, 'updateBooking'])->name('driver.booking.update');
+    Route::put('/driver-bookings/complete/{id}', [DriverController::class, 'markAsCompleted'])->name('driver.booking.complete');
+
+    Route::post('/driver-bookings/chat', [DriverController::class, 'driverChat'])->name('driver.booking.chat');
+
+    Route::get('/driver/payout', [DriverController::class, 'driverPayOut'])->name('driver.payout');
+});
+
+// -------------------------------
 // 🛠️ Admin + SuperAdmin Routes
 // -------------------------------
 Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
@@ -142,7 +196,7 @@ Route::post('/couriers', [CourierController::class, 'store'])->name('couriers.st
 Route::get('/couriers/{courier}', [CourierController::class, 'show'])->name('couriers.show');
 
 // Tracking
-Route::get('/track', fn () => Inertia::render('Courier/TrackForm'))->name('couriers.track-form');
+Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form');
 Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
 
 // -------------------------------

@@ -58,7 +58,7 @@ export default function VehicleIndex() {
         <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex justify-between items-center bg-gray-200 rounded-2xl shadow-md p-6">
             <h1 className="text-3xl font-bold text-gray-800">🚗 My Vehicle List</h1>
-            <Link href="/vehicles/create">
+            <Link href="/vendor/vehicles/create">
               <button className="bg-gray-500 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200">
                 + Register New Vehicle
               </button>
