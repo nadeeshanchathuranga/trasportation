@@ -25,7 +25,7 @@ class WarehouseController extends BaseController
     public function index()
     {
         $user = Auth::user();
-        
+
         if (!$user->vendor) {
             return redirect()->route('vendor.index')
                 ->with('error', 'Please complete your vendor profile first.');
@@ -44,7 +44,7 @@ class WarehouseController extends BaseController
     public function create()
     {
         $user = Auth::user();
-        
+
         if (!$user->vendor) {
             return redirect()->route('vendor.index')
                 ->with('error', 'Please complete your vendor profile first.');
@@ -56,7 +56,7 @@ class WarehouseController extends BaseController
     public function store(Request $request)
     {
         $user = Auth::user();
-        
+
         if (!$user->vendor) {
             return redirect()->route('vendor.index')
                 ->with('error', 'Please complete your vendor profile first.');
@@ -118,7 +118,6 @@ class WarehouseController extends BaseController
 
             return redirect()->route('vendor.warehouses.index')
                 ->with('success', 'Warehouse created successfully.');
-
         } catch (\Exception $e) {
             Log::error('Error creating warehouse:', [
                 'error' => $e->getMessage(),
@@ -169,7 +168,7 @@ class WarehouseController extends BaseController
                 foreach ($warehouse->images as $oldImage) {
                     Storage::disk('public')->delete($oldImage);
                 }
-                
+
                 $imagePaths = [];
                 foreach ($request->file('images') as $image) {
                     $imagePaths[] = $image->store('warehouse-images', 'public');
@@ -182,7 +181,7 @@ class WarehouseController extends BaseController
                 foreach ($warehouse->documents as $oldDocument) {
                     Storage::disk('public')->delete($oldDocument);
                 }
-                
+
                 $documentPaths = [];
                 foreach ($request->file('documents') as $document) {
                     $documentPaths[] = $document->store('warehouse-documents', 'public');
@@ -196,7 +195,6 @@ class WarehouseController extends BaseController
 
             return redirect()->route('vendor.warehouses.index')
                 ->with('success', 'Warehouse updated successfully.');
-                
         } catch (\Exception $e) {
             Log::error('Error updating warehouse:', [
                 'error' => $e->getMessage(),
@@ -205,6 +203,34 @@ class WarehouseController extends BaseController
 
             return back()->withErrors(['error' => 'Failed to update warehouse. ' . $e->getMessage()])
                 ->withInput();
+        }
+    }
+
+    public function toggleStatus(Warehouse $warehouse)
+    {
+        $this->authorize('update', $warehouse);
+
+        try {
+            $warehouse->update([
+                'is_active' => !$warehouse->is_active
+            ]);
+
+            $statusText = $warehouse->is_active ? 'activated' : 'deactivated';
+
+            Log::info("Warehouse status toggled:", [
+                'id' => $warehouse->id,
+                'is_active' => $warehouse->is_active
+            ]);
+
+            return redirect()->route('vendor.warehouses.index')
+                ->with('success', "Warehouse {$statusText} successfully.");
+        } catch (\Exception $e) {
+            Log::error('Error toggling warehouse status:', [
+                'error' => $e->getMessage(),
+                'warehouse_id' => $warehouse->id
+            ]);
+
+            return back()->withErrors(['error' => 'Failed to update warehouse status.']);
         }
     }
 
@@ -257,7 +283,7 @@ class WarehouseController extends BaseController
     public function deleteAvailability(Warehouse $warehouse, WarehouseAvailability $availability)
     {
         $this->authorize('update', $warehouse);
-        
+
         if ($availability->warehouse_id !== $warehouse->id) {
             abort(404);
         }
@@ -265,5 +291,116 @@ class WarehouseController extends BaseController
         $availability->delete();
 
         return back()->with('success', 'Availability record deleted successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        // Get all active warehouses with vendor information
+        $query = Warehouse::with(['vendor', 'availability'])
+            ->where('is_active', true);
+
+        // Filter by location (using distance calculation if lat/long provided)
+        if ($request->filled(['latitude', 'longitude', 'distance'])) {
+            $lat = $request->latitude;
+            $lng = $request->longitude;
+            $distance = $request->distance; // in kilometers
+
+            // Haversine formula for calculating distance between two points
+            $query->selectRaw("*, 
+            (6371 * acos(
+                cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + 
+                sin(radians(?)) * sin(radians(latitude))
+            )) AS distance", [$lat, $lng, $lat])
+                ->having('distance', '<=', $distance)
+                ->orderBy('distance');
+        }
+
+        // Filter by address text search
+        if ($request->filled('location')) {
+            $query->where('address', 'like', '%' . $request->location . '%');
+        }
+
+        // Filter by area size range
+        if ($request->filled('min_area')) {
+            $query->where('total_area', '>=', $request->min_area);
+        }
+
+        if ($request->filled('max_area')) {
+            $query->where('total_area', '<=', $request->max_area);
+        }
+
+        // Filter by capacity
+        if ($request->filled('min_capacity')) {
+            $query->where('capacity', '>=', $request->min_capacity);
+        }
+
+        // Filter by price range
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Filter by warehouse type
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        // Filter by amenities (JSON column)
+        if ($request->filled('amenities') && is_array($request->amenities)) {
+            foreach ($request->amenities as $amenity) {
+                $query->whereJsonContains('amenities', $amenity);
+            }
+        }
+
+        // Filter by availability dates
+        if ($request->filled(['start_date', 'end_date'])) {
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+
+            // Get warehouses that don't have overlapping blocked dates in the availability table
+            $query->whereDoesntHave('availability', function ($q) use ($startDate, $endDate) {
+                $q->where('status', '!=', 'available')
+                    ->where(function ($q2) use ($startDate, $endDate) {
+                        $q2->whereBetween('start_date', [$startDate, $endDate])
+                            ->orWhereBetween('end_date', [$startDate, $endDate])
+                            ->orWhere(function ($q3) use ($startDate, $endDate) {
+                                $q3->where('start_date', '<=', $startDate)
+                                    ->where('end_date', '>=', $endDate);
+                            });
+                    });
+            });
+        }
+
+        // Sort results
+        $sortField = $request->sort_by ?? 'price';
+        $sortOrder = $request->sort_order ?? 'asc';
+        $query->orderBy($sortField, $sortOrder);
+
+        // Paginate results
+        $warehouses = $query->paginate(12)->withQueryString();
+
+        return Inertia::render('Warehouses/Search', [
+            'warehouses' => $warehouses,
+            'filters' => $request->only([
+                'location',
+                'latitude',
+                'longitude',
+                'distance',
+                'min_area',
+                'max_area',
+                'min_capacity',
+                'min_price',
+                'max_price',
+                'type',
+                'amenities',
+                'start_date',
+                'end_date',
+                'sort_by',
+                'sort_order'
+            ])
+        ]);
     }
 }

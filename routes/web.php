@@ -34,8 +34,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-     Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
-    Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
+Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
+Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
 
 
 // -------------------------------
@@ -45,9 +45,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-
 });
 
 // -------------------------------
@@ -55,7 +52,6 @@ Route::middleware(['auth'])->group(function () {
 // -------------------------------
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
-
 });
 
 // -------------------------------
@@ -86,6 +82,10 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
     Route::delete('/warehouses/{warehouse}', [WarehouseController::class, 'destroy'])->name('vendor.warehouses.destroy');
     Route::post('/warehouses/{warehouse}/availability', [WarehouseController::class, 'updateAvailability'])->name('vendor.warehouses.availability.update');
     Route::delete('/warehouses/{warehouse}/availability/{availability}', [WarehouseController::class, 'deleteAvailability'])->name('vendor.warehouses.availability.destroy');
+    Route::patch('/warehouses/{warehouse}/toggle-status', [WarehouseController::class, 'toggleStatus'])
+        ->name('vendor.warehouses.toggle-status');
+    Route::post('/warehouses/{warehouse}/book', [WarehouseController::class, 'book'])->name('warehouses.book');
+    Route::get('/my-bookings', [WarehouseController::class, 'userBookings'])->name('warehouse.bookings');
 });
 
 // -------------------------------
@@ -206,6 +206,12 @@ Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('courie
 Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
 
 // -------------------------------
+// 📋 Warehouse Routes
+// -------------------------------
+Route::get('/warehouses', [WarehouseController::class, 'search'])->name('warehouses.search');
+Route::get('/warehouses/{warehouse}', [WarehouseController::class, 'show'])->name('warehouses.show');
+
+
 // 🚛 Freight Company Routes
 // -------------------------------
 Route::middleware(['auth', 'role:freight'])->prefix('freight')->group(function () {
