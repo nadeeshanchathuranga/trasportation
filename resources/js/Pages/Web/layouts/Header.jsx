@@ -39,6 +39,14 @@ const Header = () => {
           user Dashboard
         </Link>
       )}
+{['admin', 'superadmin'].includes(auth.user.role_type) && (
+  <Link
+    href="/admin"
+    className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium"
+  >
+    Admin Dashboard
+  </Link>
+)}
 
 
 
