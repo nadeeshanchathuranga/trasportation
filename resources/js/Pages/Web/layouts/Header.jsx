@@ -18,15 +18,15 @@ const Header = () => {
           <>
             <span className="mr-2">Hello, {auth.user.name}</span>
 
-            {/* Show driver dashboard link if role is 'driver' */}
-            {auth.user.role_type === 'driver' && (
-              <Link
-                href="/driver/dashboard"
-                className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
-              >
-                Driver Dashboard
-              </Link>
-            )}
+      {/* ✅ Show driver dashboard link if role is 'driver' */}
+      {auth.user.role_type === 'driver' && (
+        <Link
+          href="/driver/dashboard"
+          className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
+        >
+          Driver Dashboard
+        </Link>
+      )}
 
             {/* Show freight company dashboard link if role is 'freight' */}
             {auth.user.role_type === 'freight' && (

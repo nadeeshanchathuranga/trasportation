@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vendor extends Model
 {
@@ -32,5 +33,10 @@ class Vendor extends Model
     public function available_dates()
     {
         return $this->hasMany(Available_date::class);
+    }
+
+    public function warehouses(): HasMany
+    {
+        return $this->hasMany(Warehouse::class);
     }
 }

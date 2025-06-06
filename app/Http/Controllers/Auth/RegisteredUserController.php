@@ -23,9 +23,11 @@ class RegisteredUserController extends Controller
 
 public function create(): Response
 {
+
+
     // Optional caching for performance
     $countries = Cache::remember('countries_list', 86400, function () {
-        $response = Http::get('https://restcountries.com/v3.1/all');
+        $response = Http::get('https://www.apicountries.com/countries');
 
         if ($response->successful()) {
             return collect($response->json())
