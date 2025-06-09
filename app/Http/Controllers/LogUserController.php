@@ -30,7 +30,7 @@ public function flightView()
 {
 
 
-
+ 
 
     $user = Auth::user();
 
@@ -117,7 +117,7 @@ public function destroy($id)
 public function edit(Request $request, $id)
 {
     $booking = BookingSummary::findOrFail($id);
- 
+
     $validated = $request->validate([
         'flight_id' => 'required|exists:flights,id',
         'seat_number' => 'required|string|max:10',
@@ -133,6 +133,38 @@ public function edit(Request $request, $id)
 
     return redirect()->back()->with('success', 'Booking updated successfully!');
 }
+
+
+
+    public function airTicketBook()
+    {
+
+        return Inertia::render('Web/dashboard/AirticketBook', [
+
+        ]);
+
+    }
+
+
+
+  public function airTicketBookView()
+    {
+
+        return Inertia::render('Web/dashboard/AirticketBookView', [
+
+        ]);
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 

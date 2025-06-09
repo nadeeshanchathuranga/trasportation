@@ -306,9 +306,9 @@ class WarehouseController extends BaseController
             $distance = $request->distance; // in kilometers
 
             // Haversine formula for calculating distance between two points
-            $query->selectRaw("*, 
+            $query->selectRaw("*,
             (6371 * acos(
-                cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + 
+                cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) +
                 sin(radians(?)) * sin(radians(latitude))
             )) AS distance", [$lat, $lng, $lat])
                 ->having('distance', '<=', $distance)

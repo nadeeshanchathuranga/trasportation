@@ -104,7 +104,7 @@ export default function Dashboard() {
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
                                 <h3 className="text-lg font-semibold mb-1">Warehouse Management</h3>
                                 <Link
-                                    href={route("vendor.warehouses.index")}
+                                    href={route('vendor.warehouses.index')}
                                     className="text-sm text-blue-600 hover:underline mt-2 block"
                                 >
                                     View Warehouse List
