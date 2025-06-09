@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FreightBooking;
 use App\Models\FreightCompany;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class FreightController extends Controller
         // Handle file uploads
         $businessCertificatePath = $request->file('business_certificate')->store('freight/documents', 'public');
         $taxDocumentPath = $request->file('tax_document')->store('freight/documents', 'public');
-        $logoPath = $request->hasFile('logo') 
+        $logoPath = $request->hasFile('logo')
             ? $request->file('logo')->store('freight/logos', 'public')
             : null;
 
@@ -76,9 +77,11 @@ class FreightController extends Controller
     public function dashboard()
     {
         $freightCompany = FreightCompany::where('user_id', Auth::id())->firstOrFail();
-        
+        $bookings = FreightBooking::with('user')->latest()->get();
+
         return Inertia::render('Web/Freight/Dashboard', [
-            'freightCompany' => $freightCompany
+            'freightCompany' => $freightCompany,
+            'bookings' => $bookings,
         ]);
     }
 

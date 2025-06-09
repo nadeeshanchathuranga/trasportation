@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
 });
+Route::get('/my-freight-bookings', [LogUserController::class, 'freightBookings'])->name('user.freight_bookings');
 
 // -------------------------------
 // 🚚 Vendor Routes
@@ -237,3 +238,20 @@ Route::post('/freight/register', [FreightController::class, 'register'])->name('
 // 🔐 Auth Routes
 // -------------------------------
 require __DIR__ . '/auth.php';
+
+// -------------------------------
+// 🚛 Freight Booking Routes
+// -------------------------------
+Route::middleware(['auth'])->prefix('freight-booking')->name('freight.booking.')->group(function () {
+    Route::get('/create', [App\Http\Controllers\FreightBookingController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\FreightBookingController::class, 'store'])->name('store');
+});
+
+Route::middleware(['auth', 'role:freight'])->prefix('freight')->name('freight.')->group(function () {
+    Route::get('/bookings', [App\Http\Controllers\FreightBookingController::class, 'index'])->name('bookings.index');
+    Route::put('/bookings/{booking}/status', [App\Http\Controllers\FreightBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+});
+
+Route::middleware(['auth', 'role:admin,superadmin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/freight-bookings', [App\Http\Controllers\FreightBookingController::class, 'adminIndex'])->name('freight.bookings.index');
+});
