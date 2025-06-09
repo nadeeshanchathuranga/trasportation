@@ -17,15 +17,15 @@ class DatabaseSeeder extends Seeder
 
         // Call your custom seeders
         $this->call([
-            VehicleCategorySeeder::class,
-            VendorSeeder::class,
-            DriverSeeder::class,
-            ComplaintsSeeder::class,
+            // VehicleCategorySeeder::class,
+            // VendorSeeder::class,
+            // DriverSeeder::class,
+            // ComplaintsSeeder::class,
             UserSeeder::class,
             DriverServicePackagesTypesTableSeeder::class,
             VehicleTypeSeeder::class,
-            DriverServicePackageSeeder::class,
-            CourierSeeder::class,
+            // DriverServicePackageSeeder::class,
+            // CourierSeeder::class,
             // first DriverSeeder CourierSeeder cmnt
         ]);
     }
