@@ -63,6 +63,33 @@ const Dashboard = ({ auth, freightCompany, bookings }) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-2xl font-semibold">Welcome, {freightCompany.business_name}</h2>
+                            <div className="flex items-center space-x-4">
+                                {freightCompany.logo && (
+                                    <img
+                                        src={`/storage/${freightCompany.logo}`}
+                                        alt="Company Logo"
+                                        className="h-12 w-12 rounded-full object-cover"
+                                    />
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                            {/* Company Information Card */}
+                            <div className="bg-white p-6 rounded-lg shadow-md">
+                                <h3 className="text-lg font-semibold mb-4">Company Information</h3>
+                                <div className="space-y-2">
+                                    <p><span className="font-medium">Business Type:</span> {freightCompany.business_type}</p>
+                                    <p><span className="font-medium">Registration Number:</span> {freightCompany.registration_number}</p>
+                                    <p><span className="font-medium">Location:</span> {freightCompany.location}</p>
+                                    <p><span className="font-medium">Email:</span> {freightCompany.email}</p>
+                                    <p><span className="font-medium">Phone:</span> {freightCompany.phone}</p>
+                                </div>
+                            </div>
+                        </div>
+
                         <h2 className="text-2xl font-semibold mb-6">Freight Bookings</h2>
 
                         <div className="space-y-6">
