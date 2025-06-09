@@ -44,6 +44,16 @@ export default function View({ auth }) {
     </svg>
     Find Warehouses
   </Link>
+
+  <Link
+  href={route('user.airticket_book')}
+  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+>
+  <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.5 12l9.5-2.5-1-4-9.5 2.5L4 4 2 6l5.5 5.5L5 18l2 1 5-5.5 3.5 3.5 1.5-1.5-3.5-3.5z" />
+  </svg>
+  Air Ticket Book
+</Link>
 </div>
 
             </div>
