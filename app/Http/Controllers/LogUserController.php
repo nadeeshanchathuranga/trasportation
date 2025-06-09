@@ -16,10 +16,13 @@ class LogUserController extends Controller
         return Inertia::render('Web/dashboard/View', []);
     }
 
-    public function flightView()
-    {
-        $user = Auth::user();
-        $flights = collect(); // Initialize as empty collection
+public function flightView()
+{
+
+
+
+
+    $user = Auth::user();
 
         if ($user->role_type === 'user') {
             $flights = Flight::with('user')
@@ -75,25 +78,25 @@ class LogUserController extends Controller
         return redirect()->back()->with('success', 'Booking has been cancelled.');
     }
 
-    public function edit(Request $request, $id)
-    {
-        $booking = BookingSummary::findOrFail($id);
+public function edit(Request $request, $id)
+{
+    $booking = BookingSummary::findOrFail($id);
 
-        $validated = $request->validate([
-            'flight_id' => 'required|exists:flights,id',
-            'seat_number' => 'required|string|max:10',
-            'price' => 'required|numeric|min:0',
-            'tax' => 'required|numeric|min:0',
-            'baggage' => 'nullable|string|max:255',
-            'departure_time' => 'required',
-            'arrival_time' => 'nullable',
-            'status' => 'required|in:pending,confirmed,cancelled',
-        ]);
+    $validated = $request->validate([
+        'flight_id' => 'required|exists:flights,id',
+        'seat_number' => 'required|string|max:10',
+        'price' => 'required|numeric|min:0',
+        'tax' => 'required|numeric|min:0',
+        'baggage' => 'nullable|string|max:255',
+        'departure_time' => 'required',
+        'arrival_time' => 'nullable',
+        'status' => 'required|in:pending,confirmed,cancelled',
+    ]);
 
         $booking->update($validated);
 
-        return redirect()->back()->with('success', 'Booking updated successfully!');
-    }
+    return redirect()->back()->with('success', 'Booking updated successfully!');
+}
 
     public function freightBookings()
     {
