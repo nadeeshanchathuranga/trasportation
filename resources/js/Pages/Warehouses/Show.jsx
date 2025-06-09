@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
+// import AppLayout from '@/Layouts/AppLayout';
 
 export default function Show({ auth, warehouse, previewPrice, previewDuration, dates }) {
     const [activeTab, setActiveTab] = useState('details');
     const [activeImageIndex, setActiveImageIndex] = useState(0);
-    
+
     const { data, setData, post, processing, errors } = useForm({
         start_date: dates.start_date || '',
         end_date: dates.end_date || '',
@@ -14,12 +14,12 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
         duration_unit: warehouse.pricing_model, // Default to warehouse's model
         quantity: 1
     });
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         post(route('warehouses.book', warehouse.id));
     };
-    
+
     const formatPriceDisplay = (pricingModel) => {
         const priceUnit = {
             hourly: '/hour',
@@ -28,21 +28,21 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
         };
         return `$${warehouse.price}${priceUnit[pricingModel]}`;
     };
-    
+
     // Calculate price whenever relevant form fields change
     const [calculatedPrice, setCalculatedPrice] = useState(previewPrice);
     const [calculatedDuration, setCalculatedDuration] = useState(previewDuration);
-    
+
     const calculatePrice = () => {
         if (!data.start_date || !data.end_date) return;
-        
+
         const startDate = new Date(data.start_date);
         const endDate = new Date(data.end_date);
-        
+
         // Calculate duration based on the selected unit
         let duration = 0;
         let durationText = '';
-        
+
         switch (data.duration_unit) {
             case 'hourly':
                 duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60));
@@ -57,18 +57,18 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                 durationText = `${duration} ${duration === 1 ? 'month' : 'months'}`;
                 break;
         }
-        
+
         const price = duration * warehouse.price * data.quantity;
-        
+
         setCalculatedDuration(durationText);
         setCalculatedPrice(price);
     };
-    
+
     // Recalculate whenever form changes
     React.useEffect(() => {
         calculatePrice();
     }, [data.start_date, data.end_date, data.duration_unit, data.quantity]);
-    
+
     return (
         <AppLayout
             user={auth.user}
@@ -79,21 +79,21 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <nav className="mb-4">
-                        <Link 
+                        <Link
                             href={route('warehouses.search')}
                             className="text-blue-600 hover:text-blue-800"
                         >
                             ← Back to Search Results
                         </Link>
                     </nav>
-                    
+
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div className="p-6">
                                 <div className="mb-4">
                                     <div className="h-80 overflow-hidden bg-gray-200 mb-2 rounded">
                                         {warehouse.images && warehouse.images.length > 0 ? (
-                                            <img 
+                                            <img
                                                 src={`/storage/${warehouse.images[activeImageIndex]}`}
                                                 alt={warehouse.name}
                                                 className="h-full w-full object-cover"
@@ -104,7 +104,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                             </div>
                                         )}
                                     </div>
-                                    
+
                                     {warehouse.images && warehouse.images.length > 1 && (
                                         <div className="flex space-x-2 overflow-x-auto">
                                             {warehouse.images.map((image, index) => (
@@ -113,7 +113,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                     onClick={() => setActiveImageIndex(index)}
                                                     className={`h-16 w-16 flex-shrink-0 overflow-hidden rounded ${index === activeImageIndex ? 'ring-2 ring-blue-500' : ''}`}
                                                 >
-                                                    <img 
+                                                    <img
                                                         src={`/storage/${image}`}
                                                         alt={`${warehouse.name} image ${index + 1}`}
                                                         className="h-full w-full object-cover"
@@ -123,11 +123,11 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                         </div>
                                     )}
                                 </div>
-                                
+
                                 <div>
                                     <h1 className="text-2xl font-bold mb-2">{warehouse.name}</h1>
                                     <p className="text-gray-600 mb-4">{warehouse.address}</p>
-                                    
+
                                     <div className="flex items-center justify-between mb-4">
                                         <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
                                             {warehouse.type.replace('_', ' ')}
@@ -136,7 +136,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                             {formatPriceDisplay(warehouse.pricing_model)}
                                         </span>
                                     </div>
-                                    
+
                                     <div className="mb-6">
                                         <div className="grid grid-cols-2 gap-4 text-sm">
                                             <div>
@@ -157,7 +157,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="mb-6">
                                         <h3 className="text-lg font-medium mb-2">Amenities</h3>
                                         <div className="flex flex-wrap gap-2">
@@ -170,7 +170,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="bg-gray-50 p-6">
                                 <div className="mb-6">
                                     <div className="border-b border-gray-200">
@@ -198,7 +198,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                         </nav>
                                     </div>
                                 </div>
-                                
+
                                 {activeTab === 'details' ? (
                                     <div>
                                         <div className="prose max-w-none">
@@ -206,13 +206,13 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                             <div className="text-sm">
                                                 {warehouse.terms_conditions}
                                             </div>
-                                            
+
                                             <h3 className="mt-6">Documents</h3>
                                             {warehouse.documents && warehouse.documents.length > 0 ? (
                                                 <ul className="list-disc pl-5">
                                                     {warehouse.documents.map((doc, index) => (
                                                         <li key={index}>
-                                                            <a 
+                                                            <a
                                                                 href={`/storage/${doc}`}
                                                                 target="_blank"
                                                                 className="text-blue-600 hover:text-blue-800"
@@ -226,7 +226,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                 <p className="text-sm text-gray-500">No documents available.</p>
                                             )}
                                         </div>
-                                        
+
                                         <div className="mt-6">
                                             <button
                                                 onClick={() => setActiveTab('booking')}
@@ -270,7 +270,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Booking Dates
@@ -302,7 +302,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                     {errors.start_date && <p className="mt-1 text-sm text-red-600">{errors.start_date}</p>}
                                                     {errors.end_date && <p className="mt-1 text-sm text-red-600">{errors.end_date}</p>}
                                                 </div>
-                                                
+
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Duration Unit
@@ -344,7 +344,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                     </div>
                                                     {errors.duration_unit && <p className="mt-1 text-sm text-red-600">{errors.duration_unit}</p>}
                                                 </div>
-                                                
+
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Quantity (space units)
@@ -358,7 +358,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                     />
                                                     {errors.quantity && <p className="mt-1 text-sm text-red-600">{errors.quantity}</p>}
                                                 </div>
-                                                
+
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Purpose of Storage
@@ -373,7 +373,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                     ></textarea>
                                                     {errors.purpose && <p className="mt-1 text-sm text-red-600">{errors.purpose}</p>}
                                                 </div>
-                                                
+
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Special Requirements (Optional)
@@ -387,7 +387,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                     ></textarea>
                                                     {errors.special_requirements && <p className="mt-1 text-sm text-red-600">{errors.special_requirements}</p>}
                                                 </div>
-                                                
+
                                                 {calculatedPrice !== null && (
                                                     <div className="rounded-md bg-blue-50 p-4">
                                                         <div className="flex">
@@ -401,7 +401,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                         </div>
                                                     </div>
                                                 )}
-                                                
+
                                                 {errors.availability && (
                                                     <div className="rounded-md bg-red-50 p-4">
                                                         <div className="flex">
@@ -419,7 +419,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                                                         </div>
                                                     </div>
                                                 )}
-                                                
+
                                                 <div>
                                                     <button
                                                         type="submit"
