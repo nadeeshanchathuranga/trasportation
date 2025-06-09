@@ -37,16 +37,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
 
-Route::post('/edit_bookings/{id}', [LogUserController::class, 'edit'])->name('user.booking_view.edit');
-Route::delete('/delete_bookings/{id}', [LogUserController::class, 'destroy'])->name('user.booking_view.destroy');
-
-
-
-
-
-Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
 
 
 // -------------------------------
@@ -60,10 +51,30 @@ Route::middleware(['auth'])->group(function () {
 
 // -------------------------------
 // 🚚 Vendor Routes
-// -------------------------------
+// -------------------------------   
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
+
+
+Route::post('/edit_bookings/{id}', [LogUserController::class, 'edit'])->name('user.booking_view.edit');
+Route::delete('/delete_bookings/{id}', [LogUserController::class, 'destroy'])->name('user.booking_view.destroy');
+
+Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
+
+Route::get('/airticket-book', [LogUserController::class, 'airTicketBook'])->name('user.airticket_book');
+
+Route::get('/airticket-view', [LogUserController::class, 'airTicketBookView'])->name('user.airticket_book_view');
+
+
+
 });
+Route::get('/my-freight-bookings', [LogUserController::class, 'freightBookings'])->name('user.freight_bookings');
+
+
+
+
+
+
 
 // -------------------------------
 // 🚚 Vendor Routes
@@ -233,7 +244,37 @@ Route::middleware(['auth', 'role:freight'])->prefix('freight')->group(function (
 Route::get('/freight/register', [FreightController::class, 'showRegistrationForm'])->name('freight.register');
 Route::post('/freight/register', [FreightController::class, 'register'])->name('freight.register.store');
 
+
+
+
+
+
+
+
+
+Route::middleware(['auth', 'role:admin,superadmin,user'])->group(function () {
+   Route::get('/booking_view', [LogUserController::class, 'bookingView'])->name('user.booking_view');
+
+
+    });
 // -------------------------------
 // 🔐 Auth Routes
 // -------------------------------
 require __DIR__ . '/auth.php';
+
+// -------------------------------
+// 🚛 Freight Booking Routes
+// -------------------------------
+Route::middleware(['auth'])->prefix('freight-booking')->name('freight.booking.')->group(function () {
+    Route::get('/create', [App\Http\Controllers\FreightBookingController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\FreightBookingController::class, 'store'])->name('store');
+});
+
+Route::middleware(['auth', 'role:freight'])->prefix('freight')->name('freight.')->group(function () {
+    Route::get('/bookings', [App\Http\Controllers\FreightBookingController::class, 'index'])->name('bookings.index');
+    Route::put('/bookings/{booking}/status', [App\Http\Controllers\FreightBookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+});
+
+Route::middleware(['auth', 'role:admin,superadmin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/freight-bookings', [App\Http\Controllers\FreightBookingController::class, 'adminIndex'])->name('freight.bookings.index');
+});

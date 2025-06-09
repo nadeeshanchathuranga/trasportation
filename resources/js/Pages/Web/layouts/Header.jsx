@@ -44,75 +44,133 @@ const Header = () => {
                   className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
                 >
                   Driver Dashboard
-                </Link>
+                </button>
               )}
 
               {auth.user.role_type === 'user' && (
-                <Link
-                  href="/user/view"
-                  className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
+                <button
+                  onClick={() => router.visit('/view')}
+                  className="bg-[#0955AC] text-white px-4 py-1 rounded-[9px] hover:bg-[#0955AC]/90 text-[15px] font-[700] cursor-pointer"
                 >
                   User Dashboard
-                </Link>
+                </button>
               )}
 
               {['admin', 'superadmin'].includes(auth.user.role_type) && (
-                <Link
-                  href="/admin"
-                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium"
+                <button
+                  onClick={() => router.visit('/admin')}
+                  className="bg-[#0955AC] text-white px-4 py-1 rounded-[9px] hover:bg-[#0955AC]/90 text-[15px] font-[700] cursor-pointer"
                 >
                   Admin Dashboard
-                </Link>
+                </button>
               )}
 
               {auth.user.role_type === 'freight' && (
-                <Link
-                  href="/freight/dashboard"
-                  className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-white font-medium"
+                <button
+                  onClick={() => router.visit('/freight/dashboard')}
+                  className="bg-[#0955AC] text-white px-4 py-1 rounded-[9px] hover:bg-[#0955AC]/90 text-[15px] font-[700] cursor-pointer"
                 >
                   Freight Dashboard
-                </Link>
+                </button>
               )}
 
-              {/* Profile Initial */}
-              <div className="flex items-center gap-2 cursor-pointer">
-                <div className="h-[28px] w-[28px] border border-black rounded-full flex items-center justify-center">
+              {/* User Profile Dropdown */}
+              <div className="flex items-center gap-1 cursor-pointer">
+                <div className="h-[28px] w-[28px] border-[1px] border-black rounded-full flex items-center justify-center">
                   {auth.user.name.charAt(0).toUpperCase()}
                 </div>
                 <img src={downArrow} alt="dropdown" className="w-[8px] h-[5px]" />
               </div>
 
-              {/* Logout */}
+<<<<<<< HEAD
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className="bg-white w-[105px] h-[45px] hover:bg-red-700 px-4 py-2 rounded text-white font-medium"
+                className="border-[2px] border-red-500 text-red-500 px-4 py-1 rounded-[9px] hover:bg-red-500 hover:text-white text-[15px] font-[700] cursor-pointer"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link
-                href="/login"
-                className=" h-[45px] w-[105px] border-[2px] border-[#0955AC] rounded-[9px] hover:bg-[#0955AC] px-4 py-2 text-[#0955AC] text-[15px] font-[700] hover:text-[white] flex justify-center items-center"
+              <button
+                onClick={() => router.visit('/login')}
+                className="border-[2px] border-[#0955AC] text-[#0955AC] px-4 py-1 md:w-[105px] md:h-[45px] rounded-[9px] hover:bg-[#0955AC] hover:text-white text-[15px] font-[700] cursor-pointer"
               >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="bg-[#0955AC] w-[105px] h-[45px] rounded-[9px] border-[2px] border-[#0955AC] px-4 py-2 text-white font-[700] text-[15px] flex justify-center items-center"
+                LOGIN
+              </button>
+              <button
+                onClick={() => router.visit('/register')}
+                className="bg-[#0955AC] md:w-[105px] md:h-[45px] text-white px-4 py-1 rounded-[9px] hover:bg-[#0955AC]/90 text-[15px] font-[700] cursor-pointer"
               >
-                Register
-              </Link>
-              <Link
-                href="/freight/register"
-                className="rounded-[9px] bg-[#0955AC] border-[2px] border-[#0955AC] px-4 py-2 text-white text-[10px] font-[700] text-center h-[45px] w-[105]"
-              >
-                Register as Freight
-              </Link>
+                REGISTER
+              </button>
             </>
           )}
         </div>
+=======
+
+       {/* User Dashboard */}
+  {auth.user.role_type === 'user' && (
+    <Link
+      href="/user/view"
+      className="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded text-white font-medium"
+    >
+      User Dashboard
+    </Link>
+  )}
+
+  {/* Admin or Superadmin Dashboard */}
+  {['admin', 'superadmin'].includes(auth.user.role_type) && (
+    <Link
+      href="/admin"
+      className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium"
+    >
+      Admin Dashboard
+    </Link>
+  )}
+
+            {/* Show freight company dashboard link if role is 'freight' */}
+            {auth.user.role_type === 'freight' && (
+              <Link
+                href="/freight/dashboard"
+                className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium"
+              >
+                Freight Dashboard
+              </Link>
+            )}
+
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-medium"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              href="/login"
+              className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white font-medium"
+            >
+              Register
+            </Link>
+            <Link
+              href="/freight/register"
+              className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-white font-medium"
+            >
+              Register as Freight
+            </Link>
+          </>
+        )}
+>>>>>>> 12af4525e6c33eaf1044536fa13dc4fd15db7b4a
       </div>
     </header>
   );

@@ -35,8 +35,8 @@ export default function View({ auth }) {
   >
     Booking Summary
   </Link>
-    <Link 
-    href={route('warehouses.search')} 
+    <Link
+    href={route('warehouses.search')}
     className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
   >
     <svg className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
