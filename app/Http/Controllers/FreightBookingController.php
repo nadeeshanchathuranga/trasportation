@@ -43,7 +43,7 @@ class FreightBookingController extends Controller
 
         FreightBooking::create($data);
 
-        return redirect()->route('dashboard')->with('success', 'Freight booking created successfully.');
+        return redirect()->route('user.index')->with('success', 'Freight booking created successfully.');
     }
 
     public function index()
