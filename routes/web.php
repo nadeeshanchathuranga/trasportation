@@ -23,6 +23,7 @@ use Inertia\Inertia;
 // 🌐 Public Routes
 // -------------------------------
 Route::get('/', [WebController::class, 'index'])->name('home');
+Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [

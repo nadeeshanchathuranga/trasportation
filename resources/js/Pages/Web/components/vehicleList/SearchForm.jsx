@@ -12,15 +12,15 @@ const SearchForm = ({ formData, onFormChange }) => {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-4 sm:p-6 md:p-10">
       {/* Search Form */}
-      <div className="figtree bg-white p-6 rounded-[15px] shadow-2xl shadow-[#00000040] w-[1110px] h-[132px] text-[#286BB6] text-[16px] font-[400]">
+      <div className="figtree bg-white p-4 sm:p-6 rounded-[15px] shadow-2xl shadow-[#00000040] w-full max-w-[1110px] min-h-[132px] text-[#286BB6] text-[13px] font-[400]">
         {/* Combined Inputs and Button */}
-        <div className="flex items-end gap-4">
+        <div className="flex flex-col sm:flex-row items-end gap-4">
           {/* Input Fields Container */}
-          <div className="flex flex-grow gap-4">
+          <div className="flex flex-col sm:flex-row flex-grow gap-4 w-full">
             {/* Pick-up Location */}
-            <div className="flex-1">
+            <div className="w-full sm:flex-1">
               <label htmlFor="pickupLocation" className="block mb-1">
                 Pick-up Location
               </label>
@@ -33,34 +33,37 @@ const SearchForm = ({ formData, onFormChange }) => {
                   placeholder="Search a location"
                   value={formData.pickupLocation}
                   onChange={handleInputChange}
-                  className="shadow-sm appearance-none w-full border-[1px] border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pl-12"
+                  className="shadow-sm appearance-none w-full border-[1px] border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pl-12 placeholder:text-[#286BB6]"
                 />
               </div>
             </div>
 
             {/* Pick-up Date */}
-            <div className="flex-1">
+            <div className="w-full sm:flex-1">
               <label htmlFor="pickupDate" className="block mb-1">
                 Pick-up Date
               </label>
               <div className="relative flex items-center">
                 <input
-                  type="text"
+                  type="date"
                   id="pickupDate"
                   placeholder="12/12/2023"
                   value={formData.pickupDate}
                   onChange={handleInputChange}
-                  className="shadow-sm w-full border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pr-12"
-                  onFocus={(e) => (e.target.type = "date")}
-                  onBlur={(e) => (e.target.type = "text")}
+                  className="shadow-sm w-full border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pr-12 [&::-webkit-calendar-picker-indicator]:hidden"
                 />
                 {/* Calendar Icon Placeholder */}
-                <img src={calendarBlue} className="absolute inset-y-5 right-0 flex items-center pr-3 pointer-events-none" alt="calendar" />
+                <img 
+                  src={calendarBlue} 
+                  className="absolute inset-y-5 right-0 flex items-center pr-3 cursor-pointer" 
+                  alt="calendar" 
+                  onClick={() => document.getElementById('pickupDate').showPicker()}
+                />
               </div>
             </div>
 
             {/* Drop-off Location */}
-            <div className="flex-1">
+            <div className="w-full sm:flex-1">
               <label htmlFor="dropoffLocation" className="block mb-1">
                 Drop-off Location
               </label>
@@ -73,34 +76,37 @@ const SearchForm = ({ formData, onFormChange }) => {
                   placeholder="Search a location"
                   value={formData.dropoffLocation}
                   onChange={handleInputChange}
-                  className="shadow-sm w-full border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pl-12"
+                  className="shadow-sm w-full border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pl-12 placeholder:text-[#286BB6]"
                 />
               </div>
             </div>
 
             {/* Drop-off Date */}
-            <div className="flex-1">
+            <div className="w-full sm:flex-1">
               <label htmlFor="dropoffDate" className="block mb-1">
                 Drop-off Date
               </label>
               <div className="relative flex items-center">
                 <input
-                  type="text"
+                  type="date"
                   id="dropoffDate"
                   placeholder="12/12/2023"
                   value={formData.dropoffDate}
                   onChange={handleInputChange}
-                  className="shadow-sm border-[#0000001A] rounded-[8px] p-[16px] w-full leading-tight focus:outline-none focus:shadow-outline pr-12"
-                  onFocus={(e) => (e.target.type = "date")}
-                  onBlur={(e) => (e.target.type = "text")}
+                  className="shadow-sm border-[#0000001A] rounded-[8px] p-[16px] w-full leading-tight focus:outline-none focus:shadow-outline pr-12 [&::-webkit-calendar-picker-indicator]:hidden"
                 />
-                <img src={calendarBlue} className="absolute inset-y-5 right-0 flex items-center pr-3 pointer-events-none" alt="calendar" />
+                <img 
+                  src={calendarBlue} 
+                  className="absolute inset-y-5 right-0 flex items-center pr-3 cursor-pointer" 
+                  alt="calendar" 
+                  onClick={() => document.getElementById('dropoffDate').showPicker()}
+                />
               </div>
             </div>
           </div>
 
           {/* Find a Vehicle Button */}
-          <button className="bg-[#0955AC] text-white font-bold h-[56px] w-[56px] flex items-center justify-center rounded-[8px] focus:outline-none focus:shadow-outline cursor-pointer">
+          <button className="bg-[#0955AC] text-white font-bold h-[56px] w-full sm:w-[56px] flex items-center justify-center rounded-[8px] focus:outline-none focus:shadow-outline cursor-pointer mt-4 sm:mt-0">
             →
           </button>
         </div>
