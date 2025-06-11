@@ -121,7 +121,7 @@ export default function Register({ countries = [] }) {
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                     <div className="space-y-2 lg:col-span-1">
                                         <InputLabel htmlFor="country" value="Country" className="text-sm font-medium text-gray-700" />
-                                        <select
+                                        {/* <select
                                             id="country"
                                             name="country"
                                             value={data.country}
@@ -135,7 +135,27 @@ export default function Register({ countries = [] }) {
                                                     {country}
                                                 </option>
                                             ))}
-                                        </select>
+                                        </select> */}
+
+
+
+          <select
+    id="country"
+    name="country"
+    value={data.country}
+    onChange={(e) => setData('country', e.target.value)}
+      className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 bg-white"
+    required
+>
+    <option value="">Select your country...</option>
+    {countries.map((country) => (
+        <option key={country.code} value={country.code}>
+            {country.name}
+        </option>
+    ))}
+</select>
+
+
                                         <InputError message={errors.country} className="mt-2" />
                                     </div>
 
