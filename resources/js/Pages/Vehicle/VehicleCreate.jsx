@@ -1,8 +1,12 @@
+
+
+
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function VehicleCreate({brands = []}) {
+export default function VehicleCreate({ brands = [] }) {
   const [formData, setFormData] = useState({
     model: '',
     vehicle_brand_id: '',
@@ -20,16 +24,13 @@ export default function VehicleCreate({brands = []}) {
     insuarance_provider_name: '',
     insuarance_document: null,
     images: [],
-    // Land vehicle fields
     body_type: '',
     fuel_type: '',
     transmission_type: '',
     pickup_location: '',
     drop_off_policy: '',
-    // Air vehicle fields
     flight_fly_range_km: '',
     airport_name: '',
-    // Sea vehicle fields
     port_of_operation: '',
   });
 
@@ -37,14 +38,11 @@ export default function VehicleCreate({brands = []}) {
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
-
     if (type === 'file') {
       if (name === 'images') {
         const selectedImages = Array.from(files);
         setFormData({ ...formData, images: selectedImages });
-
-        const previews = selectedImages.map(file => URL.createObjectURL(file));
-        setImagePreviews(previews);
+        setImagePreviews(selectedImages.map(file => URL.createObjectURL(file)));
       } else {
         setFormData({ ...formData, [name]: files[0] });
       }
@@ -53,48 +51,43 @@ export default function VehicleCreate({brands = []}) {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const form = new FormData();
-
-        // Add all fields to FormData
-        Object.entries(formData).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-                value.forEach((file, index) => {
-                    form.append(`${key}[${index}]`, file);
-            });
-            } else {
-                form.append(key, value);
-            }
+    const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((file, index) => {
+          form.append(`${key}[${index}]`, file);
+        });
+      } else {
+        form.append(key, value);
+      }
     });
 
-    // Optional: Add CSRF token if using Laravel's web.php route
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-    if (csrfToken) {
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-    }
-
     try {
+      // Get CSRF cookie first
+      await axios.get('/sanctum/csrf-cookie');
 
-        await axios.post('/vendor/vehicles/store', form, {
+      // Submit form with multipart data
+      await axios.post('/vendor/vehicles/store', form, {
         headers: {
-            'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data',
         },
-        });
+      });
 
-        window.location.href = '/vendor/vehicles';
+      alert('✅ Vehicle registered successfully!');
+      window.location.href = '/vendor/vehicles';
 
     } catch (error) {
-        console.error('❌ Submission error:', error.response?.data || error.message);
-        alert('❌ Failed to register vehicle.');
+      console.error('❌ Submission error:', error.response?.data || error.message);
+      alert('❌ Failed to register vehicle.');
     }
-    };
-
-
+  };
 
   return (
+
+
     <AuthenticatedLayout>
     <div className="min-h-screen bg-gray-500 py-10 px-4">
 
