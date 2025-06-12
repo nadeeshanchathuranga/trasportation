@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function VehicleCreate() {
+export default function VehicleCreate({brands = []}) {
   const [formData, setFormData] = useState({
     model: '',
+    vehicle_brand_id: '',
     manufracture: '',
     manufracture_year: '',
     register_year: '',
@@ -76,19 +77,21 @@ export default function VehicleCreate() {
     }
 
     try {
-        await axios.post('/vehicles/store', form, {
+
+        await axios.post('/vendor/vehicles/store', form, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
         });
 
-        window.location.href = '/vehicles';
+        window.location.href = '/vendor/vehicles';
 
     } catch (error) {
         console.error('❌ Submission error:', error.response?.data || error.message);
-        alert('Failed to register vehicle.');
+        alert('❌ Failed to register vehicle.');
     }
     };
+
 
 
   return (
@@ -100,6 +103,24 @@ export default function VehicleCreate() {
         <h1 className="text-3xl font-bold mb-6 text-gray-800">🚗 Register a New Vehicle</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
 
+
+            <div>
+                <label className="block text-gray-700 font-semibold">Vehicle Brand</label>
+                <select
+                    name="vehicle_brand_id"
+                    value={formData.vehicle_brand_id}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                    required
+                >
+                    <option value="">-- Select a Brand --</option>
+                    {brands.map((brand) => (
+                    <option key={brand.id} value={brand.id}>
+                        {brand.name}
+                    </option>
+                    ))}
+                </select>
+            </div>
 
           {/* Vehicle Model */}
           <div>
@@ -113,6 +134,7 @@ export default function VehicleCreate() {
               required
             />
           </div>
+
 
           {/* Manufacturer */}
           <div>
