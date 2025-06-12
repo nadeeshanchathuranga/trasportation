@@ -29,4 +29,18 @@ class BodyTypeController extends Controller
         return redirect()->back()->with('success', 'Vehicle Body Type added successfully.');
 
     }
+
+    public function destroy($id)
+    {
+        $bodyType = BodyType::findOrFail($id);
+
+        // Delete the image file if it exists
+        if ($bodyType->bodyTypeImage && Storage::disk('public')->exists($bodyType->bodyTypeImage)) {
+            Storage::disk('public')->delete($bodyType->bodyTypeImage);
+        }
+
+        $bodyType->delete();
+
+        return redirect()->back()->with('success', 'Vehicle Body Type deleted successfully.');
+    }
 }

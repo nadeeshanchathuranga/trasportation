@@ -40,4 +40,18 @@ class VehicleBrandController extends Controller
 
         return redirect()->back()->with('success', 'Vehicle Brand added successfully.');
     }
+
+    public function destroy($id)
+    {
+        $brand = VehicleBrand::findOrFail($id);
+
+        // Delete the logo file if it exists
+        if ($brand->logo && Storage::disk('public')->exists($brand->logo)) {
+            Storage::disk('public')->delete($brand->logo);
+        }
+
+        $brand->delete();
+
+        return redirect()->back()->with('success', 'Vehicle Brand deleted successfully.');
+    }
 }

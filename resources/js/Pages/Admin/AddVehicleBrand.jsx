@@ -23,6 +23,18 @@ export default function AddVehicleBrand({ brands }) {
     });
   };
 
+  const handleDelete = (id) => {
+    if (confirm("Are you sure you want to delete this brand?")) {
+      post(route("vehicle-brand.destroy", id), {
+        method: "delete",
+        onSuccess: () => {
+          // Optionally reset the form or update state after deletion
+          reset();
+          setPreview(null);
+        },
+      });
+    }
+  };
   const handleLogoChange = (e) => {
     const file = e.target.files[0];
     setData("logo", file);
@@ -52,6 +64,7 @@ export default function AddVehicleBrand({ brands }) {
                       <th className="px-4 py-2">Logo</th>
                       <th className="px-4 py-2">Name</th>
                       <th className="px-4 py-2">Status</th>
+                      <th className="px-4 py-2">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,6 +93,10 @@ export default function AddVehicleBrand({ brands }) {
                             >
                               {brand.status}
                             </span>
+                          </td>
+                          <td className="px-4 py-2 space-x-2">
+                            {/* <button className="text-blue-600 hover:underline">Edit</button> */}
+                            <button onClick={() => handleDelete(brand.id)}  className="bg-red-100 text-black hover:underline px-4 py-1 border rounded-2xl hover:bg-red-200">Delete</button>
                           </td>
                         </tr>
                       ))

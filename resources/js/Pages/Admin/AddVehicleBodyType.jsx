@@ -1,6 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import { usePage } from "@inertiajs/react";
+
+
 
 export default function AddVehicleBodyType({ bodyTypes }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -9,6 +12,15 @@ export default function AddVehicleBodyType({ bodyTypes }) {
     description: "",
     status: "1",
   });
+
+  const { props } = usePage();
+    const flashMessage = props.flash?.success;
+
+    const successMessage = flashMessage ? (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <span className="block sm:inline">{flashMessage}</span>
+        </div>
+    ) : null;
 
   const [preview, setPreview] = useState(null);
 
@@ -21,6 +33,19 @@ export default function AddVehicleBodyType({ bodyTypes }) {
         setPreview(null);
       },
     });
+  };
+
+  const handleDelete = (id) => {
+    if (confirm("Are you sure you want to delete this body type?")) {
+      post(route("vehicle-body-types.destroy", id), {
+        method: "delete",
+        onSuccess: () => {
+          // Optionally reset the form or update state after deletion
+          reset();
+          setPreview(null);
+        },
+      });
+    }
   };
 
   const handleImageChange = (e) => {
@@ -48,7 +73,7 @@ export default function AddVehicleBodyType({ bodyTypes }) {
                       <th className="px-4 py-2">Image</th>
                       <th className="px-4 py-2">Type</th>
                       <th className="px-4 py-2">Status</th>
-                      {/* <th className="px-4 py-2">Action</th> */}
+                      <th className="px-4 py-2">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -78,10 +103,10 @@ export default function AddVehicleBodyType({ bodyTypes }) {
                               {item.status ? "Active" : "Inactive"}
                             </span>
                           </td>
-                          {/* <td className="px-4 py-2 space-x-2">
-                            <button className="text-blue-600 hover:underline">Edit</button>
-                            <button className="text-red-600 hover:underline">Delete</button>
-                          </td> */}
+                          <td className="px-4 py-2 space-x-2">
+                            {/* <button className="text-blue-600 hover:underline">Edit</button> */}
+                            <button  className="bg-red-100 text-black hover:underline px-4 py-1 border rounded-2xl hover:bg-red-200">Delete</button>
+                          </td>
                         </tr>
                       ))
                     ) : (

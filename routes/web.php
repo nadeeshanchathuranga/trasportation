@@ -190,7 +190,9 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/admin/add-vehicle-brand', [AdminController::class, 'addVehicleBrand'])->name('admin.add_vehicle_brand');
     Route::get('/admin/vehicle-body-type', [AdminController::class, 'vehicleBodyType'])->name('admin.vehicle_body_type');
     Route::post('/admin/vehicle-body-type', [BodyTypeController::class, 'store'])->name('vehicle-body-types.store');
+    Route::post('/admin/vehicle-body-type/{id}', [BodyTypeController::class, 'destroy'])->name('vehicle-body-types.destroy');
 
+    Route::post('/vehicle-brand/{id}', [VehicleBrandController::class, 'destroy'])->name('vehicle-brand.destroy');
 
     Route::get('/vehicle-brands/create', [VehicleBrandController::class, 'create'])->name('vehicle-brands.create');
     Route::post('/vehicle-brands', [VehicleBrandController::class, 'store'])->name('vehicle-brands.store');
