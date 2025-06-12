@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\VehicleBrandController;
 
 use App\Http\Controllers\FreightController;
 
@@ -184,6 +185,10 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
+
+    Route::get('/admin/add-vehicle-brand', [AdminController::class, 'addVehicleBrand'])->name('admin.add_vehicle_brand');
+    Route::get('/vehicle-brands/create', [VehicleBrandController::class, 'create'])->name('vehicle-brands.create');
+    Route::post('/vehicle-brands', [VehicleBrandController::class, 'store'])->name('vehicle-brands.store');
 
     Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);
