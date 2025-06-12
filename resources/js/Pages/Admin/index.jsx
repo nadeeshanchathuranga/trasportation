@@ -146,13 +146,24 @@ export default function Dashboard() {
 
 
                             {/* Total Vendors */}
-                            <div className="bg-purple-300 p-6 rounded-lg shadow-sm border-l-4 border-green-500">
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
                                 <h3 className="text-lg font-semibold mb-1">Add New Brand</h3>
                                 <Link
                                     href={route("admin.add_vehicle_brand")}
                                     className="text-sm text-blue-600 hover:underline mt-2 block"
                                 >
                                     Added vehicle brand list
+                                </Link>
+                            </div>
+
+                            {/* Total Vendors */}
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
+                                <h3 className="text-lg font-semibold mb-1">Add New Body Type</h3>
+                                <Link
+                                    href={route("admin.vehicle_body_type")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    Added body type list
                                 </Link>
                             </div>
 

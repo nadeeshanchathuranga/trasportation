@@ -10,6 +10,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\VehicleBrandController;
+use App\Http\Controllers\BodyTypeController;
 
 use App\Http\Controllers\FreightController;
 
@@ -187,6 +188,10 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
 
     Route::get('/admin/add-vehicle-brand', [AdminController::class, 'addVehicleBrand'])->name('admin.add_vehicle_brand');
+    Route::get('/admin/vehicle-body-type', [AdminController::class, 'vehicleBodyType'])->name('admin.vehicle_body_type');
+    Route::post('/admin/vehicle-body-type', [BodyTypeController::class, 'store'])->name('vehicle-body-types.store');
+
+
     Route::get('/vehicle-brands/create', [VehicleBrandController::class, 'create'])->name('vehicle-brands.create');
     Route::post('/vehicle-brands', [VehicleBrandController::class, 'store'])->name('vehicle-brands.store');
 

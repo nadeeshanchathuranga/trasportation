@@ -14,6 +14,7 @@ use App\Models\Vehicle;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ActivityLogger;
+use App\Models\BodyType;
 
 
 class AdminController extends Controller
@@ -243,6 +244,14 @@ class AdminController extends Controller
         $brands = VehicleBrand::latest()->get();
         return Inertia::render('Admin/AddVehicleBrand', [
             'brands' => $brands,
+        ]);
+    }
+
+    public function vehicleBodyType(){
+        // return Inertia::render('Admin/AddVehicleBrand');
+        $bodyTypes = BodyType::latest()->get();
+        return Inertia::render('Admin/AddVehicleBodyType', [
+            'bodyTypes' => $bodyTypes,
         ]);
     }
 
