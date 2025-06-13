@@ -86,17 +86,33 @@ const Header = () => {
                             className="w-[8px] h-[5px]"
                         />
                     </a>
-                    <a
-                        href="#"
-                        className="hover:text-[#0955AC] flex items-center h-full gap-1 w-full md:w-auto"
-                    >
-                        Courier Service{" "}
-                        <img
-                            src={downArrow}
-                            alt="dropdown"
-                            className="w-[8px] h-[5px]"
-                        />
-                    </a>
+                    <div className="relative group">
+                        <Link
+                            href="/courier-service"
+                            className="hover:text-[#0955AC] flex items-center h-full gap-1 w-full md:w-auto"
+                        >
+                            Courier Service{" "}
+                            <img
+                                src={downArrow}
+                                alt="dropdown"
+                                className="w-[8px] h-[5px]"
+                            />
+                        </Link>
+                        <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <Link
+                                href="/track"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#0955AC]"
+                            >
+                                Track Courier
+                            </Link>
+                            <Link
+                                href="/couriers/create"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#0955AC]"
+                            >
+                                Book Courier
+                            </Link>
+                        </div>
+                    </div>
                     <a
                         href="#"
                         className="hover:text-[#0955AC] flex items-center h-full w-full md:w-auto"

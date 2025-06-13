@@ -47,4 +47,9 @@ class WebController extends Controller
             'searchParams' => $request->all()
         ]);
     }
+
+    public function courierService()
+    {
+        return Inertia::render('Web/home/CourierService');
+    }
 }

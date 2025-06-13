@@ -24,6 +24,7 @@ use Inertia\Inertia;
 // -------------------------------
 Route::get('/', [WebController::class, 'index'])->name('home');
 Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
+Route::get('/courier-service', [WebController::class, 'courierService'])->name('courier.service');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [
