@@ -75,8 +75,8 @@ const Header = () => {
                             className="w-[8px] h-[5px]"
                         />
                     </a>
-                    <a
-                        href="#"
+                    <Link
+                        href="/user/airticket-book"
                         className="hover:text-[#0955AC] flex items-center h-full gap-1 w-full md:w-auto"
                     >
                         Book a Ticket{" "}
@@ -85,7 +85,7 @@ const Header = () => {
                             alt="dropdown"
                             className="w-[8px] h-[5px]"
                         />
-                    </a>
+                    </Link>
                     <div className="relative group">
                         <Link
                             href="/courier-service"

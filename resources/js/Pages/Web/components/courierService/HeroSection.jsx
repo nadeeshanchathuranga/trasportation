@@ -42,13 +42,13 @@ const HeroSection = () => {
                             {/* button section */}
                             <div className="figtree mt-20 lg:gap-7 gap-5 flex flex-col md:flex-row w-full text-[12px] md:text-[16px] font-[700]">
                                 <Link
-                                    href="/track"
+                                    href="/couriers/create"
                                     className="bg-[#0955AC] text-white rounded-lg transition duration-300  w-[100px] h-[25px] md:w-[202px] md:h-[56px] flex justify-center items-center"
                                 >
                                     Send a package
                                 </Link>
                                 <Link
-                                    href="/couriers/create"
+                                    href="/track"
                                     className="bg-[#FFFFFF82] border-[2px] border-[#0955AC] text-[#0955AC] rounded-lg transition duration-300 w-[100px] h-[25px] md:w-[202px] md:h-[56px] flex justify-center items-center"
                                 >
                                     Track Parcel

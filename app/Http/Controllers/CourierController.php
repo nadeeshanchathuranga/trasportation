@@ -33,8 +33,11 @@ class CourierController extends Controller
      * Show the form for creating a new courier pickup.
      */
     public function create()
+
     {
-        return Inertia::render('Courier/Create');
+        // return Inertia::render('Courier/Create');
+
+        return Inertia::render('Web/home/PackageDelivery');
     }
 
     /**
@@ -174,7 +177,7 @@ class CourierController extends Controller
             ->where('tracking_number', $request->tracking_number)
             ->first();
 
-        return Inertia::render('Courier/Track', [
+        return Inertia::render('Web/home/TrackCouriersForm', [
             'courier' => $courier
         ]);
     }

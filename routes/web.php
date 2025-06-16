@@ -226,7 +226,8 @@ Route::post('/couriers', [CourierController::class, 'store'])->name('couriers.st
 Route::get('/couriers/{courier}', [CourierController::class, 'show'])->name('couriers.show');
 
 // Tracking
-Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form');
+// Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form'); previous one
+Route::get('/track', fn() => Inertia::render('Web/home/TrackCouriersForm'))->name('couriers.track-form'); 
 Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
 
 // -------------------------------

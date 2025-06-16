@@ -106,4 +106,14 @@ public function edit(Request $request, $id)
             'bookings' => $bookings,
         ]);
     }
+
+    public function airTicketBook()
+    {
+        return Inertia::render('Web/home/BookATicket');
+    }
+
+    public function airTicketBookView()
+    {
+        return Inertia::render('Web/dashboard/AirticketBookView');
+    }
 }
