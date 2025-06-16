@@ -36,6 +36,7 @@ export default function AddVehicleBodyType({ bodyTypes }) {
   };
 
   const handleDelete = (id) => {
+    // alert("Delete function called with ID: " + id);
     if (confirm("Are you sure you want to delete this body type?")) {
       post(route("vehicle-body-types.destroy", id), {
         method: "delete",
@@ -104,8 +105,10 @@ export default function AddVehicleBodyType({ bodyTypes }) {
                             </span>
                           </td>
                           <td className="px-4 py-2 space-x-2">
-                            {/* <button className="text-blue-600 hover:underline">Edit</button> */}
-                            <button  className="bg-red-100 text-black hover:underline px-4 py-1 border rounded-2xl hover:bg-red-200">Delete</button>
+                            {/* <button className="text-blue-600 hover:underline">Edit</button> vehicle-body-types.destroy */}
+                            {/* <button  className="bg-red-100 text-black hover:underline px-4 py-1 border rounded-2xl hover:bg-red-200">Delete</button> */}
+                            <button onClick={() => handleDelete(item.id)}  className="bg-red-100 text-black hover:underline px-4 py-1 border rounded-2xl hover:bg-red-200">Delete</button>
+
                           </td>
                         </tr>
                       ))

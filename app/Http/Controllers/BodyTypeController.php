@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Storage;
 
 class BodyTypeController extends Controller
 {
+
+    // public function create()
+    // {
+    //     $brands = VehicleBrand::latest()->get();
+    //     return Inertia::render('VehicleBrands/AddVehicleBrand', [
+    //         'brands' => $brands,
+    //     ]);
+    // }
+
+
+    
+
     public function store(Request $request)
     {
         $validated = $request->validate([

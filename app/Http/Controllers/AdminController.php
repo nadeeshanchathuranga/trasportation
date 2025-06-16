@@ -20,6 +20,13 @@ use App\Models\BodyType;
 class AdminController extends Controller
 {
 
+    // public function create(){
+    //     $bodyTypes = BodyType::latest()->get();
+    //     return view('Admin.AddVehicleBodyType', [
+    //         'bodyTypes' => $bodyTypes,
+    //     ]);
+    // }
+
     public function index()
     {
         $pendingComplaints = DriverComplaint::where('status', 'pending')->count();
