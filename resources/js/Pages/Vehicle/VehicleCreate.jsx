@@ -1,12 +1,8 @@
-
-
-
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function VehicleCreate({ brands = [] }) {
+export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
   const [formData, setFormData] = useState({
     model: '',
     vehicle_brand_id: '',
@@ -128,6 +124,24 @@ export default function VehicleCreate({ brands = [] }) {
             />
           </div>
 
+          {/* <div>
+                <label className="block text-gray-700 font-semibold">Body Type</label>
+                <select
+                    name="vehicle_brand_id"
+                    value={formData.body_type}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                    required
+                >
+                    <option value="">-- Select a Body Type --</option>
+                    {bodyTypes.map((bodyType) => (
+                    <option key={bodyType.id} value={bodyType.id}>
+                        {bodyType.name}
+                    </option>
+                    ))}
+                </select>
+            </div> */}
+
 
           {/* Manufacturer */}
           <div>
@@ -215,7 +229,25 @@ export default function VehicleCreate({ brands = [] }) {
               <h3 className="font-semibold text-lg text-gray-700">Land Vehicle Details</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+
+            <div>
+                <label className="block text-gray-700 font-semibold">Body Type</label>
+                <select
+                    name="body_type"
+                    value={formData.body_type}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                >
+                    <option value="">-- Select a Brand --</option>
+                    {bodyTypes.map((bodyType) => (
+                    <option key={bodyType.id} value={bodyType.id}>
+                        {bodyType.bodyType}
+                    </option>
+                    ))}
+                </select>
+            </div>
+
+                {/* <div>
                   <label className="block text-gray-700 font-semibold">Body Type</label>
                   <select
                     name="body_type"
@@ -232,7 +264,7 @@ export default function VehicleCreate({ brands = [] }) {
                     <option>Coupe</option>
                     <option>Convertible</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div>
                   <label className="block text-gray-700 font-semibold">Fuel Type</label>

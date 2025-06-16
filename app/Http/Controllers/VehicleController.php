@@ -9,6 +9,7 @@ use App\Models\AirVehicle;
 use App\Models\SeaVehicle;
 use App\Models\VehicleImage;
 use App\Models\VehicleBrand;
+use App\Models\BodyType;
 
 use Inertia\Inertia;
 
@@ -43,9 +44,15 @@ class VehicleController extends Controller
     public function create()
     {
         $brands = VehicleBrand::select('id', 'name')->orderBy('name')->get();
+        $bodyTypes = BodyType::select('id', 'bodyType', 'bodyTypeImage', 'description', 'status')
+            ->where('status', 1)
+            ->orderBy('bodyType')
+            ->get();
+
 
         return Inertia::render('Vehicle/VehicleCreate', [
             'brands' => $brands,
+            'bodyTypes' => $bodyTypes,
         ]);
     }
 
