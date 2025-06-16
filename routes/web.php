@@ -11,6 +11,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\VehicleBrandController;
 use App\Http\Controllers\BodyTypeController;
+use App\Http\Controllers\VehicleBookingController;
 
 use App\Http\Controllers\FreightController;
 
@@ -58,14 +59,14 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
 
 
-Route::post('/edit_bookings/{id}', [LogUserController::class, 'edit'])->name('user.booking_view.edit');
-Route::delete('/delete_bookings/{id}', [LogUserController::class, 'destroy'])->name('user.booking_view.destroy');
+    Route::post('/edit_bookings/{id}', [LogUserController::class, 'edit'])->name('user.booking_view.edit');
+    Route::delete('/delete_bookings/{id}', [LogUserController::class, 'destroy'])->name('user.booking_view.destroy');
 
-Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
+    Route::get('/flights', [LogUserController::class, 'flightView'])->name('user.fight_view');
 
-Route::get('/airticket-book', [LogUserController::class, 'airTicketBook'])->name('user.airticket_book');
+    Route::get('/airticket-book', [LogUserController::class, 'airTicketBook'])->name('user.airticket_book');
 
-Route::get('/airticket-view', [LogUserController::class, 'airTicketBookView'])->name('user.airticket_book_view');
+    Route::get('/airticket-view', [LogUserController::class, 'airTicketBookView'])->name('user.airticket_book_view');
 
 
 
@@ -291,4 +292,18 @@ Route::middleware(['auth', 'role:freight'])->prefix('freight')->name('freight.')
 
 Route::middleware(['auth', 'role:admin,superadmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/freight-bookings', [App\Http\Controllers\FreightBookingController::class, 'adminIndex'])->name('freight.bookings.index');
+});
+
+
+Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.')->group(function () {
+    Route::get('/', [App\Http\Controllers\VehicleBookingController::class, 'index'])->name('index');
+
+    Route::get('/bookings/land', [App\Http\Controllers\VehicleBookingController::class, 'landBookings'])->name('land.bookings');
+    Route::get('/bookings/air', [App\Http\Controllers\VehicleBookingController::class, 'airBookings'])->name('air.bookings');
+    Route::get('/bookings/sea', [App\Http\Controllers\VehicleBookingController::class, 'seaBookings'])->name('sea.bookings');
+
+    Route::get('/bookings/land/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'landBookingDetails'])->name('land.booking.details');
+    Route::get('/bookings/air/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'airBookingDetails'])->name('air.booking.details');
+    Route::get('/bookings/sea/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'seaBookingDetails'])->name('sea.booking.details');
+
 });
