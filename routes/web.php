@@ -11,11 +11,8 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\VehicleBrandController;
 use App\Http\Controllers\BodyTypeController;
-
 use App\Http\Controllers\FreightController;
-
 use App\Http\Controllers\WarehouseController;
-
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\LogUserController;
 use Illuminate\Support\Facades\Route;
@@ -74,10 +71,6 @@ Route::get('/airticket-view', [LogUserController::class, 'airTicketBookView'])->
 
 });
 Route::get('/my-freight-bookings', [LogUserController::class, 'freightBookings'])->name('user.freight_bookings');
-
-
-
-
 
 
 

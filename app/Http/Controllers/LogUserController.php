@@ -19,8 +19,7 @@ class LogUserController extends Controller
 public function flightView()
 {
 
-
-
+ 
 
     $user = Auth::user();
 
