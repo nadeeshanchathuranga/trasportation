@@ -307,3 +307,4 @@ Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.'
     Route::get('/bookings/sea/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'seaBookingDetails'])->name('sea.booking.details');
 
 });
+
