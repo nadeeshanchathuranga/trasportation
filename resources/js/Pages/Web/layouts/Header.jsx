@@ -197,7 +197,7 @@ const Header = () => {
                             {/* Logout */}
                             <button
                                 onClick={handleLogout}
-                                className="bg-red-700 w-[80px] md:w-[90px] lg:w-[105px] h-[35px] md:h-[40px] lg:h-[45px] hover:bg-red-700 px-2 md:px-3 lg:px-4 py-2 rounded-[9px] text-white text-[9px] md:text-[10px] lg:text-[12px] font-[700]"
+                                className="bg-[#EF3826] w-[80px] md:w-[90px] lg:w-[105px] h-[35px] md:h-[40px] lg:h-[45px] hover:bg-red-700 px-2 md:px-3 lg:px-4 py-2 rounded-[9px] text-white text-[9px] md:text-[10px] lg:text-[12px] font-[700]"
                             >
                                 Logout
                             </button>
