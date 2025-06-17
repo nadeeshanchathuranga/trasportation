@@ -31,35 +31,39 @@ const HomePage = ({ auth }) => {
             return;
         }
         router.visit("/couriers", {
-            data: { 
+            data: {
                 searchParams: formData,
-                method: 'get'
-            }
+                method: "get",
+            },
         });
     };
 
     return (
-        <div
-            className="relative w-full min-h-screen"
-            style={{
-                backgroundImage: `url(${bg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-            }}
-        >
+        <div>
             <Header />
-            <HeroSection
-                formData={formData}
-                onFormChange={handleFormChange}
-                onSubmit={handleFormSubmit}
-            />
-            <RentByBrands />
-            <RentByBodyType />
-            <VehicleCollection />
-            <PopularRentals />
-            <HowItWorks />
-            <Footer />
+            <div
+                className="relative flex flex-col"
+                style={{
+                    backgroundImage: `url(${bg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    minHeight: "calc(100vh - 80px)",
+                }}
+            >
+                
+                <HeroSection
+                    formData={formData}
+                    onFormChange={handleFormChange}
+                    onSubmit={handleFormSubmit}
+                />
+                <RentByBrands />
+                <RentByBodyType />
+                <VehicleCollection />
+                <PopularRentals />
+                <HowItWorks />
+                <Footer />
+            </div>
         </div>
     );
 };

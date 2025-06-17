@@ -53,7 +53,7 @@ const RentByBodyType = () => {
               onClick={() => handleBodyTypeClick(bodyType)}
             >
               <img src={bodyType.icon} alt={`${bodyType.name} Icon`} className="h-[40px] object-contain mb-5" />
-              <p className="figtree text-[#0955AC] text-[16px]">{bodyType.name}</p>
+              <p className="figtree text-[#0955AC] text-[12px] md:text-[16px] text-center">{bodyType.name}</p>
             </div>
           ))}
         </div>

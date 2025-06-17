@@ -26,6 +26,9 @@ use Inertia\Inertia;
 // 🌐 Public Routes
 // -------------------------------
 Route::get('/', [WebController::class, 'index'])->name('home');
+Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
+Route::get('/vehicleDetails', [WebController::class, 'vehicleDetails'])->name('vehicle.details');
+Route::get('/courier-service', [WebController::class, 'courierService'])->name('courier.service');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [
@@ -239,8 +242,10 @@ Route::post('/couriers', [CourierController::class, 'store'])->name('couriers.st
 Route::get('/couriers/{courier}', [CourierController::class, 'show'])->name('couriers.show');
 
 // Tracking
-Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form');
+// Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form'); previous one
+Route::get('/track', fn() => Inertia::render('Web/home/TrackCouriersForm'))->name('couriers.track-form'); 
 Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
+Route::get('/driver-courier-track', fn() => Inertia::render('Web/home/driver/DriverCourierTrack'))->name('driver.courier.track');
 
 // -------------------------------
 // 📋 Warehouse Routes
