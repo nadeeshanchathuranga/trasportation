@@ -1,74 +1,13 @@
-// import React from 'react';
-// import Header from '../../layouts/Header';
-// import { Link } from '@inertiajs/react';
-// import Footer from '../../layouts/Footer';
-
-// export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
-//   const hasData = vehicles.length > 0 && airVehicleDetails.length > 0;
-
-//   return (
-//     <div>
-//       <Header />
-//       <div className="max-w-7xl mx-auto px-4 py-8">
-//         <h1 className="text-3xl font-bold mb-6">Air Vehicles</h1>
-
-//         {!hasData ? (
-//           <p className="text-center text-gray-600">No air vehicles available at the moment.</p>
-//         ) : (
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-//             {airVehicleDetails.map((air) => {
-//               const vehicle = vehicles.find(v => v.id === air.vehicle_id);
-//               if (!vehicle) return null;
-
-//               return (
-//                 <div key={vehicle.id} className="border rounded-lg shadow-md p-4">
-//                   <img
-//                     src={`/storage/${vehicle.cover_image}`}
-//                     alt={vehicle.model}
-//                     className="w-full h-48 object-cover rounded mb-4"
-//                   />
-//                   <h2 className="text-xl font-semibold">{vehicle.model}</h2>
-//                   <p><strong>Brand:</strong> {vehicle.brand?.name}</p>
-//                   <p><strong>Vehicle No:</strong> {vehicle.vehicle_no}</p>
-//                   <p><strong>Year:</strong> {vehicle.manufracture_year}</p>
-//                   <p><strong>Color:</strong> {vehicle.color}</p>
-//                   <p><strong>Passenger Capacity:</strong> {vehicle.passenger_capacity}</p>
-//                   <p><strong>Current Mileage:</strong> {vehicle.currect_milage} km</p>
-//                   <p><strong>Condition:</strong> {vehicle.condition}</p>
-//                   <p><strong>Ownership Type:</strong> {vehicle.ownership_type}</p>
-//                   <p><strong>Description:</strong> {vehicle.description}</p>
-//                   <p><strong>Insurance:</strong> {vehicle.insuarance_provider_name}</p>
-//                   <p><strong>Flight Range:</strong> {air.flight_fly_range_km} km</p>
-//                   <p><strong>Airport:</strong> {air.airport_name}</p>
-
-//                   <Link href={`/vehicle-bookings/bookings/land/${vehicle.id}`}>
-//                     <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
-//                       Book Now
-//                     </button>
-//                   </Link>
-
-//                 </div>
-//               );
-//             })}
-//           </div>
-//         )}
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// }
-
-
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Car, Calendar, Palette, Users, Gauge, Shield, Settings, Wrench } from 'lucide-react';
+import { Car, Calendar, Palette, Users, Gauge, Shield, Settings, Wrench, Ship } from 'lucide-react';
 import Header from '../../layouts/Header';
 import Footer from '../../layouts/Footer';
 import { Link } from '@inertiajs/react';
 
-export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
-  const hasData = vehicles.length > 0 && airVehicleDetails.length > 0;
+export default function seaIndex({ vehicles = [], seaVehicleDetails = [] }) {
+  const hasData = vehicles.length > 0 && seaVehicleDetails.length > 0;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -90,7 +29,7 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
     }
   };
 
-  const VehicleCard = ({ vehicle, airVehicleDetails }) => (
+  const VehicleCard = ({ vehicle, seaVehicleDetails }) => (
     <motion.div
       variants={cardVariants}
       whileHover={{
@@ -151,27 +90,15 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
 
         {/* Technical Details */}
         <div className="space-y-2 pt-2 border-t border-gray-100">
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2">
-              <Settings className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-600">Engine</span>
-            </div>
-            <span className="font-medium text-gray-900">{airVehicleDetails.engine_type}</span>
-          </div>
+
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-2">
               <Wrench className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-600">Transmission</span>
+              <span className="text-gray-600">Port of Operation</span>
             </div>
-            <span className="font-medium text-gray-900">{airVehicleDetails.transmission}</span>
+            <span className="font-medium text-gray-900">{seaVehicleDetails?.port_of_operation}</span>
           </div>
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-600">Insurance</span>
-            </div>
-            <span className="font-medium text-gray-900">{vehicle.insuarance_provider_name}</span>
-          </div>
+
         </div>
 
         {/* Description */}
@@ -189,7 +116,7 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
         </div>
 
         {/* Book Button */}
-        <Link href={`/vehicle-bookings/bookings/air/${vehicle.id}`}>
+        <Link href={`/vehicle-bookings/bookings/sea/${vehicle.id}`}>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -215,10 +142,10 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Air Vehicles
+            Water Vehicles
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover our premium fleet of air vehicles, perfect for your travel needs
+            Discover our premium fleet of water vehicles, perfect for your travel needs
           </p>
         </motion.div>
 
@@ -232,7 +159,7 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
           >
             <div className="max-w-md mx-auto">
               <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Car className="w-12 h-12 text-gray-400" />
+                <Ship className="w-12 h-12 text-gray-400" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 No Vehicles Available
@@ -249,15 +176,15 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
             animate="visible"
             className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
           >
-            {airVehicleDetails.map((air) => {
-              const vehicle = vehicles.find(v => v.id === air.vehicle_id);
+            {seaVehicleDetails.map((sea) => {
+              const vehicle = vehicles.find(v => v.id === sea.vehicle_id);
               if (!vehicle) return null;
 
               return (
                 <VehicleCard
                   key={vehicle.id}
                   vehicle={vehicle}
-                  airVehicleDetails={air}
+                  airVehicleDetails={sea}
                 />
               );
             })}
@@ -269,3 +196,65 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
     </div>
   );
 }
+
+
+// import React from 'react';
+// import Header from '../../layouts/Header';
+// import { Link } from '@inertiajs/react';
+// import Footer from '../../layouts/Footer';
+
+// export default function seaIndex({ vehicles = [], seaVehicleDetails = [] }) {
+//   const hasData = vehicles.length > 0 && seaVehicleDetails.length > 0;
+
+//   return (
+//     <div>
+//       <Header />
+//       <div className="max-w-7xl mx-auto px-4 py-8">
+//         <h1 className="text-3xl font-bold mb-6">Water Vehicles</h1>
+
+//         {!hasData ? (
+//           <p className="text-center text-gray-600">No water vehicles available at the moment.</p>
+//         ) : (
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+//             {seaVehicleDetails.map((sea) => {
+//               const vehicle = vehicles.find(v => v.id === sea.vehicle_id);
+//               if (!vehicle) return null;
+
+//               return (
+//                 <div key={vehicle.id} className="border rounded-lg shadow-md p-4">
+//                   <img
+//                     src={`/storage/${vehicle.cover_image}`}
+//                     alt={vehicle.model}
+//                     className="w-full h-48 object-cover rounded mb-4"
+//                   />
+//                   <h2 className="text-xl font-semibold">{vehicle.model}</h2>
+//                   <p><strong>Brand:</strong> {vehicle.brand?.name}</p>
+//                   <p><strong>Vehicle No:</strong> {vehicle.vehicle_no}</p>
+//                   <p><strong>Year:</strong> {vehicle.manufracture_year}</p>
+//                   <p><strong>Color:</strong> {vehicle.color}</p>
+//                   <p><strong>Passenger Capacity:</strong> {vehicle.passenger_capacity}</p>
+//                   <p><strong>Current Mileage:</strong> {vehicle.currect_milage} km</p>
+//                   <p><strong>Condition:</strong> {vehicle.condition}</p>
+//                   <p><strong>Ownership Type:</strong> {vehicle.ownership_type}</p>
+//                   <p><strong>Description:</strong> {vehicle.description}</p>
+//                   <p><strong>Insurance:</strong> {vehicle.insuarance_provider_name}</p>
+//                   <p><strong>Port of Operation:</strong> {sea.port_of_operation}</p>
+
+//                   <Link href={`/vehicle-bookings/bookings/land/${vehicle.id}`}>
+//                     <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
+//                       Book Now
+//                     </button>
+//                   </Link>
+
+//                 </div>
+
+
+//               );
+//             })}
+//           </div>
+//         )}
+//       </div>
+//       <Footer />
+//     </div>
+//   );
+// }

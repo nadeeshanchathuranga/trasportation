@@ -13,7 +13,7 @@ use App\Models\SeaVehicle;
 class vehicleBookingController extends Controller
 {
     public function index(){
-        return Inertia::render('Web/components/vehicleBooking/bookingPage');
+        return Inertia::render('Web/components/vehicleBooking/bookingCategoryPage');
     }
 
 
@@ -51,7 +51,7 @@ class vehicleBookingController extends Controller
         $vehicle = Vehicle::findOrFail($id);
         $landVehicleDetails = LandVehicle::where('vehicle_id', $id)->first();
 
-        return Inertia::render('Web/components/vehicleBooking/index', [
+        return Inertia::render('Web/components/vehicleBooking/bookingPage', [
             'vehicle' => $vehicle,
             'landVehicleDetails' => $landVehicleDetails
         ]);
@@ -61,7 +61,7 @@ class vehicleBookingController extends Controller
         $vehicle = Vehicle::findOrFail($id);
         $airVehicleDetails = AirVehicle::where('vehicle_id', $id)->first();
 
-        return Inertia::render('Web/components/vehicleBooking/index', [
+        return Inertia::render('Web/components/vehicleBooking/bookingPage', [
             'vehicle' => $vehicle,
             'airVehicleDetails' => $airVehicleDetails
         ]);
@@ -71,7 +71,7 @@ class vehicleBookingController extends Controller
         $vehicle = Vehicle::findOrFail($id);
         $seaVehicleDetails = SeaVehicle::where('vehicle_id', $id)->first();
 
-        return Inertia::render('Web/components/vehicleBooking/index', [
+        return Inertia::render('Web/components/vehicleBooking/bookingPage', [
             'vehicle' => $vehicle,
             'seaVehicleDetails' => $seaVehicleDetails
         ]);

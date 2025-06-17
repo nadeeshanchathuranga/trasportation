@@ -243,7 +243,7 @@ Route::get('/couriers/{courier}', [CourierController::class, 'show'])->name('cou
 
 // Tracking
 // Route::get('/track', fn() => Inertia::render('Courier/TrackForm'))->name('couriers.track-form'); previous one
-Route::get('/track', fn() => Inertia::render('Web/home/TrackCouriersForm'))->name('couriers.track-form'); 
+Route::get('/track', fn() => Inertia::render('Web/home/TrackCouriersForm'))->name('couriers.track-form');
 Route::post('/track', [CourierController::class, 'track'])->name('couriers.track');
 Route::get('/driver-courier-track', fn() => Inertia::render('Web/home/driver/DriverCourierTrack'))->name('driver.courier.track');
 
@@ -311,5 +311,10 @@ Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.'
     Route::get('/bookings/air/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'airBookingDetails'])->name('air.booking.details');
     Route::get('/bookings/sea/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'seaBookingDetails'])->name('sea.booking.details');
 
+    // Route::post('/book', [BookingController::class, 'store']);
 });
+
+Route::get('/sample', function () {
+    return Inertia::render('Web/components/vehicleBooking/sample');
+})->name('sample');
 
