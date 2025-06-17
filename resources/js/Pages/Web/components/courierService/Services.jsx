@@ -5,7 +5,7 @@ import thirdImg from "../../assets/courierService/3.png";
 
 const Services = () => {
     return (
-        <div className="bg-[#E7E7E7] py-20 px-20">
+        <div className="bg-[#E7E7E7] py-10 px-20">
             <div className="flex flex-col justify-center items-center">
                 <h1 className="bebas-neue text-[40px]/[130%] font-[400]">
                     OUR <span className="text-[#0955AC]"> Services</span>
@@ -17,7 +17,7 @@ const Services = () => {
                     pellentesque ac
                 </p>
 
-                <div className="flex flex-col lg:flex-row justify-center items-center py-20 xl:gap-10 gap-10">
+                <div className="flex flex-col lg:flex-row justify-center items-center py-10 xl:gap-10 gap-10">
                     {/* Card 1 */}
                     <div className="xl:w-[378px] h-[429px] bg-[#F5F5F5] rounded-[21px] flex flex-col justify-center items-center py-10 px-5">
                         <img src={firstImg} />

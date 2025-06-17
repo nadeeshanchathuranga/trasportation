@@ -7,7 +7,7 @@ import dDoor from "../../assets/courierService/dDoor.png";
 
 const WhyOurService = () => {
     return (
-        <div className="bg-[#E7E7E7] py-20 px-20">
+        <div className="bg-[#E7E7E7] py-10 px-20">
             <div className="flex flex-col justify-center items-center">
                 <h1 className="bebas-neue font-[400] text-[40px] py-20 px-5">
                     Why <span className="text-[#0955AC]"> should </span> you{" "}

@@ -8,7 +8,7 @@ import delivery from "../../assets/courierService/delivery.png";
 
 const Process = () => {
     return (
-        <div className="bg-[#E7E7E7] py-20 xl:px-20">
+        <div className="bg-[#E7E7E7] xl:px-20">
             <div className="flex flex-col justify-center items-center text-[14px]">
                 <h1 className="bebas-neue text-[40px]/[130%] font-[400]">
                     OUR <span className="text-[#0955AC]"> DELIVERY</span>{" "}
@@ -21,7 +21,6 @@ const Process = () => {
                 </p>
 
                 {/* process chart */}
-
                 <div className="relative flex flex-col lg:flex-row w-auto justify-center items-center overflow-visible py-10">
                     <div className="h-[826px] lg:w-[425px] xl:w-[525px] flex flex-col gap-10 justify-center items-center">
                         <div className="absolute lg:top-[180px] lg:left-[60px] xl:left-[10px] xl:top-[70px] flex flex-col gap-5">

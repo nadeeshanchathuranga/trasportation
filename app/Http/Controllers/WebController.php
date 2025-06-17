@@ -48,6 +48,14 @@ class WebController extends Controller
         ]);
     }
 
+    public function vehicleDetails(Request $request)
+    {
+        return Inertia::render('Web/home/vehicleDetails', [
+            'vehicle' => $request->vehicle,
+            'searchParams' => $request->except('vehicle')
+        ]);
+    }
+
     public function courierService()
     {
         return Inertia::render('Web/home/CourierService');

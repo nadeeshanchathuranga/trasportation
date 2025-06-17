@@ -27,14 +27,14 @@ const ShippingSolution = () => {
     };
 
     return (
-        <div className="bg-[#E7E7E7] py-20 px-20">
+        <div className="bg-[#E7E7E7] py-5 px-20">
             <div className="flex flex-col justify-center items-center">
                 <h1 className="bebas-neue text-[40px]/[130%] font-[400]">
                     Global <span className="text-[#0955AC]"> Shipping</span>{" "}
                     Solution
                 </h1>
 
-                <div className="flex flex-col py-20 lg:px-10">
+                <div className="flex flex-col py-10 lg:px-10">
                     <div className="bebas-neue flex flex-row text-[24px] font-[400] relative">
                         <div 
                             className={getTabStyle('shipping-routes')}

@@ -70,9 +70,9 @@ const FAQ = () => {
     };
 
     return (
-        <div className="bg-[#E7E7E7] py-20 px-20 pb-[300px]">
+        <div className="bg-[#E7E7E7] py-10 px-20 pb-[100px]">
             <div className="flex flex-col justify-center items-center">
-                <h1 className="bebas-neue text-[40px]/[130%] font-[400] py-20">
+                <h1 className="bebas-neue text-[40px]/[130%] font-[400] py-5">
                     <span className="text-[#0955AC]"> frequently</span> asked{" "}
                     <span className="text-[#0955AC]"> questions</span>
                 </h1>
