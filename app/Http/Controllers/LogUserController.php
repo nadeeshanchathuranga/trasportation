@@ -107,13 +107,24 @@ public function edit(Request $request, $id)
         ]);
     }
 
-    public function airTicketBook()
+      public function airTicketBook()
     {
-        return Inertia::render('Web/home/BookATicket');
+
+        return Inertia::render('Web/dashboard/AirticketBook', [
+
+        ]);
+
     }
 
-    public function airTicketBookView()
+
+
+  public function airTicketBookView()
     {
-        return Inertia::render('Web/dashboard/AirticketBookView');
+
+        return Inertia::render('Web/dashboard/AirticketBookView', [
+
+        ]);
+
     }
+
 }

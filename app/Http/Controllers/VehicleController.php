@@ -8,6 +8,8 @@ use App\Models\LandVehicle;
 use App\Models\AirVehicle;
 use App\Models\SeaVehicle;
 use App\Models\VehicleImage;
+use App\Models\VehicleBrand;
+use App\Models\BodyType;
 
 use Inertia\Inertia;
 
@@ -34,23 +36,43 @@ class VehicleController extends Controller
     }
 
 
-    public function create(){
-        return Inertia::render('Vehicle/VehicleCreate');
+    // public function create(){
+    //     return Inertia::render('Vehicle/VehicleCreate');
+    // }
+
+
+    public function create()
+    {
+        $brands = VehicleBrand::select('id', 'name')->orderBy('name')->get();
+        $bodyTypes = BodyType::select('id', 'bodyType', 'bodyTypeImage', 'description', 'status')
+            ->where('status', 1)
+            ->orderBy('bodyType')
+            ->get();
+
+
+        return Inertia::render('Vehicle/VehicleCreate', [
+            'brands' => $brands,
+            'bodyTypes' => $bodyTypes,
+        ]);
     }
 
-    public function store(Request $request)
-{
 
-  
+
+
+
+public function store(Request $request)
+{
     $vendor = auth()->user();
 
+    // Validate inputs
     $validatedData = $request->validate([
         'model' => 'nullable|string',
+        'vehicle_brand_id' => 'required|exists:vehicle_brands,id',
         'manufracture' => 'nullable|string',
         'manufracture_year' => 'nullable|digits:4|integer',
         'register_year' => 'nullable|digits:4|integer',
         'vehicle_no' => 'nullable|string|unique:vehicles,vehicle_no',
-        'category' => 'in:air,land,sea',
+        'category' => 'required|in:air,land,sea',
         'color' => 'nullable|string',
         'condition' => 'nullable|string',
         'ownership_type' => 'nullable|string',
@@ -58,43 +80,47 @@ class VehicleController extends Controller
         'currect_milage' => 'nullable|integer',
         'description' => 'nullable|string',
         'insuarance_provider_name' => 'nullable|string',
-        'insuarance_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx,csv,webp',
+        'insuarance_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx,csv,webp|max:5120',
 
-        // Optional fields
+        // Optional details per category
         'body_type' => 'nullable|string',
         'fuel_type' => 'nullable|string',
         'transmission_type' => 'nullable|string',
         'pickup_location' => 'nullable|string',
         'drop_off_policy' => 'nullable|string',
+
         'flight_fly_range_km' => 'nullable|string',
         'airport_name' => 'nullable|string',
+
         'port_of_operation' => 'nullable|string',
 
-        // ✅ For multiple images
+        // Multiple vehicle images
         'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
+    // Add user/vendor reference
     $validatedData['user_id'] = $vendor->user_id;
     $validatedData['vendor_id'] = $vendor->id;
 
-    // Handle insurance document upload
+    // Upload insurance document
     if ($request->hasFile('insuarance_document')) {
-        $path = $request->file('insuarance_document')->store('insurance_documents', 'public');
-        $validatedData['insuarance_document'] = $path;
+        $validatedData['insuarance_document'] = $request->file('insuarance_document')->store('insurance_documents', 'public');
     }
 
-    // Save vehicle
+    // Create vehicle record
     $vehicle = Vehicle::create([
         'vendor_id' => $validatedData['vendor_id'],
-        'model' => $validatedData['model'],
-        'manufracture' => $validatedData['manufracture'],
-        'manufracture_year' => $validatedData['manufracture_year'],
-        'register_year' => $validatedData['register_year'],
-        'vehicle_no' => $validatedData['vehicle_no'],
+        'user_id' => $validatedData['user_id'],
+        'vehicle_brand_id' => $validatedData['vehicle_brand_id'],
+        'model' => $validatedData['model'] ?? null,
+        'manufracture' => $validatedData['manufracture'] ?? null,
+        'manufracture_year' => $validatedData['manufracture_year'] ?? null,
+        'register_year' => $validatedData['register_year'] ?? null,
+        'vehicle_no' => $validatedData['vehicle_no'] ?? null,
         'category' => $validatedData['category'],
-        'color' => $validatedData['color'],
-        'condition' => $validatedData['condition'],
-        'ownership_type' => $validatedData['ownership_type'],
+        'color' => $validatedData['color'] ?? null,
+        'condition' => $validatedData['condition'] ?? null,
+        'ownership_type' => $validatedData['ownership_type'] ?? null,
         'passenger_capacity' => $validatedData['passenger_capacity'] ?? null,
         'currect_milage' => $validatedData['currect_milage'] ?? null,
         'description' => $validatedData['description'] ?? null,
@@ -102,30 +128,36 @@ class VehicleController extends Controller
         'insuarance_document' => $validatedData['insuarance_document'] ?? null,
     ]);
 
-    // Save category-specific details
-    if ($vehicle->category === 'land') {
-        LandVehicle::create([
-            'vehicle_id' => $vehicle->id,
-            'body_type' => $validatedData['body_type'] ?? null,
-            'fuel_type' => $validatedData['fuel_type'] ?? null,
-            'transmission_type' => $validatedData['transmission_type'] ?? null,
-            'pickup_location' => $validatedData['pickup_location'] ?? null,
-            'drop_off_policy' => $validatedData['drop_off_policy'] ?? null,
-        ]);
-    } elseif ($vehicle->category === 'air') {
-        AirVehicle::create([
-            'vehicle_id' => $vehicle->id,
-            'flight_fly_range_km' => $validatedData['flight_fly_range_km'] ?? null,
-            'airport_name' => $validatedData['airport_name'] ?? null,
-        ]);
-    } elseif ($vehicle->category === 'sea') {
-        SeaVehicle::create([
-            'vehicle_id' => $vehicle->id,
-            'port_of_operation' => $validatedData['port_of_operation'] ?? null,
-        ]);
+    // Category-specific insert
+    switch ($vehicle->category) {
+        case 'land':
+            LandVehicle::create([
+                'vehicle_id' => $vehicle->id,
+                'body_type' => $validatedData['body_type'] ?? null,
+                'fuel_type' => $validatedData['fuel_type'] ?? null,
+                'transmission_type' => $validatedData['transmission_type'] ?? null,
+                'pickup_location' => $validatedData['pickup_location'] ?? null,
+                'drop_off_policy' => $validatedData['drop_off_policy'] ?? null,
+            ]);
+            break;
+
+        case 'air':
+            AirVehicle::create([
+                'vehicle_id' => $vehicle->id,
+                'flight_fly_range_km' => $validatedData['flight_fly_range_km'] ?? null,
+                'airport_name' => $validatedData['airport_name'] ?? null,
+            ]);
+            break;
+
+        case 'sea':
+            SeaVehicle::create([
+                'vehicle_id' => $vehicle->id,
+                'port_of_operation' => $validatedData['port_of_operation'] ?? null,
+            ]);
+            break;
     }
 
-    // ✅ Save uploaded images to vehicle_images table
+    // Upload multiple images
     if ($request->hasFile('images')) {
         foreach ($request->file('images') as $image) {
             $imagePath = $image->store('vehicle_images', 'public');
@@ -139,5 +171,15 @@ class VehicleController extends Controller
 
     return response()->json(['message' => 'Vehicle registered successfully.'], 200);
 }
+
+
+
+
+
+
+
+
+
+
 }
 

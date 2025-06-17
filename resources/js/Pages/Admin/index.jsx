@@ -12,6 +12,8 @@ export default function Dashboard() {
                         <h2 className="text-lg font-bold mb-4">Admin Dashboard</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+
                             {/* Total Vendors */}
                             <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-red-500">
                                 <h3 className="text-lg font-semibold mb-1">Total Vendors</h3>
@@ -141,6 +143,31 @@ export default function Dashboard() {
                                     View Freight Bookings
                                 </Link>
                             </div>
+
+
+                            {/* Total Vendors */}
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
+                                <h3 className="text-lg font-semibold mb-1">Add New Brand</h3>
+                                <Link
+                                    href={route("admin.add_vehicle_brand")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    Added vehicle brand list
+                                </Link>
+                            </div>
+
+                            {/* Total Vendors */}
+                            <div className="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-500">
+                                <h3 className="text-lg font-semibold mb-1">Add New Body Type</h3>
+                                <Link
+                                    href={route("admin.vehicle_body_type")}
+                                    className="text-sm text-blue-600 hover:underline mt-2 block"
+                                >
+                                    Added body type list
+                                </Link>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

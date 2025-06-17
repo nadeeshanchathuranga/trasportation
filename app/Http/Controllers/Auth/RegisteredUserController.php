@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,22 +25,8 @@ class RegisteredUserController extends Controller
 public function create(): Response
 {
 
-
-    // Optional caching for performance
-    $countries = Cache::remember('countries_list', 86400, function () {
-        $response = Http::get('https://www.apicountries.com/countries');
-
-        if ($response->successful()) {
-            return collect($response->json())
-                ->pluck('name.common')
-                ->sort()
-                ->values();
-        }
-
-
-
-        return collect(); // return empty collection if failed
-    });
+$countries = Country::select('name', 'code')->orderBy('name')->get();
+ 
 
     return Inertia::render('Auth/Register', [
         'countries' => $countries,

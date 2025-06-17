@@ -9,6 +9,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\VehicleBrandController;
+use App\Http\Controllers\BodyTypeController;
 
 use App\Http\Controllers\FreightController;
 
@@ -54,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
 
 // -------------------------------
 // 🚚 Vendor Routes
-// -------------------------------   
+// -------------------------------
 Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
     Route::get('/view', [LogUserController::class, 'UserIndex'])->name('user.index');
 
@@ -187,6 +189,18 @@ Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
+
+    Route::get('/admin/add-vehicle-brand', [AdminController::class, 'addVehicleBrand'])->name('admin.add_vehicle_brand');
+    Route::get('/admin/vehicle-body-type', [AdminController::class, 'vehicleBodyType'])->name('admin.vehicle_body_type');
+
+    // Route::get('/admin/vehicle-body-type/create', [BodyTypeController::class, 'create'])->name('vehicle-body-types.create');
+    Route::post('/admin/vehicle-body-type', [BodyTypeController::class, 'store'])->name('vehicle-body-types.store');
+    Route::post('/admin/vehicle-body-type/{id}', [BodyTypeController::class, 'destroy'])->name('vehicle-body-types.destroy');
+
+    Route::post('/vehicle-brand/{id}', [VehicleBrandController::class, 'destroy'])->name('vehicle-brand.destroy');
+
+    Route::get('/vehicle-brands/create', [VehicleBrandController::class, 'create'])->name('vehicle-brands.create');
+    Route::post('/vehicle-brands', [VehicleBrandController::class, 'store'])->name('vehicle-brands.store');
 
     Route::get('/admin/drivers-list', [AdminController::class, 'driverList'])->name('driver.list');
     Route::post('/driver/{id}/reject', [AdminController::class, 'driverReject']);

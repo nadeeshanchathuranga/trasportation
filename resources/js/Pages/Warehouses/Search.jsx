@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
+// import AppLayout from '@/Layouts/AppLayout';
 import Pagination from '@/Components/Pagination';
 
 const WAREHOUSE_TYPES = [
@@ -322,7 +322,7 @@ export default function Search({ auth, warehouses, filters }) {
                                     <div key={warehouse.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                                         <div className="h-48 overflow-hidden bg-gray-200">
                                             {warehouse.images && warehouse.images.length > 0 ? (
-                                                <img 
+                                                <img
                                                     src={`/storage/${warehouse.images[0]}`}
                                                     alt={warehouse.name}
                                                     className="h-full w-full object-cover"
@@ -336,7 +336,7 @@ export default function Search({ auth, warehouses, filters }) {
                                         <div className="p-4">
                                             <h3 className="font-bold text-lg mb-1">{warehouse.name}</h3>
                                             <p className="text-sm text-gray-600 mb-2">{warehouse.address}</p>
-                                            
+
                                             <div className="flex justify-between items-center mb-3">
                                                 <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
                                                     {warehouse.type.replace('_', ' ')}
@@ -345,7 +345,7 @@ export default function Search({ auth, warehouses, filters }) {
                                                     {formatPriceDisplay(warehouse)}
                                                 </span>
                                             </div>
-                                            
+
                                             <div className="mb-3">
                                                 <div className="grid grid-cols-2 gap-2 text-sm">
                                                     <div>
@@ -356,7 +356,7 @@ export default function Search({ auth, warehouses, filters }) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            
+
                                             <div className="mb-4">
                                                 <div className="flex flex-wrap gap-1">
                                                     {warehouse.amenities.slice(0, 3).map(amenity => (
@@ -371,7 +371,7 @@ export default function Search({ auth, warehouses, filters }) {
                                                     )}
                                                 </div>
                                             </div>
-                                            
+
                                             <Link
                                                 href={route('warehouses.show', {
                                                     warehouse: warehouse.id,

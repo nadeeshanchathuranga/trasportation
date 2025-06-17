@@ -9,12 +9,23 @@ use App\Models\Driver;
 use App\Models\DriverComplaint;
 use App\Models\FlightSearch;
 use App\Models\DriverServicePackage;
+use App\Models\VehicleBrand;
+use App\Models\Vehicle;
 use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ActivityLogger;
+use App\Models\BodyType;
+
 
 class AdminController extends Controller
 {
+
+    // public function create(){
+    //     $bodyTypes = BodyType::latest()->get();
+    //     return view('Admin.AddVehicleBodyType', [
+    //         'bodyTypes' => $bodyTypes,
+    //     ]);
+    // }
 
     public function index()
     {
@@ -232,6 +243,22 @@ class AdminController extends Controller
             'logs' => $logs,
             'actions' => $actions,
             'filters' => $request->only(['action', 'user_type', 'search_name'])
+        ]);
+    }
+
+    public function addVehicleBrand(){
+        // return Inertia::render('Admin/AddVehicleBrand');
+        $brands = VehicleBrand::latest()->get();
+        return Inertia::render('Admin/AddVehicleBrand', [
+            'brands' => $brands,
+        ]);
+    }
+
+    public function vehicleBodyType(){
+        // return Inertia::render('Admin/AddVehicleBrand');
+        $bodyTypes = BodyType::latest()->get();
+        return Inertia::render('Admin/AddVehicleBodyType', [
+            'bodyTypes' => $bodyTypes,
         ]);
     }
 

@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\VehicleBrand;
 
 class Vehicle extends Model
 {
@@ -14,6 +18,7 @@ class Vehicle extends Model
         'manufracture_year',
         'register_year',
         'vehicle_no',
+        'vehicle_brand_id',
         'category',
         'color',
         'condition',
@@ -50,4 +55,10 @@ class Vehicle extends Model
     {
         return $this->belongsTo(User::class, 'vendor_id');
     }
+
+    public function brand()
+    {
+        return $this->belongsTo(VehicleBrand::class, 'vehicle_brand_id');
+    }
+
 }

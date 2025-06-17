@@ -25,9 +25,11 @@ class DatabaseSeeder extends Seeder
             // first DriverSeeder CourierSeeder cmnt
 
 
-             UserSeeder::class,
+            CountrySeeder::class,
+            UserSeeder::class,
             DriverServicePackagesTypesTableSeeder::class,
             VehicleTypeSeeder::class,
+            VehicleCategorySeeder::class,
         ]);
     }
 }

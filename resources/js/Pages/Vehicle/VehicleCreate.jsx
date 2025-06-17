@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function VehicleCreate() {
+export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
   const [formData, setFormData] = useState({
     model: '',
+    vehicle_brand_id: '',
     manufracture: '',
     manufracture_year: '',
     register_year: '',
@@ -19,16 +20,13 @@ export default function VehicleCreate() {
     insuarance_provider_name: '',
     insuarance_document: null,
     images: [],
-    // Land vehicle fields
     body_type: '',
     fuel_type: '',
     transmission_type: '',
     pickup_location: '',
     drop_off_policy: '',
-    // Air vehicle fields
     flight_fly_range_km: '',
     airport_name: '',
-    // Sea vehicle fields
     port_of_operation: '',
   });
 
@@ -36,14 +34,11 @@ export default function VehicleCreate() {
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
-
     if (type === 'file') {
       if (name === 'images') {
         const selectedImages = Array.from(files);
         setFormData({ ...formData, images: selectedImages });
-
-        const previews = selectedImages.map(file => URL.createObjectURL(file));
-        setImagePreviews(previews);
+        setImagePreviews(selectedImages.map(file => URL.createObjectURL(file)));
       } else {
         setFormData({ ...formData, [name]: files[0] });
       }
@@ -52,46 +47,43 @@ export default function VehicleCreate() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const form = new FormData();
-
-        // Add all fields to FormData
-        Object.entries(formData).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-                value.forEach((file, index) => {
-                    form.append(`${key}[${index}]`, file);
-            });
-            } else {
-                form.append(key, value);
-            }
+    const form = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((file, index) => {
+          form.append(`${key}[${index}]`, file);
+        });
+      } else {
+        form.append(key, value);
+      }
     });
 
-    // Optional: Add CSRF token if using Laravel's web.php route
-    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-    if (csrfToken) {
-        axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-    }
-
     try {
-        await axios.post('/vehicles/store', form, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-        });
+      // Get CSRF cookie first
+      await axios.get('/sanctum/csrf-cookie');
 
-        window.location.href = '/vehicles';
+      // Submit form with multipart data
+      await axios.post('/vendor/vehicles/store', form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      alert('✅ Vehicle registered successfully!');
+      window.location.href = '/vendor/vehicles';
 
     } catch (error) {
-        console.error('❌ Submission error:', error.response?.data || error.message);
-        alert('Failed to register vehicle.');
+      console.error('❌ Submission error:', error.response?.data || error.message);
+      alert('❌ Failed to register vehicle.');
     }
-    };
-
+  };
 
   return (
+
+
     <AuthenticatedLayout>
     <div className="min-h-screen bg-gray-500 py-10 px-4">
 
@@ -100,6 +92,24 @@ export default function VehicleCreate() {
         <h1 className="text-3xl font-bold mb-6 text-gray-800">🚗 Register a New Vehicle</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
 
+
+            <div>
+                <label className="block text-gray-700 font-semibold">Vehicle Brand</label>
+                <select
+                    name="vehicle_brand_id"
+                    value={formData.vehicle_brand_id}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                    required
+                >
+                    <option value="">-- Select a Brand --</option>
+                    {brands.map((brand) => (
+                    <option key={brand.id} value={brand.id}>
+                        {brand.name}
+                    </option>
+                    ))}
+                </select>
+            </div>
 
           {/* Vehicle Model */}
           <div>
@@ -113,6 +123,25 @@ export default function VehicleCreate() {
               required
             />
           </div>
+
+          {/* <div>
+                <label className="block text-gray-700 font-semibold">Body Type</label>
+                <select
+                    name="vehicle_brand_id"
+                    value={formData.body_type}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                    required
+                >
+                    <option value="">-- Select a Body Type --</option>
+                    {bodyTypes.map((bodyType) => (
+                    <option key={bodyType.id} value={bodyType.id}>
+                        {bodyType.name}
+                    </option>
+                    ))}
+                </select>
+            </div> */}
+
 
           {/* Manufacturer */}
           <div>
@@ -200,7 +229,25 @@ export default function VehicleCreate() {
               <h3 className="font-semibold text-lg text-gray-700">Land Vehicle Details</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
+
+            <div>
+                <label className="block text-gray-700 font-semibold">Body Type</label>
+                <select
+                    name="body_type"
+                    value={formData.body_type}
+                    onChange={handleInputChange}
+                    className="mt-1 w-full border-gray-300 rounded-md shadow-sm"
+                >
+                    <option value="">-- Select a Brand --</option>
+                    {bodyTypes.map((bodyType) => (
+                    <option key={bodyType.id} value={bodyType.id}>
+                        {bodyType.bodyType}
+                    </option>
+                    ))}
+                </select>
+            </div>
+
+                {/* <div>
                   <label className="block text-gray-700 font-semibold">Body Type</label>
                   <select
                     name="body_type"
@@ -217,7 +264,7 @@ export default function VehicleCreate() {
                     <option>Coupe</option>
                     <option>Convertible</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div>
                   <label className="block text-gray-700 font-semibold">Fuel Type</label>
