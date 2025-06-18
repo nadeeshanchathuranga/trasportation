@@ -70,4 +70,21 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/BookingHomePage');
     }
+
+    public function cargoFreight()
+    {
+        return Inertia::render('Web/home/cargoAndFreight/HomePage');
+    }
+
+    public function driversHome()
+    {
+        return Inertia::render('Web/home/DriversHomePage');
+    }
+
+    public function driverSearchResults(Request $request)
+    {
+        return Inertia::render('Web/home/DriverSearchResults', [
+            'searchParams' => $request->all()
+        ]);
+    }
 }

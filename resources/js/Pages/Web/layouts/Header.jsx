@@ -129,12 +129,12 @@ const Header = () => {
                             </Link>
                         </div>
                     </div>
-                    <a
-                        href="#"
+                    <Link
+                        href="/drivers-home"
                         className="hover:text-[#0955AC] flex items-center h-full w-full md:w-auto"
                     >
                         Drivers
-                    </a>
+                    </Link>
                     <a
                         href="#"
                         className="hover:text-[#0955AC] flex items-center h-full w-full md:w-auto"
