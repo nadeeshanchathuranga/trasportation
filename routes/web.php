@@ -92,6 +92,12 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
     Route::get('/review-management', [VendorController::class, 'reviewsManagement'])->name('vendor.review');
     Route::get('/document/{vendor}/{type}', [VendorController::class, 'viewDocument'])->name('vendor.document');
 
+
+    Route::get('/booking-report-download', [VendorController::class, 'downloadReport']);
+    Route::get('/booking-report', [VendorController::class, 'displayBookingReport']);
+    Route::post('/booking/{id}/status', [VendorController::class, 'updateBookingStatus']);
+
+
     // Vehicle management
     Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
     Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicles.create');
