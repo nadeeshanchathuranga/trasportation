@@ -60,4 +60,14 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/CourierService');
     }
+
+    public function bookATicket()
+    {
+        return Inertia::render('Web/home/BookATicket');
+    }
+
+    public function bookingHome()
+    {
+        return Inertia::render('Web/home/BookingHomePage');
+    }
 }
