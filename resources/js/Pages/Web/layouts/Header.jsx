@@ -75,17 +75,33 @@ const Header = () => {
                             className="w-[8px] h-[5px]"
                         />
                     </a>
-                    <Link
-                        href="/user/airticket-book"
-                        className="hover:text-[#0955AC] flex items-center h-full gap-1 w-full md:w-auto"
-                    >
-                        Book a Ticket{" "}
-                        <img
-                            src={downArrow}
-                            alt="dropdown"
-                            className="w-[8px] h-[5px]"
-                        />
-                    </Link>
+                    <div className="relative group">
+                        <Link
+                            href="/book-a-ticket"
+                            className="hover:text-[#0955AC] flex items-center h-full gap-1 w-full md:w-auto"
+                        >
+                            Book a Ticket{" "}
+                            <img
+                                src={downArrow}
+                                alt="dropdown"
+                                className="w-[8px] h-[5px]"
+                            />
+                        </Link>
+                        <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <Link
+                                href="/book-a-ticket"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#0955AC]"
+                            >
+                                Book a Ticket
+                            </Link>
+                            <Link
+                                href="/booking-home"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#0955AC]"
+                            >
+                                Booking Home
+                            </Link>
+                        </div>
+                    </div>
                     <div className="relative group">
                         <Link
                             href="/courier-service"
@@ -197,7 +213,7 @@ const Header = () => {
                             {/* Logout */}
                             <button
                                 onClick={handleLogout}
-                                className="bg-red-700 w-[80px] md:w-[90px] lg:w-[105px] h-[35px] md:h-[40px] lg:h-[45px] hover:bg-red-700 px-2 md:px-3 lg:px-4 py-2 rounded-[9px] text-white text-[9px] md:text-[10px] lg:text-[12px] font-[700]"
+                                className="bg-[#EF3826] w-[80px] md:w-[90px] lg:w-[105px] h-[35px] md:h-[40px] lg:h-[45px] hover:bg-red-700 px-2 md:px-3 lg:px-4 py-2 rounded-[9px] text-white text-[9px] md:text-[10px] lg:text-[12px] font-[700]"
                             >
                                 Logout
                             </button>

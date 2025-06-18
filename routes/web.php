@@ -14,9 +14,7 @@ use App\Http\Controllers\BodyTypeController;
 use App\Http\Controllers\VehicleBookingController;
 
 use App\Http\Controllers\FreightController;
-
 use App\Http\Controllers\WarehouseController;
-
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\LogUserController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +27,8 @@ Route::get('/', [WebController::class, 'index'])->name('home');
 Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
 Route::get('/vehicleDetails', [WebController::class, 'vehicleDetails'])->name('vehicle.details');
 Route::get('/courier-service', [WebController::class, 'courierService'])->name('courier.service');
+Route::get('/book-a-ticket', [WebController::class, 'bookATicket'])->name('book.a.ticket');
+Route::get('/booking-home', [WebController::class, 'bookingHome'])->name('booking.home');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [
@@ -75,10 +75,6 @@ Route::middleware(['auth', 'role:user'])->prefix('user')->group(function () {
 
 });
 Route::get('/my-freight-bookings', [LogUserController::class, 'freightBookings'])->name('user.freight_bookings');
-
-
-
-
 
 
 

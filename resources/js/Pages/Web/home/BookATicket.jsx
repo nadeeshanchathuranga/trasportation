@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "../layouts/Header";
-import Filters from "../components/bookATicket/filters";
+import FilterSidebar from "../components/bookATicket/filters";
 import SearchForm from "../components/bookATicket/SearchForm";
 import Footer from "../layouts/Footer";
 
@@ -20,7 +20,7 @@ const BookATicket = () => {
         <div>
             <Header />
             <div className="flex flex-row bg-[#E7E7E7]">
-                <Filters />
+                <FilterSidebar />
                 <SearchForm
                     formData={formData}
                     onFormChange={handleFormChange}

@@ -13,7 +13,7 @@ const HowItWorks = () => {
         </h2>
         <p className="figtree text-center text-[14px] md:text-[15px] font-[400] text-[#0F0F0F80] mb-10 md:mb-20 px-4">
           Renting a luxury car has never been easier. Our streamlined process
-          makes it simple for you to book and confirm your vehicle of
+          makes it simple for you to book and confirm <br/> your vehicle of
           choice online
         </p>
         <div className="flex flex-col lg:flex-row items-center gap-6 md:gap-8 relative">

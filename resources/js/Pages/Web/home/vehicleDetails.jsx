@@ -4,6 +4,7 @@ import Header from "../layouts/Header";
 import FilterSidebar from "../components/vehicleList/FilterSidebar";
 import VehicleImageGallery from "../components/vehicleDetails/VehicleImageGallery";
 import VehicleInformation from "../components/vehicleDetails/VehicleInformation";
+import ReviewSection from "../components/vehicleDetails/ReviewSection";
 import bg from "../assets/rentAVehicle/bg/bg.png";
 
 const VehicleDetails = () => {
@@ -42,16 +43,17 @@ const VehicleDetails = () => {
         }}
       >
         <FilterSidebar searchParams={props.searchParams || {}} />
-        <div className="vehicle-list-container flex-1 p-4 flex">
-          <VehicleImageGallery vehicle={memoizedVehicle} />
-          <VehicleInformation
-            vehicle={memoizedVehicle}
-            searchParams={props.searchParams || {}}
-          />
-          <div
-            className="bottom-placeholder mt-8 bg-gray-200 rounded-md"
-            style={{ height: "300px" }}
-          ></div>
+        <div className="vehicle-list-container flex-1 p-4 flex flex-col gap-10">
+          <div className="flex flex-col xl:flex-row justify-center items-center">
+            <VehicleImageGallery vehicle={memoizedVehicle} />
+            <VehicleInformation
+              vehicle={memoizedVehicle}
+              searchParams={props.searchParams || {}}
+            />
+          </div>
+          <ReviewSection />
+        </div>
+        <div>
         </div>
       </div>
     </div>
