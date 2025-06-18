@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import bg from "../../assets/booking/bg.png";
 import locationBlue from "../../assets/vehicleList/locationBlue.png";
 import calendarBlue from "../../assets/vehicleList/calendarBlue.png";
 import classIcon from "../../assets/booking/class.png";
 
 const HeroSection = () => {
+    const [selectedTicketType, setSelectedTicketType] =
+        useState("Train tickets");
+
+    const ticketTypes = [
+        { id: "air", label: "Air tickets" },
+        { id: "cruise", label: "Cruise tickets" },
+        { id: "train", label: "Train tickets" },
+    ];
+
     return (
-        <div className="relative h-screen lg:h-[788px]">
+      // image size is the issue when develop this responsive
+        <div className="relative h-screen lg:h-[788px]">  
             <img src={bg} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-[#000000B8]" />
             <div className="absolute inset-0 flex items-center">
                 <div className="container mx-auto px-4">
-                    <div className="relative text-white flex flex-col items-center justify-center gap-8">
+                    <div className="text-white flex flex-col items-center justify-center gap-8">
                         <div className="absolute top-[-40px] left-[180px] w-[125px] h-[5px] rounded-sm bg-[white]" />
-                        <h1 className="bebas-neue text-[75px] font-[400]">
+                        <h1 className="bebas-neue lg:text-[75px] text-[50px] font-[400]">
                             Book <span className="text-[#286BB6]">Your</span>{" "}
                             Train Journey{" "}
                             <span className="text-[#286BB6]">in</span> Seconds.
                         </h1>
-                        <p className="poppins text-[28px]/[50px] font-[300] text-[#FFFFFFC9] text-center">
+                        <p className="poppins lg:text-[28px]/[50px] font-[300] text-[#FFFFFFC9] text-center">
                             Book train tickets across major routes in just a few
                             clicks — <br /> affordable, reliable, and
                             hassle-free. Whether you're commuting <br /> daily
@@ -28,7 +38,7 @@ const HeroSection = () => {
                         {/* Search Form */}
                         <form
                             // onSubmit={onSubmit}
-                            className="figtree bg-white px-10 py-10 rounded-[15px] shadow-2xl shadow-[#00000040] w-full xl:w-[915px] h-auto xl:h-[318px] text-[#286BB6] text-[13px] font-[400]"
+                            className="figtree bg-white px-10 py-10 rounded-[15px] shadow-2xl shadow-[#00000040] w-full md:w-[615px] lg:w-[715px] xl:w-[915px] h-auto xl:h-[318px] text-[#286BB6] text-[13px] font-[400]"
                         >
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-8 justify-center items-center">
                                 {/* From */}
@@ -152,16 +162,22 @@ const HeroSection = () => {
                             </div>
                         </form>
 
-                        <div className="absolute rotate-90 left-0 text-[20px] bebas-neue flex flex-row gap-5 text-[#0955AC]">
-                            <div className="w-[118px] h-[74px] bg-[#D9D9D980] rounded-tl-[20px] rounded-tr-[20px] flex justify-center py-5">
-                                <h1>Air tickets</h1>
-                            </div>
-                            <div className="w-[118px] h-[74px] bg-[#D9D9D980] rounded-tl-[20px] rounded-tr-[20px] flex justify-center py-5">
-                                <h1>Cruise tickets</h1>
-                            </div>
-                            <div className="w-[118px] h-[74px] bg-[#D9D9D980] rounded-tl-[20px] rounded-tr-[20px] flex justify-center py-5">
-                                <h1>Train tickets</h1>
-                            </div>
+                        <div className="absolute rotate-90 hidden left-[-160px] text-[20px] bebas-neue lg:flex flex-row gap-5 text-[#0955AC]">
+                            {ticketTypes.map((ticketType) => (
+                                <div
+                                    key={ticketType.id}
+                                    onClick={() =>
+                                        setSelectedTicketType(ticketType.label)
+                                    }
+                                    className={`w-[118px] h-[74px] rounded-tl-[20px] rounded-tr-[20px] flex justify-center py-5 cursor-pointer transition-all duration-200 ${
+                                        selectedTicketType === ticketType.label
+                                            ? "bg-[#0955AC] text-white border-2 border-[#0955AC]"
+                                            : "bg-[#D9D9D980] text-[#0955AC]"
+                                    }`}
+                                >
+                                    <h1>{ticketType.label}</h1>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
