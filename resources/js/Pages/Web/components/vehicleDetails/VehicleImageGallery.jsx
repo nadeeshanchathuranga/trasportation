@@ -22,7 +22,7 @@ const VehicleImageGallery = ({ vehicle }) => {
 
   const mainImage = useMemo(() => (
     <div 
-      className="main-image w-[537px] h-[349px] bg-[#F4F3F3] rounded-[12px] flex items-center justify-center cursor-pointer" 
+      className="main-image xl:w-[537px] h-[349px] bg-[#F4F3F3] rounded-[12px] flex items-center justify-center cursor-pointer" 
       onClick={() => handleImageClick(vehicle.image)}
     >
       <img 
@@ -34,7 +34,7 @@ const VehicleImageGallery = ({ vehicle }) => {
   ), [vehicle.image, vehicle.name]);
 
   const imagePreviews = useMemo(() => (
-    <div className="preview-images w-[537px] flex justify-between mt-4">
+    <div className="preview-images xl:w-[537px] flex flex-col gap-5 xl:flex-row justify-between mt-4">
       {previewImages.map((image, index) => (
         <img 
           key={index}
@@ -54,7 +54,7 @@ const VehicleImageGallery = ({ vehicle }) => {
 
       {selectedImage && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50"
           onClick={closePopup}
         >
           <div className="relative max-w-[90vw] max-h-[90vh]">

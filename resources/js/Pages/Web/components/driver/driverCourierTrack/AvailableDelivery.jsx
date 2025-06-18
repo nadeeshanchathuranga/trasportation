@@ -1,37 +1,152 @@
-import React from "react";
+import React, { useState } from "react";
 import filter from "../../../assets/driver/filter.png";
 import downArrow from "../../../assets/driver/downArrow.png";
 import redo from "../../../assets/driver/redo.png";
 
 const AvailableDelivery = () => {
-    // Sample data array - you can replace this with your actual data source
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+
+    // Function to get colors based on delivery mode
+    const getModeColors = (mode) => {
+        switch (mode.toLowerCase()) {
+            case "motorbike":
+                return {
+                    textColor: "#059669",
+                    bgColor: "#D1FAE5",
+                };
+            case "bicycle":
+                return {
+                    textColor: "#EF3826",
+                    bgColor: "#FEE2E2",
+                };
+            case "skateboard":
+                return {
+                    textColor: "#FFA756",
+                    bgColor: "#FEF3C7",
+                };
+        }
+    };
+
     const deliveryData = [
         {
             id: "00001",
             client: "Christine Brooks",
-            address: "089 Kutch Green 448",
+            address: "089 Kutch Green Apt. 448",
             price: "N 4500",
             type: "Foodstuff",
-            mode: "Motorbike"
+            mode: "Motorbike",
         },
         {
             id: "00002",
-            client: "John Smith",
-            address: "123 Main Street",
-            price: "N 3200",
-            type: "Electronics",
-            mode: "Car"
+            client: "Rosie Pearson",
+            address: "979 Immanuel Ferry Suite 526",
+            price: "N 4500",
+            type: "Book",
+            mode: "Motorbike",
         },
         {
             id: "00003",
-            client: "Sarah Johnson",
+            client: "Darrell Caldwell",
+            address: "8587 Frida Ports",
+            price: "N 4500",
+            type: "Foodstuff",
+            mode: "Bicycle",
+        },
+        {
+            id: "00004",
+            client: "Gilbert Johnston",
+            address: "768 Destiny Lake Suite 600",
+            price: "N 4500",
+            type: "Foodstuff",
+            mode: "Motorbike",
+        },
+        {
+            id: "00005",
+            client: "Alan Cain",
+            address: "042 Mylene Throughway",
+            price: "N 4500",
+            type: "Watch",
+            mode: "Motorbike",
+        },
+        {
+            id: "00006",
+            client: "Alfred Murray",
+            address: "543 Weimann Mountain",
+            price: "N 4500",
+            type: "Foodstuff",
+            mode: "Motorbike",
+        },
+        {
+            id: "00007",
+            client: "Maggie Sullivan",
+            address: "New Scottieberg",
+            price: "N 4500",
+            type: "Watch",
+            mode: "Motorbike",
+        },
+        {
+            id: "00008",
+            client: "Darrell Caldwell",
+            address: "8587 Frida Ports",
+            price: "N 4500",
+            type: "Foodstuff",
+            mode: "Skateboard",
+        },
+        {
+            id: "00009",
+            client: "John Smith",
+            address: "123 Main Street",
+            price: "N 3500",
+            type: "Electronics",
+            mode: "Motorbike",
+        },
+        {
+            id: "00010",
+            client: "Jane Doe",
             address: "456 Oak Avenue",
-            price: "N 1800",
-            type: "Documents",
-            mode: "Bicycle"
-        }
-        // Add more delivery entries here
+            price: "N 5500",
+            type: "Clothing",
+            mode: "Bicycle",
+        },
+        {
+            id: "00011",
+            client: "Mike Johnson",
+            address: "789 Pine Road",
+            price: "N 4000",
+            type: "Foodstuff",
+            mode: "Skateboard",
+        },
+        {
+            id: "00012",
+            client: "Sarah Wilson",
+            address: "321 Elm Street",
+            price: "N 6000",
+            type: "Book",
+            mode: "Motorbike",
+        },
     ];
+
+    // Pagination calculations
+    const totalItems = deliveryData.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+    const currentData = deliveryData.slice(startIndex, endIndex);
+
+    // Pagination handlers
+    const handlePrevious = () => {
+        setCurrentPage(prev => Math.max(prev - 1, 1));
+    };
+
+    const handleNext = () => {
+        setCurrentPage(prev => Math.min(prev + 1, totalPages));
+    };
+
+    const handlePageClick = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
         <div className="bg-[#0955AC24]">
@@ -99,30 +214,87 @@ const AvailableDelivery = () => {
                             </div>
 
                             {/* Data rows using .map() */}
-                            {deliveryData.map((delivery, index) => (
-                                <React.Fragment key={delivery.id}>
-                                    <div className="gilroy-medium border-b-[0.6px] h-[69px] flex items-center">
-                                        <h1 className="pl-10">{delivery.id}</h1>
-                                    </div>
-                                    <div className="gilroy-medium border-b-[0.6px] h-[69px] flex items-center">
-                                        <h1 className="pl-10">{delivery.client}</h1>
-                                    </div>
-                                    <div className="gilroy-medium border-b-[0.6px] h-[69px] flex items-center">
-                                        <h1 className="pl-10">{delivery.address}</h1>
-                                    </div>
-                                    <div className="gilroy-medium border-b-[0.6px] h-[69px] flex items-center">
-                                        <h1 className="pl-10">{delivery.price}</h1>
-                                    </div>
-                                    <div className="gilroy-medium border-b-[0.6px] h-[69px] flex items-center">
-                                        <h1 className="pl-10">{delivery.type}</h1>
-                                    </div>
-                                    <div className="gilroy-medium border-b-[0.6px] h-[69px] flex items-center">
-                                        <div className="w-[93px] h-[27px] text-[#00B69B] rounded-[4.5px] flex justify-center items-center ml-10 text-[12px] bg-green-200">
-                                            <h1>{delivery.mode}</h1>
+                            {currentData.map((delivery, index) => {
+                                const modeColors = getModeColors(delivery.mode);
+                                const isLastRow = index === currentData.length - 1;
+                                return (
+                                    <React.Fragment key={delivery.id}>
+                                        <div className={`gilroy-medium ${!isLastRow ? 'border-b-[0.6px]' : ''} h-[85px] flex items-center`}>
+                                            <h1 className="pl-10">
+                                                {delivery.id}
+                                            </h1>
                                         </div>
-                                    </div>
-                                </React.Fragment>
+                                        <div className={`gilroy-medium ${!isLastRow ? 'border-b-[0.6px]' : ''} h-[85px] flex items-center`}>
+                                            <h1 className="pl-10">
+                                                {delivery.client}
+                                            </h1>
+                                        </div>
+                                        <div className={`gilroy-medium ${!isLastRow ? 'border-b-[0.6px]' : ''} h-[85px] flex items-center`}>
+                                            <h1 className="pl-10">
+                                                {delivery.address}
+                                            </h1>
+                                        </div>
+                                        <div className={`gilroy-medium ${!isLastRow ? 'border-b-[0.6px]' : ''} h-[85px] flex items-center`}>
+                                            <h1 className="pl-10">
+                                                {delivery.price}
+                                            </h1>
+                                        </div>
+                                        <div className={`gilroy-medium ${!isLastRow ? 'border-b-[0.6px]' : ''} h-[85px] flex items-center`}>
+                                            <h1 className="pl-10">
+                                                {delivery.type}
+                                            </h1>
+                                        </div>
+                                        <div className={`gilroy-medium ${!isLastRow ? 'border-b-[0.6px]' : ''} h-[85px] flex items-center`}>
+                                            <div
+                                                className="w-[93px] h-[27px] rounded-[4.5px] flex justify-center items-center ml-10 text-[12px]"
+                                                style={{
+                                                    backgroundColor:
+                                                        modeColors.bgColor,
+                                                    color: modeColors.textColor,
+                                                }}
+                                            >
+                                                <h1>{delivery.mode}</h1>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    
+                    {/* Pagination Section */}
+                    <div className="xl:w-[1141px] flex justify-between items-center py-4 px-6">
+                        <div className="text-[14px] text-[#0955AC] gilroy-medium">
+                            Showing {startIndex + 1} to {endIndex} of {totalItems} entries
+                        </div>
+                        <div className="gap-2 border-[1px] border-[#D9D9D9] rounded-[6px] w-[166px] h-[26px] flex justify-evenly items-center text-[10px]">
+                            <button 
+                                className={`text-[10px] gilroy-medium transition-colors ${currentPage === 1 ? 'text-[#9CA3AF] cursor-not-allowed' : 'text-[#0955AC] hover:bg-[#F9FAFB]'}`}
+                                onClick={handlePrevious}
+                                disabled={currentPage === 1}
+                            >
+                                Previous
+                            </button>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button
+                                    key={index + 1}
+                                    className={`size-[26px] text-[10px] flex justify-center items-center cursor-pointer transition-colors ${
+                                        currentPage === index + 1 
+                                            ? 'bg-[#0955AC] text-white' 
+                                            : 'bg-transparent text-[#0955AC] hover:bg-[#F3F4F6]'
+                                    }`}
+                                    onClick={() => handlePageClick(index + 1)}
+                                >
+                                    {index + 1}
+                                </button>
                             ))}
+                            <button 
+                                className={`text-[10px] gilroy-medium transition-colors ${currentPage === totalPages ? 'text-[#9CA3AF] cursor-not-allowed' : 'text-[#0955AC] hover:bg-[#F9FAFB]'}`}
+                                onClick={handleNext}
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
                         </div>
                     </div>
                 </div>

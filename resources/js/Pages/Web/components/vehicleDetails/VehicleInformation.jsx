@@ -56,9 +56,9 @@ const VehicleInformation = ({ vehicle }) => {
       </p>
       
       {/* Specifications Grid */}
-      <div className="work-sans text-[16px] font-[600] specifications-grid grid grid-cols-3 gap-10 mt-10">
+      <div className="work-sans text-[16px] font-[600] specifications-grid grid md:grid-cols-3 gap-10 mt-10">
         {specifications.map((spec, index) => (
-          <div key={index} className="specification-item flex items-center gap-3 min-w-[180px]">
+          <div key={index} className="specification-item flex items-center gap-3 xl:min-w-[180px]">
             <img src={spec.icon} alt={spec.title} className="w-[20px] h-[20px] mt-1" />
             <div>
               <div>{spec.title}</div>
@@ -69,7 +69,7 @@ const VehicleInformation = ({ vehicle }) => {
       </div>
 
       {/* Price and Book Button */}
-      <div className="price-booking-section flex justify-between items-center mt-12">
+      <div className="price-booking-section flex flex-col md:flex-row justify-between items-center mt-12">
         <div className="price text-[22px] font-[500]">
           $<span className='text-[32px] font-[700]'>{vehicle.price}</span>.00 
           <span className="text-[15px] font-[600] text-[#00000080]">/day</span>
