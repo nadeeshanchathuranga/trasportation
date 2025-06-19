@@ -53,6 +53,36 @@ const drivers = [
         rides: 248,
         isProfessional: true,
     },
+    {
+        name: "Steve Gibson",
+        rides: 248,
+        isProfessional: true,
+    },
+    {
+        name: "Steve Gibson",
+        rides: 248,
+        isProfessional: true,
+    },
+    {
+        name: "Steve Gibson",
+        rides: 248,
+        isProfessional: true,
+    },
+    {
+        name: "Steve Gibson",
+        rides: 248,
+        isProfessional: true,
+    },
+    {
+        name: "Steve Gibson",
+        rides: 248,
+        isProfessional: true,
+    },
+    {
+        name: "Steve Gibson",
+        rides: 248,
+        isProfessional: true,
+    },
 ];
 
 const DriversList = () => {
@@ -85,7 +115,11 @@ const DriversList = () => {
     return (
         <div className="w-full px-20 py-5">
             <h1 className="bebas-neue text-[40px]">
-                we found <span className="text-[#0955AC]"> {drivers.length} Drivers </span>
+                we found{" "}
+                <span className="text-[#0955AC]">
+                    {" "}
+                    {drivers.length} Drivers{" "}
+                </span>
                 for you
             </h1>
 
@@ -100,12 +134,18 @@ const DriversList = () => {
                         >
                             <img src={proPic} />
                             <h1 className="bebas-neue text-[30px]">
-                                {driver.name.split(" ")[0]} <span className="text-[#0955AC]">{driver.name.split(" ")[1]}</span>
+                                {driver.name.split(" ")[0]}{" "}
+                                <span className="text-[#0955AC]">
+                                    {driver.name.split(" ")[1]}
+                                </span>
                             </h1>
                             <h1 className="poppins text-[15px]/[24px] font-[700]">
                                 {driver.rides}+ rides{" "}
                                 <span className="text-[10px] font-[600] text-[#00000080]">
-                                    / {driver.isProfessional ? "professional driver" : "driver"}
+                                    /{" "}
+                                    {driver.isProfessional
+                                        ? "professional driver"
+                                        : "driver"}
                                 </span>
                             </h1>
                             <div className="flex flex-row gap-5 mt-3">
@@ -117,7 +157,11 @@ const DriversList = () => {
                                     onClick={() => toggleLike(globalIdx)}
                                 >
                                     <img
-                                        src={likedDrivers.has(globalIdx) ? heartTwo : heartIcon}
+                                        src={
+                                            likedDrivers.has(globalIdx)
+                                                ? heartTwo
+                                                : heartIcon
+                                        }
                                         alt="Heart"
                                         className="w-4 h-3.5"
                                     />
@@ -130,15 +174,23 @@ const DriversList = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-                <div className="flex justify-end mt-3 gap-4 items-center">
+                <div className="flex justify-end mt-3 gap-4 items-center px-[70px] pb-20">
                     {/* Previous Button */}
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className={`size-[40px] flex items-center justify-center rounded bg-[#F4F3F3] border-[1px] ${currentPage === 1 ? 'border-[#BEBEBE] cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                        className={`size-[40px] flex items-center justify-center rounded bg-[#F4F3F3] border-[1px] ${
+                            currentPage === 1
+                                ? "border-[#BEBEBE] cursor-not-allowed opacity-50"
+                                : "cursor-pointer"
+                        }`}
                         aria-label="Previous Page"
                     >
-                        <img src={leftArrow} alt="Previous" className="w-4 h-4" />
+                        <img
+                            src={leftArrow}
+                            alt="Previous"
+                            className="w-4 h-4"
+                        />
                     </button>
                     {/* Page Numbers */}
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map(
@@ -146,10 +198,10 @@ const DriversList = () => {
                             <button
                                 key={page}
                                 onClick={() => handlePageChange(page)}
-                                className={`px-3 md:px-4 py-1.5 md:py-2 rounded text-sm md:text-base size-[40px] ${
+                                className={`px-3 md:px-4 py-1.5 md:py-2 rounded text-sm md:text-base inter text-[16px] font-[600] size-[40px] ${
                                     currentPage === page
-                                        ? "bg-[#F4F3F3] inter text-[16px] font-[600] text-[#0955AC] border border-[#0955AC]"
-                                        : "bg-[#F4F3F3] inter text-[16px] font-[600] border-[1px] border-[#BEBEBE] text-[#000000]"
+                                        ? "bg-[#F4F3F3] text-[#0955AC] border border-[#0955AC]"
+                                        : "bg-[#F4F3F3] border-[1px] border-[#BEBEBE] text-[#000000]"
                                 }`}
                             >
                                 {page}
@@ -160,7 +212,11 @@ const DriversList = () => {
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
-                        className={`size-[40px] flex items-center justify-center rounded bg-[#F4F3F3] border-[1px] ${currentPage === totalPages ? 'border-[#BEBEBE] cursor-not-allowed opacity-50' : ' cursor-pointer'}`}
+                        className={`size-[40px] flex items-center justify-center rounded bg-[#F4F3F3] border-[1px] ${
+                            currentPage === totalPages
+                                ? "border-[#BEBEBE] cursor-not-allowed opacity-50"
+                                : " cursor-pointer"
+                        }`}
                         aria-label="Next Page"
                     >
                         <img src={rightArrow} alt="Next" className="w-4 h-4" />
