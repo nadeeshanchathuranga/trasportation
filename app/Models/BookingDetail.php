@@ -29,7 +29,8 @@ class BookingDetail extends Model
         'payment_method',
         'special_requests',
         'hear_about_us',
-        'terms_accepted'
+        'terms_accepted',
+        'status',
     ];
 
     public function vehicle()

@@ -3,6 +3,7 @@ import { Calendar, MapPin, Clock, Phone, CreditCard, Shield, Star, Users, Fuel, 
 import Header from '../../layouts/Header';
 import Footer from '../../layouts/Footer';
 import axios from 'axios';
+import { redirect } from 'react-router-dom';
 
 export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
   // Insurance and payment state
@@ -32,7 +33,8 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
     payment_method: 'card',
     special_requests: '',
     hear_about_us: 'Google Search',
-    terms_accepted: false
+    terms_accepted: false,
+    status: 'pending',
   });
 
   const handleInputChange = (e) => {
@@ -50,17 +52,46 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
 //     // Add your form submission logic here
 //   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const response = await axios.post('vehicle-bookings/book', formData); // use full URL if needed
-        // console.log('Submission successful:', response.data);
-        alert('Booking successful!', response.data);
-    } catch (error) {
-        // console.error('Submission error:', error.response?.data || error.message);
-        alert('Failed to submit booking.');
-    }
-  };
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//         const response = await axios.post('/vehicle-bookings/book', formData); // use full URL if needed
+//         // console.log('Submission successful:', response.data);
+//         // alert('Booking successful!', response.data);
+//         alert('Booking successful!');
+
+//     } catch (error) {
+//         // console.error('Submission error:', error.response?.data || error.message);
+//         alert('Failed to submit booking.');
+//     }
+//   };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/vehicle-bookings/book', formData);
+
+            if (response.data.success) {
+                // Optional: Show success message before redirect
+                alert('Booking is completed');
+                // Redirect to the desired page
+                window.location.href = '/vehicle-bookings/bookings/land';
+            } else {
+                alert('Booking failed');
+            }
+
+        } catch (error) {
+            if (error.response?.data?.errors) {
+                // Handle validation errors (optional)
+                console.error('Validation errors:', error.response.data.errors);
+                alert('Please fix the validation errors.');
+            } else {
+                alert('Failed to submit booking.');
+            }
+        }
+    };
+
+
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">

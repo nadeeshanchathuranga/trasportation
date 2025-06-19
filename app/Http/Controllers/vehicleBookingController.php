@@ -8,6 +8,7 @@ use App\Models\Vehicle;
 use App\Models\LandVehicle;
 use App\Models\AirVehicle;
 use App\Models\SeaVehicle;
+use App\Models\VehicleImage;
 
 
 class vehicleBookingController extends Controller
@@ -17,15 +18,26 @@ class vehicleBookingController extends Controller
     }
 
 
-    public function landBookings(){
+
+    public function landBookings() {
         $vehicles = Vehicle::all();
         $landVehicleDetails = LandVehicle::all();
+        $vehicleImages = VehicleImage::all()->map(function ($vehicle) {
+            return [
+                'id' => $vehicle->id,
+                'vehicle_id' => $vehicle->vehicle_id,
+                'image' => $vehicle->image ? asset('storage/vehicle_images/' . $vehicle->image) : null,
+            ];
+        });
 
         return Inertia::render('Web/components/vehicleBooking/landIndex', [
             'vehicles' => $vehicles,
-            'landVehicleDetails' => $landVehicleDetails
+            'landVehicleDetails' => $landVehicleDetails,
+            'vehicleImages' => $vehicleImages,
         ]);
     }
+
+
 
     public function airBookings(){
         $vehicles = Vehicle::all();
