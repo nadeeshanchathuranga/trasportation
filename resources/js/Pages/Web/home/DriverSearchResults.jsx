@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../layouts/Header";
 import Filter from "../components/driverSearchResults/Filter";
-import VehicleListContent from "../components/vehicleList/VehicleListContent";
-import SearchForm from "../components/vehicleList/searchForm";
+import SearchForm from "../components/driverSearchResults/SearchForm";
+import DriversList from "../components/driverSearchResults/DriversList";
 import Footer from "../layouts/Footer";
 
 const DriverSearchResults = () => {
+    // Add state for formData
+    const [formData, setFormData] = useState({
+        pickupLocation: "",
+        pickupDate: "",
+        dropoffLocation: "",
+        dropoffDate: "",
+    });
+
+    // Add handler to update formData
+    const handleFormChange = (newFormData) => {
+        setFormData(newFormData);
+    };
+
     return (
         <div>
             <Header />
 
-            <Filter />
-            <div className="vehicle-list-container flex-1">
-                {/* <SearchForm
-                    formData={formData}
-                    onFormChange={handleFormChange}
-                />
-                <VehicleListContent vehicles={props.vehicles} /> */}
+            <div className="flex flex-row">
+                <Filter />
+
+                <div className="w-full">
+                    <SearchForm
+                        formData={formData}
+                        onFormChange={handleFormChange}
+                    />
+                    <DriversList />
+                </div>
             </div>
 
             <Footer />

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import proPic from "../../assets/driverBooking/proPic.png";
 import heartIcon from "../../assets/driverBooking/heart.svg";
 import heartTwo from "../../assets/driverBooking/heart2.svg"
+import { router } from '@inertiajs/react';
 
 const DriversProfile = () => {
     const [likedDrivers, setLikedDrivers] = useState(new Set());
@@ -257,7 +258,7 @@ const DriversProfile = () => {
                 </div>
             </div>
 
-            <button className="w-[150px] h-[45px] bg-[#0955AC] border-[2px] my-10 rounded-[9px] figtree text-[16px] font-[700] text-[#FFFFFF]">VIEW MORE</button>
+            <button className="w-[150px] h-[45px] bg-[#0955AC] border-[2px] my-10 rounded-[9px] figtree text-[16px] font-[700] text-[#FFFFFF]" onClick={() => router.get('/driver-search-results')}>VIEW MORE</button>
 
             
         </div>
