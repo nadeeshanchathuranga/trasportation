@@ -30,6 +30,9 @@ Route::get('/vehicleDetails', [WebController::class, 'vehicleDetails'])->name('v
 Route::get('/courier-service', [WebController::class, 'courierService'])->name('courier.service');
 Route::get('/book-a-ticket', [WebController::class, 'bookATicket'])->name('book.a.ticket');
 Route::get('/booking-home', [WebController::class, 'bookingHome'])->name('booking.home');
+Route::get('/cargo-freight', [WebController::class, 'cargoFreight'])->name('cargo.freight');
+Route::get('/drivers-home', [WebController::class, 'driversHome'])->name('drivers.home');
+Route::get('/driver-search-results', [WebController::class, 'driverSearchResults'])->name('driver.search.results');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [

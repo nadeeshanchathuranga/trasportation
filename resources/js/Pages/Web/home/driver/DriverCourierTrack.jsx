@@ -4,7 +4,6 @@ import HeroSection from "../../components/driver/driverCourierTrack/HeroSection"
 import TrackForm from "../../components/driver/driverCourierTrack/TrackForm";
 import Map from "../../components/driver/driverCourierTrack/Map";
 import AvailableDelivery from "../../components/driver/driverCourierTrack/AvailableDelivery";
-
 import Footer from "../../layouts/Footer";
 
 const DriverCourierTrack = () => {
