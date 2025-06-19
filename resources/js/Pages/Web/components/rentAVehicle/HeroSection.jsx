@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import carImage from "../../assets/rentAVehicle/car.png";
-import calendarBlue from "../../assets/vehicleList/calendarBlue.png"
-import locationBlue from "../../assets/vehicleList/locationBlue.png"
-
-
+import { router } from '@inertiajs/react';
+import { route } from 'ziggy-js';
 
 const HeroSection = ({ formData, onFormChange, onSubmit }) => {
   const [expandedImage, setExpandedImage] = useState("other");
@@ -11,6 +9,35 @@ const HeroSection = ({ formData, onFormChange, onSubmit }) => {
   const handleImageClick = (imageType) => {
     setExpandedImage(imageType);
   };
+
+
+
+    const handleFindVehicleClick = (e) => {
+    e.preventDefault(); // Prevent default form submit behavior
+
+    if (
+        !formData.pickupLocation ||
+        !formData.pickupDate ||
+        !formData.dropoffLocation ||
+        !formData.dropoffDate
+    ) {
+        alert("Please fill in all fields before proceeding.");
+        return;
+    }
+
+    router.visit(route("vehicle.booking.index"), {
+        method: 'get',
+        data: {
+            pickupLocation: formData.pickupLocation,
+            pickupDate: formData.pickupDate,
+            dropoffLocation: formData.dropoffLocation,
+            dropoffDate: formData.dropoffDate
+        },
+        preserveScroll: true
+    });
+};
+
+
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -48,38 +75,32 @@ const HeroSection = ({ formData, onFormChange, onSubmit }) => {
               <label htmlFor="pickupLocation" className="block mb-1">
                 Pick-up Location
               </label>
-              <div className="relative flex items-center">
-                <img src={locationBlue} className="absolute inset-y-5 left-0 flex items-center pl-3 pointer-events-none" alt="location" />
-                <input
-                  type="text"
-                  id="pickupLocation"
-                  value={formData.pickupLocation}
-                  onChange={handleInputChange}
-                  placeholder="Search a location"
-                  className="shadow-sm appearance-none w-full border-[1px] border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pl-12 placeholder:text-[#286BB6]"
-                />
-              </div>
+              <input
+                type="text"
+                id="pickupLocation"
+                value={formData.pickupLocation}
+                onChange={handleInputChange}
+                placeholder="Search a location"
+                className="appearance-none w-full border-[1px] border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline placeholder:text-[#286BB6]"
+
+              />
             </div>
             {/* Pick-up Date */}
             <div>
               <label htmlFor="pickupDate" className="block mb-1">
                 Pick-up Date
               </label>
-              <div className="relative flex items-center">
-                <input
-                  type="date"
-                  id="pickupDate"
-                  value={formData.pickupDate}
-                  onChange={handleInputChange}
-                  className="shadow-sm w-full border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pr-12 [&::-webkit-calendar-picker-indicator]:hidden"
-                />
-                <img 
-                  src={calendarBlue} 
-                  className="absolute inset-y-5 right-0 flex items-center pr-3 cursor-pointer" 
-                  alt="calendar" 
-                  onClick={() => handleCalendarClick('pickupDate')}
-                />
-              </div>
+              <input
+                type="text"
+                id="pickupDate"
+                value={formData.pickupDate}
+                onChange={handleInputChange}
+                placeholder="DD/MM/YYYY"
+                className="w-full border-[1px] border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline placeholder:text-[#286BB6]"
+                onFocus={(e) => (e.target.type = "date")}
+                onBlur={(e) => (e.target.type = "text")}
+
+              />
             </div>
           </div>
 
@@ -89,48 +110,44 @@ const HeroSection = ({ formData, onFormChange, onSubmit }) => {
               <label htmlFor="dropoffLocation" className="block mb-1">
                 Drop-off Location
               </label>
-              <div className="relative flex items-center">
-                <img src={locationBlue} className="absolute inset-y-5 left-0 flex items-center pl-3 pointer-events-none" alt="location" />
-                <input
-                  type="text"
-                  id="dropoffLocation"
-                  value={formData.dropoffLocation}
-                  onChange={handleInputChange}
-                  placeholder="Search a location"
-                  className="shadow-sm w-full border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline pl-12 placeholder:text-[#286BB6]"
-                />
-              </div>
+              <input
+                type="text"
+                id="dropoffLocation"
+                value={formData.dropoffLocation}
+                onChange={handleInputChange}
+                placeholder="Search a location"
+                className="w-full border-[1px] border-[#0000001A] rounded-[8px] p-[16px] leading-tight focus:outline-none focus:shadow-outline placeholder:text-[#286BB6]"
+
+              />
             </div>
             {/* Drop-off Date */}
             <div>
               <label htmlFor="dropoffDate" className="block mb-1">
                 Drop-off Date
               </label>
-              <div className="relative flex items-center">
-                <input
-                  type="date"
-                  id="dropoffDate"
-                  value={formData.dropoffDate}
-                  onChange={handleInputChange}
-                  className="shadow-sm border-[#0000001A] rounded-[8px] p-[16px] w-full leading-tight focus:outline-none focus:shadow-outline pr-12 [&::-webkit-calendar-picker-indicator]:hidden"
-                />
-                <img 
-                  src={calendarBlue} 
-                  className="absolute inset-y-5 right-0 flex items-center pr-3 cursor-pointer" 
-                  alt="calendar" 
-                  onClick={() => handleCalendarClick('dropoffDate')}
-                />
-              </div>
+              <input
+                type="text"
+                id="dropoffDate"
+                value={formData.dropoffDate}
+                onChange={handleInputChange}
+                placeholder="DD/MM/YYYY"
+                className="border-[1px] border-[#0000001A] rounded-[8px] p-[16px] w-full leading-tight focus:outline-none focus:shadow-outline placeholder:text-[#286BB6]"
+                onFocus={(e) => (e.target.type = "date")}
+                onBlur={(e) => (e.target.type = "text")}
+
+              />
             </div>
           </div>
 
           {/* Find a Vehicle Button */}
-          <button 
+          <button
             type="submit"
-            className="bg-[#0955AC] text-white font-bold h-[56px] w-full rounded-[8px] focus:outline-none focus:shadow-outline cursor-pointer"
+            onClick={handleFindVehicleClick}
+            className="bg-[#0955AC] text-white font-bold h-[56px] w-full max-w-[459px] rounded-[8px] focus:outline-none focus:shadow-outline cursor-pointer hover:bg-[#07448a] transition-colors"
           >
             Find a Vehicle
           </button>
+
         </form>
       </div>
 

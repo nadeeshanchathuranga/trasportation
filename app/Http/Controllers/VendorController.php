@@ -11,6 +11,9 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\BookingDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Response;
 
 
 class VendorController extends Controller
@@ -38,9 +41,72 @@ class VendorController extends Controller
     }
 
 
-    public function bookingManagement(){
-        return Inertia::render('Vendors/BookingManagement');
+    // public function bookingManagement(){
+    //     $booking_details = BookingDetail::all();
+
+    //     return Inertia::render('Vendors/BookingManagement', [
+    //         'bookingDetails' => $booking_details,
+    //     ]);
+    // }
+
+    public function downloadReport()
+    {
+        $bookings = BookingDetail::with('vehicle')->latest()->get();
+
+        $pdf = Pdf::loadView('exports.booking_report', compact('bookings'))
+                ->setPaper('A4', 'landscape');
+
+        return $pdf->download('booking_report.pdf');
     }
+
+
+    public function displayBookingReport()
+    {
+        $bookings = BookingDetail::with('vehicle')->latest()->paginate(10);
+
+        return Inertia::render('Vendors/BookingReport', [
+            'bookingDetails' => $bookings,
+        ]);
+    }
+
+
+    public function updateBookingStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Accepted,Cancelled',
+        ]);
+
+        $booking = BookingDetail::findOrFail($id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        return response()->json([
+            'message' => "Booking status updated to {$request->status}."
+        ]);
+    }
+
+
+
+
+   public function bookingManagement()
+    {
+        $bookingDetails = BookingDetail::with('vehicle')->latest()->paginate(10);
+
+        $stats = [
+            'activeDrivers' => 12, // Ideally: Driver::where('status', 'active')->count()
+            'activeCustomers' => 36, // Ideally: Customer::where('status', 'active')->count()
+            'activeBookings' => 22,
+            'ongoingTrips' => 34,
+            'totalEarnings' => 145000, // Add this field in your table
+        ];
+
+        return Inertia::render('Vendors/BookingManagement', [
+            'bookingDetails' => $bookingDetails,
+            'stats' => $stats,
+        ]);
+    }
+
+
 
     public function earningManagement(){
         return Inertia::render('Vendors/EarningManagement');
