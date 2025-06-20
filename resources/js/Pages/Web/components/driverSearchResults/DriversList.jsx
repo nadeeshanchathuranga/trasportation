@@ -4,6 +4,7 @@ import heartIcon from "../../assets/driverBooking/heart.svg";
 import heartTwo from "../../assets/driverBooking/heart2.svg";
 import leftArrow from "../../assets/driverBooking/left.svg";
 import rightArrow from "../../assets/driverBooking/right.svg";
+import { router } from "@inertiajs/react";
 
 const drivers = [
     {
@@ -23,11 +24,6 @@ const drivers = [
         isProfessional: true,
     },
     // Add more driver objects as needed
-    {
-        name: "Steve Gibson",
-        rides: 248,
-        isProfessional: true,
-    },
     {
         name: "Steve Gibson",
         rides: 248,
@@ -149,7 +145,7 @@ const DriversList = () => {
                                 </span>
                             </h1>
                             <div className="flex flex-row gap-5 mt-3">
-                                <button className="xl:w-[194px] w-full h-[30px] bg-[#0955AC] rounded-[4px] text-[#FFFFFF] bebas-neue text-[9px] font-[400]">
+                                <button className="xl:w-[194px] w-full h-[30px] bg-[#0955AC] rounded-[4px] text-[#FFFFFF] bebas-neue text-[9px] font-[400]" onClick={() => router.visit('/driver-details', { data: { driver: driver } })}>
                                     More Details
                                 </button>
                                 <div
@@ -200,7 +196,7 @@ const DriversList = () => {
                                 onClick={() => handlePageChange(page)}
                                 className={`px-3 md:px-4 py-1.5 md:py-2 rounded text-sm md:text-base inter text-[16px] font-[600] size-[40px] ${
                                     currentPage === page
-                                        ? "bg-[#F4F3F3] text-[#0955AC] border border-[#0955AC]"
+                                        ? "bg-[#F4F3F3] text-[#0955AC] border-[2px] border-[#0955AC]"
                                         : "bg-[#F4F3F3] border-[1px] border-[#BEBEBE] text-[#000000]"
                                 }`}
                             >
