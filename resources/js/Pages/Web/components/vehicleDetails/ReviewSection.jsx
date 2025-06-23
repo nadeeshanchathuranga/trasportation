@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import proPic from "../../assets/vehicleDetails/proPic.png";
 import stars from "../../assets/vehicleDetails/stars.png";
+import arrow from "../../assets/landVehicleDetails/arrow.svg"
 
 const ReviewSection = () => {
     const [showMore, setShowMore] = useState(false);
@@ -113,23 +114,13 @@ const ReviewSection = () => {
                         className="text-[#0955AC] text-[14px] font-[700] border-[1.5px] w-[175px] h-[47px] justify-center rounded-[8px] border-[#0955AC] transition-colors duration-200 flex items-center gap-2"
                     >
                         <span>
-                            {showMore ? "Show less" : "See All Reviews"}
+                            {showMore ? "Show Less Reviews" : "See All Reviews"}
                         </span>
-                        <svg
-                            className={`w-4 h-4 transition-transform duration-200 ${
-                                showMore ? "rotate-180" : ""
-                            }`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M19 9l-7 7-7-7"
-                            />
-                        </svg>
+                        <img
+                            src={arrow}
+                            alt="Arrow"
+                            className={`size-[24px] transition-transform duration-200 ${showMore ? "rotate-180" : ""}`}
+                        />
                     </button>
                 </div>
             )}

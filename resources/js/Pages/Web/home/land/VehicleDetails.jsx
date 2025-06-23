@@ -43,7 +43,7 @@ const VehicleDetails = () => {
                 }}
             >
                 <div className="py-20 md:px-10 flex flex-col xl:flex-row justify-center gap-20">
-                    <div className="flex flex-col gap-10 justify-start items-start">
+                    <div className="flex flex-col gap-10 justify-start items-center">
                         <VehicleImages />
                         <VehicleInfo />
                     </div>
