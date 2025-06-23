@@ -12,6 +12,7 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\VehicleBrandController;
 use App\Http\Controllers\BodyTypeController;
 use App\Http\Controllers\VehicleBookingController;
+use App\Http\Controllers\BookingController;
 
 use App\Http\Controllers\FreightController;
 use App\Http\Controllers\WarehouseController;
@@ -317,8 +318,9 @@ Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.'
     Route::get('/bookings/air/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'airBookingDetails'])->name('air.booking.details');
     Route::get('/bookings/sea/{vehicle}', [App\Http\Controllers\VehicleBookingController::class, 'seaBookingDetails'])->name('sea.booking.details');
 
-    // Route::post('/book', [BookingController::class, 'store']);
+    Route::post('/book', [BookingController::class, 'store']);
 });
+
 
 Route::get('/sample', function () {
     return Inertia::render('Web/components/vehicleBooking/sample');
