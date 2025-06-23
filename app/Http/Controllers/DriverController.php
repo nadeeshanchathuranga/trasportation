@@ -17,8 +17,12 @@ class DriverController extends Controller
     {
         $user = Auth::user();
 
+
+
         // Check if this user is a driver
         $driver = Driver::where('user_id', $user->id)->first();
+
+
 
         // If the user has a driver profile
         if ($driver) {
@@ -50,90 +54,238 @@ class DriverController extends Controller
 
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
+
+
+
+
+public function store(Request $request)
+{
+    try {
+        // Validate the request
+        $validatedData = $request->validate([
             'phone'            => 'required|string|max:20',
-            'dob'              => 'required|date',
-            'license_number'   => 'required|string|max:100',
+            'dob'              => 'required|date|before:-18 years',
+            'license_number'   => 'required|string|max:100|unique:drivers,license_number',
             'nic'              => 'required|file|mimes:jpeg,png,pdf|max:2048',
             'license'          => 'required|file|mimes:jpeg,png,pdf|max:2048',
             'police_clearance' => 'required|file|mimes:jpeg,png,pdf|max:2048',
             'certifications'   => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+            'profile_photo'    => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            // Custom error messages
+            'phone.required' => 'Phone number is required.',
+            'phone.max' => 'Phone number cannot exceed 20 characters.',
+            'dob.required' => 'Date of birth is required.',
+            'dob.before' => 'You must be at least 18 years old to register as a driver.',
+            'license_number.required' => 'License number is required.',
+            'license_number.unique' => 'This license number is already registered.',
+            'license_number.max' => 'License number cannot exceed 100 characters.',
+            'nic.required' => 'NIC document is required.',
+            'nic.mimes' => 'NIC must be a JPEG, PNG, or PDF file.',
+            'nic.max' => 'NIC file size cannot exceed 2MB.',
+            'license.required' => 'Driver license document is required.',
+            'license.mimes' => 'License must be a JPEG, PNG, or PDF file.',
+            'license.max' => 'License file size cannot exceed 2MB.',
+            'police_clearance.required' => 'Police clearance certificate is required.',
+            'police_clearance.mimes' => 'Police clearance must be a JPEG, PNG, or PDF file.',
+            'police_clearance.max' => 'Police clearance file size cannot exceed 2MB.',
+            'certifications.mimes' => 'Certifications must be a JPEG, PNG, or PDF file.',
+            'certifications.max' => 'Certifications file size cannot exceed 2MB.',
+            'profile_photo.image' => 'Profile photo must be an image.',
+            'profile_photo.mimes' => 'Profile photo must be a JPEG, PNG, or JPG file.',
+            'profile_photo.max' => 'Profile photo file size cannot exceed 2MB.',
         ]);
 
-        $nic       = $request->file('nic')->store('drivers/nic', 'public');
-        $license   = $request->file('license')->store('drivers/license', 'public');
+        // Check if user is already registered as a driver
+        $existingDriver = Driver::where('user_id', auth()->id())->first();
+        if ($existingDriver) {
+            return back()->with('error', 'You are already registered as a driver.');
+        }
+
+        // Store the uploaded files
+        $nic = $request->file('nic')->store('drivers/nic', 'public');
+        $license = $request->file('license')->store('drivers/license', 'public');
         $clearance = $request->file('police_clearance')->store('drivers/clearance', 'public');
 
+        // Handle optional files
         $certifications = null;
         if ($request->hasFile('certifications')) {
             $certifications = $request->file('certifications')->store('drivers/certifications', 'public');
         }
 
-        Driver::create([
+        $profilePhoto = null;
+        if ($request->hasFile('profile_photo')) {
+            $profilePhoto = $request->file('profile_photo')->store('drivers/profile_photos', 'public');
+        }
+
+        // Create the driver record
+        $driver = Driver::create([
             'user_id'               => auth()->id(),
-            'phone'                 => $request->phone,
-            'dob'                   => $request->dob,
-            'license_number'        => $request->license_number,
+            'phone'                 => $validatedData['phone'],
+            'dob'                   => $validatedData['dob'],
+            'license_number'        => $validatedData['license_number'],
             'nic_path'              => $nic,
             'license_path'          => $license,
             'police_clearance_path' => $clearance,
             'certifications'        => $certifications,
+            'profile_photo'         => $profilePhoto,
+            'status'                => 'pending', // Assuming you have a status field
         ]);
 
-        return back()->with('success', 'Driver registered successfully!');
-    }
-
-    public function servicePackageForm()
-    {
-
-
-    $driver = Driver::where('user_id', auth()->id())->first();
-
-
-
-        $servicePackageTypes = DriverServicePackagesType::where('is_active', true)->get();
-
-        return Inertia::render('Driver/ServicePackageForm', [
-
-            'servicePackageTypes' => $servicePackageTypes,
-          'driver' => $driver ?? ['user_id' => null], // sends { id: value } to frontend
-        ]);
-    }
-
-
-
-public function servicePackageStore(Request $request)
-{
-    try {
-        // Validate the incoming request
-        $validated = $request->validate([
-            'driver_id' => 'required|exists:drivers,user_id',
-            'type_id' => 'required|integer|exists:driver_service_packages_types,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'duration_in_hours' => 'required|numeric|min:0.5',
+        // Log the successful registration
+        \Log::info('Driver registered successfully', [
+            'user_id' => auth()->id(),
+            'driver_id' => $driver->id,
+            'license_number' => $validatedData['license_number']
         ]);
 
-        // Set default status
-        $validated['status'] = 'pending';
+        return back()->with('success', 'Driver registered successfully! Your application is under review.');
 
-        // Create the service package
-        DriverServicePackage::create($validated);
+    } catch (\Illuminate\Validation\ValidationException $e) {
 
-        return redirect()->route('driver.service_package.view')
-            ->with('success', 'Service Package created successfully.');
+        \Log::warning('Driver registration validation failed', [
+            'user_id' => auth()->id(),
+            'errors' => $e->errors()
+        ]);
+
+        return back()->withErrors($e->errors())->withInput();
 
     } catch (\Exception $e) {
-        \Log::error('Service Package Creation Error: ' . $e->getMessage());
 
-        return redirect()->back()
-            ->withInput()
-            ->with('error', 'Something went wrong. Please try again.');
+        \Log::error('Driver registration failed', [
+            'user_id' => auth()->id(),
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+
+        return back()->with('error', 'Registration failed due to a server error. Please try again later.');
     }
 }
+
+
+
+
+
+public function edit($userId)
+{
+    $driver = Driver::where('user_id', $userId)->with('user')->first();
+
+
+    if (!$driver) {
+        return redirect()->route('dashboard')->with('error', 'Driver profile not found.');
+    }
+
+    return inertia('Driver/DriverEdit', [
+        'driver' => $driver,
+    ]);
+}
+
+
+
+
+
+
+public function update(Request $request)
+{
+    try {
+        // Get the current driver
+        $driver = auth()->user()->driver;
+
+        if (!$driver) {
+            return back()->with('error', 'Driver profile not found.');
+        }
+
+        // Validation rules
+        $validatedData = $request->validate([
+            'dob'              => 'required|date|before:-18 years',
+            'license_number'   => 'required|string|max:100|unique:drivers,license_number,' . $driver->id,
+            'nic'              => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+            'license'          => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+            'police_clearance' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+            'certifications'   => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+            'profile_photo'    => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            // Custom error messages
+            'dob.required' => 'Date of birth is required.',
+            'dob.before' => 'You must be at least 18 years old.',
+            'license_number.required' => 'License number is required.',
+            'license_number.unique' => 'This license number is already registered.',
+            'license_number.max' => 'License number cannot exceed 100 characters.',
+            'nic.mimes' => 'NIC must be a JPEG, PNG, or PDF file.',
+            'nic.max' => 'NIC file size cannot exceed 2MB.',
+            'license.mimes' => 'License must be a JPEG, PNG, or PDF file.',
+            'license.max' => 'License file size cannot exceed 2MB.',
+            'police_clearance.mimes' => 'Police clearance must be a JPEG, PNG, or PDF file.',
+            'police_clearance.max' => 'Police clearance file size cannot exceed 2MB.',
+            'certifications.mimes' => 'Certifications must be a JPEG, PNG, or PDF file.',
+            'certifications.max' => 'Certifications file size cannot exceed 2MB.',
+            'profile_photo.image' => 'Profile photo must be an image.',
+            'profile_photo.mimes' => 'Profile photo must be a JPEG, PNG, or JPG file.',
+            'profile_photo.max' => 'Profile photo file size cannot exceed 2MB.',
+        ]);
+
+        // Handle file uploads
+        $fileFields = [
+            'nic' => ['field' => 'nic_path', 'directory' => 'drivers/nic'],
+            'license' => ['field' => 'license_path', 'directory' => 'drivers/license'],
+            'police_clearance' => ['field' => 'police_clearance_path', 'directory' => 'drivers/clearance'],
+            'certifications' => ['field' => 'certifications', 'directory' => 'drivers/certifications'],
+            'profile_photo' => ['field' => 'profile_photo', 'directory' => 'drivers/profile_photos']
+        ];
+
+        foreach ($fileFields as $inputName => $config) {
+            if ($request->hasFile($inputName)) {
+                // Delete old file if exists
+                if ($driver->{$config['field']} && Storage::disk('public')->exists($driver->{$config['field']})) {
+                    Storage::disk('public')->delete($driver->{$config['field']});
+                }
+
+                // Store new file
+                $driver->{$config['field']} = $request->file($inputName)->store($config['directory'], 'public');
+            }
+        }
+
+        // Update driver fields
+        $driver->dob = $validatedData['dob'];
+        $driver->license_number = $validatedData['license_number'];
+
+        // Save the driver
+        $driver->save();
+
+        \Log::info('Driver profile updated successfully', [
+            'user_id' => auth()->id(),
+            'driver_id' => $driver->id,
+            'updated_fields' => array_keys($validatedData)
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Driver profile updated successfully!');
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        \Log::warning('Driver update validation failed', [
+            'user_id' => auth()->id(),
+            'errors' => $e->errors()
+        ]);
+
+        return back()->withErrors($e->errors())->withInput();
+
+    } catch (\Exception $e) {
+        \Log::error('Driver update failed', [
+            'user_id' => auth()->id(),
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+
+        return back()->with('error', 'Failed to update profile. Please try again later.');
+    }
+}
+
+
+
+
+
+
+
+
 
 
 

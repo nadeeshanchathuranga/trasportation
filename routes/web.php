@@ -128,6 +128,8 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
 Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () {
     Route::get('/dashboard', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/store', [DriverController::class, 'store'])->name('driver.store');
+    Route::get('/edit/{user}', [DriverController::class, 'edit'])->name('driver.edit');
+    Route::post('/update', [DriverController::class, 'update'])->name('driver.update');
     Route::get('/rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
     Route::get('/service', [DriverController::class, 'servicePackage'])->name('driver.service_package');
     Route::get('/service-package', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
