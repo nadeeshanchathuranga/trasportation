@@ -291,10 +291,16 @@ require __DIR__ . '/auth.php';
 // -------------------------------
 // 🚛 Freight Booking Routes
 // -------------------------------
-Route::middleware(['auth'])->prefix('freight-booking')->name('freight.booking.')->group(function () {
+// Route::middleware(['auth'])->prefix('freight-booking')->name('freight.booking.')->group(function () {
+//     Route::get('/create', [App\Http\Controllers\FreightBookingController::class, 'create'])->name('create');
+//     Route::post('/', [App\Http\Controllers\FreightBookingController::class, 'store'])->name('store');
+// });
+
+Route::prefix('freight-booking')->name('freight.booking.')->group(function () {
     Route::get('/create', [App\Http\Controllers\FreightBookingController::class, 'create'])->name('create');
     Route::post('/', [App\Http\Controllers\FreightBookingController::class, 'store'])->name('store');
 });
+
 
 Route::middleware(['auth', 'role:freight'])->prefix('freight')->name('freight.')->group(function () {
     Route::get('/bookings', [App\Http\Controllers\FreightBookingController::class, 'index'])->name('bookings.index');

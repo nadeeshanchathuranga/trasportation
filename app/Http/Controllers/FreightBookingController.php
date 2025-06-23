@@ -10,11 +10,14 @@ class FreightBookingController extends Controller
 {
     public function create()
     {
+
+
         return Inertia::render('Web/Freight/CreateBooking');
     }
 
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'service_type' => ['required', 'in:LCL,FCL'],
             'multimodal_preferences' => ['nullable', 'array'],
@@ -33,6 +36,7 @@ class FreightBookingController extends Controller
         $data['origin'] = json_decode($data['origin'], true);
         $data['destination'] = json_decode($data['destination'], true);
 
+
         if ($request->hasFile('packing_list')) {
             $data['packing_list_path'] = $request->file('packing_list')->store('documents');
         }
@@ -43,7 +47,7 @@ class FreightBookingController extends Controller
 
         FreightBooking::create($data);
 
-        return redirect()->route('user.index')->with('success', 'Freight booking created successfully.');
+        return redirect()->route('freight.booking.create')->with('success', 'Freight booking created successfully.');
     }
 
     public function index()

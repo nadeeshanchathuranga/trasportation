@@ -100,6 +100,14 @@ const Header = () => {
                             >
                                 Booking Home
                             </Link>
+
+
+                             <Link
+                                href="/freight-booking/create"
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#0955AC]"
+                            >
+                                Freight Booking
+                            </Link>
                         </div>
                     </div>
                     <div className="relative group">

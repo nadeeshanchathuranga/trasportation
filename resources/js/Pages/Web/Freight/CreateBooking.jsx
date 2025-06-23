@@ -53,7 +53,7 @@ export default function CreateBooking({ auth }) {
 
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+<>
             <Head title="New Freight Booking" />
 
             <div className="max-w-4xl mx-auto mt-10 bg-white p-8 shadow rounded">
@@ -228,6 +228,6 @@ export default function CreateBooking({ auth }) {
                     </div>
                 </form>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
 }

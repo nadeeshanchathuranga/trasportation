@@ -165,6 +165,25 @@ export default function DriverRegisterForm({ user }) {
     <div className="space-y-6">
       <h3 className="text-xl font-semibold text-gray-700 border-b pb-2">📎 Upload Documents</h3>
 
+
+<div>
+  <label htmlFor="profile_photo" className="block text-sm font-medium text-gray-600 mb-1">
+    Profile Photo
+  </label>
+  <input
+    id="profile_photo"
+    type="file"
+    name="profile_photo"
+    accept="image/*"  
+    required
+    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white focus:ring focus:ring-blue-200"
+    onChange={handleChange}
+  />
+</div>
+
+
+
+
       <div>
         <label htmlFor="nic" className="block text-sm font-medium text-gray-600 mb-1">NIC (PDF or Image)</label>
         <input
