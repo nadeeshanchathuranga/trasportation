@@ -1,12 +1,10 @@
 import React from "react";
-import proPic from "../../assets/landVehicleDetails/proPic.svg";
-import star from "../../assets/landVehicleDetails/star.svg";
-import tag from "../../assets/landVehicleDetails/tag.svg";
-import clock from "../../assets/landVehicleDetails/clock.svg"
+
+import clock from "../../assets/landVehicleDetails/clock.svg";
 
 const VehicleSearch = () => {
     return (
-        <div className="poppins w-auto xl:w-[440px] xl:h-[1134px] bg-[#F4F3F3] rounded-[19px] flex flex-col gap-10 py-10 px-20">
+        <div className="poppins w-auto h-auto xl:w-[440px] xl:h-[1165px] bg-[#F4F3F3] rounded-[19px] flex flex-col gap-10 py-10 px-20">
             <div className="text-[25px] font-[700]">
                 <h1>
                     $620{" "}
@@ -64,7 +62,10 @@ const VehicleSearch = () => {
                                 onFocus={(e) => (e.target.type = "text")}
                                 onBlur={(e) => (e.target.type = "text")}
                             />
-                            <img src={clock} className="hidden sm:block absolute top-11 left-40 z-10" />
+                            <img
+                                src={clock}
+                                className="hidden sm:block absolute top-11 left-40 z-10"
+                            />
                         </div>
                     </div>
                 </div>
@@ -100,7 +101,6 @@ const VehicleSearch = () => {
                                 onFocus={(e) => (e.target.type = "date")}
                                 onBlur={(e) => (e.target.type = "text")}
                             />
-                            
                         </div>
                         <div className="relative">
                             <label htmlFor="pickupTime" className="block mb-3">
@@ -116,13 +116,16 @@ const VehicleSearch = () => {
                                 onFocus={(e) => (e.target.type = "text")}
                                 onBlur={(e) => (e.target.type = "text")}
                             />
-                            <img src={clock} className="hidden sm:block absolute top-11 left-40 z-10" />
+                            <img
+                                src={clock}
+                                className="hidden sm:block absolute top-11 left-40 z-10"
+                            />
                         </div>
                     </div>
                 </div>
             </form>
 
-            <div className="poppins text-[12px] w-full h-auto md:h-[423px] bg-[#0955AC0D] rounded-[5px] flex flex-col py-10 px-10">
+            <div className="poppins text-[12px] w-full h-auto bg-[#0955AC0D] rounded-[5px] flex flex-col py-10 px-10">
                 <h1 className="font-[600] mb-5 text-[#000000D9]">
                     Pricing Breakdown
                 </h1>
@@ -159,31 +162,90 @@ const VehicleSearch = () => {
                 </div>
                 <div className="w-full h-[1px] bg-[#CDD0D4]" />
 
+                <h1 className="font-[600] mt-5 text-[#000000D9]">Add Extras</h1>
 
+                {/* checkbox section */}
+                <div className="flex flex-col justify-center text-[12px] font-[500] mt-5">
+                    <div className="flex flex-row justify-between w-full px-5 py-5">
+                        <div className="flex flex-row justify-center items-center gap-4">
+                            <input
+                                type="checkbox"
+                                id="#"
+                                name="vehicleType"
+                                value=""
+                                className=" size-[15px] border-[1px] border-[#0955AC] rounded-[2.8px]"
+                            />
+                            <h1>GPS Navigation System</h1>
+                        </div>
+                        <h1>$155</h1>
+                    </div>
+                    <div className="flex flex-row justify-between w-full px-5">
+                        <div className="flex flex-row justify-center items-center gap-4">
+                            <input
+                                type="checkbox"
+                                id="#"
+                                name="vehicleType"
+                                value=""
+                                className=" size-[15px] border-[1px] border-[#0955AC] rounded-[2.8px]"
+                            />
+                            <h1>Child Seat</h1>
+                        </div>
+                        <h1>$155</h1>
+                    </div>
+                    <div className="flex flex-row justify-between w-full px-5 py-5">
+                        <div className="flex flex-row justify-center items-center gap-4">
+                            <input
+                                type="checkbox"
+                                id="#"
+                                name="vehicleType"
+                                value=""
+                                className=" size-[15px] border-[1px] border-[#0955AC] rounded-[2.8px]"
+                            />
+                            <h1>Wi-fi</h1>
+                        </div>
+                        <h1>$155</h1>
+                    </div>
+                    <div className="flex flex-row justify-between w-full px-5">
+                        <div className="flex flex-row justify-center items-center gap-4">
+                            <input
+                                type="checkbox"
+                                id="#"
+                                name="vehicleType"
+                                value=""
+                                className=" size-[15px] border-[1px] border-[#0955AC] rounded-[2.8px]"
+                            />
+                            <h1>Insurance Coverage </h1>
+                        </div>
+                        <h1>$155</h1>
+                    </div>
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <div className="w-full h-[1px] bg-[#CDD0D4] mt-5" />
 
                 <div className="flex flex-col md:flex-row justify-between w-full px-5 py-5 font-[500]">
                     <div>
-                        <h1 className="text-[#000000CC]">Total Price Due</h1>
-                        <div className="flex flex-row gap-3 text-[#00000061]">
-                            <h1>$500 Refunded by</h1>
-                            <h1 className="text-[#0955AC]">Oct 14th</h1>
+                        <h1 className="text-[#000000CC]">Advance Payment</h1>
+                        <div className="flex flex-row gap-3 text-[#00000061] mt-3">
+                            <h1>First payment </h1>
+                            <h1 className="text-[#0955AC]">(20%)</h1>
                         </div>
                     </div>
-                    <div className="text-[#000000CC]">$4567</div>
+                    <div className="text-[#000000CC] text-[12px] font-[500]">
+                        $1567
+                    </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row justify-between w-full px-5 pb-5 font-[500]">
+                    <div>
+                        <h1 className="text-[#000000CC]">Total Price Due</h1>
+                        <div className="flex flex-row gap-3 text-[#00000061] mt-3">
+                            <h1>$500 Refunded by</h1>
+                            <h1 className="text-[#0955AC]">July 27th</h1>
+                        </div>
+                    </div>
+                    <div className="text-[#000000CC] text-[16px] font-[700]">
+                        $4567
+                    </div>
                 </div>
 
                 <div className="relative flex flex-col md:flex-row items-start justify-start px-5">
@@ -198,38 +260,6 @@ const VehicleSearch = () => {
                 <div className="flex justify-center items-center">
                     <div className=" w-auto md:w-[261px] h-[29px] bg-[#0955AC] rounded-[5px] mt-10 flex items-center justify-center text-[12px] font-[700] text-[#FFFFFF] cursor-pointer">
                         CONTINUE TO CHECKOUT
-                    </div>
-                </div>
-            </div>
-            <div className="poppins w-full md:h-[160px] bg-[#0955AC0D] rounded-[5px] py-7 px-12">
-                <div className="flex flex-col md:flex-row justify-start gap-5">
-                    <img src={proPic} />
-                    <div className="flex flex-col items-start justify-center">
-                        <div className="flex flex-row gap-2 justify-center items-center">
-                            {" "}
-                            <h1 className="text-[15px] font-[700]">
-                                Steve Gibson
-                            </h1>
-                            <img src={tag} />
-                        </div>
-                        <div className="flex flex-row gap-3 justify-center items-center">
-                            {" "}
-                            <img src={star} />
-                            <h1 className="text-[12px] font-[500] text-[#00000080]">
-                                80 Reviews
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex justify-center items-center mt-10">
-                    <div className="text-[9px] flex flex-col md:flex-row gap-4">
-                        <div className="w-[123px] h-[29px] bg-[#0955AC] text-[#FFFFFF] font-[700] rounded-[5px] flex justify-center items-center cursor-pointer">
-                            CONTACT NUMBER
-                        </div>
-                        <div className="w-[123px] h-[29px] border-[1.5px] border-[#0955AC] text-[#0955AC] font-[700] rounded-[5px] flex justify-center items-center cursor-pointer">
-                            VIEW PROFILE
-                        </div>
                     </div>
                 </div>
             </div>

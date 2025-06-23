@@ -4,6 +4,7 @@ import Header from "../../layouts/Header";
 import VehicleImages from "../../components/LandVehicleDetails/VehicleImages";
 import VehicleSearch from "../../components/LandVehicleDetails/VehicleSearch";
 import VehicleInfo from "../../components/LandVehicleDetails/VehicleInfo";
+import Suggestions from "../../components/LandVehicleDetails/Suggestions";
 import bg from "../../assets/rentAVehicle/bg/bg.png";
 
 const VehicleDetails = () => {
@@ -41,13 +42,16 @@ const VehicleDetails = () => {
                     minHeight: "calc(100vh - 80px)",
                 }}
             >
-                <div className="py-10 md:px-10 flex flex-col xl:flex-row justify-center gap-20">
-                    <div className="flex flex-col gap-10 justify-center items-center">
+                <div className="py-20 md:px-10 flex flex-col xl:flex-row justify-center gap-20">
+                    <div className="flex flex-col gap-10 justify-start items-start">
                         <VehicleImages />
                         <VehicleInfo />
                     </div>
-
-                    <VehicleSearch />
+                    <div className="flex flex-col justify-start items-center gap-10">
+                        {" "}
+                        <VehicleSearch />
+                        <Suggestions />
+                    </div>
                 </div>
             </div>
         </div>
