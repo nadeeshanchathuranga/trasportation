@@ -326,3 +326,11 @@ Route::get('/sample', function () {
     return Inertia::render('Web/components/vehicleBooking/sample');
 })->name('sample');
 
+Route::get('/vendors/bookings', function () {
+    return Inertia::render('Web/home/vendors/Booking');
+})->name('vendors.bookings');
+
+Route::get('/vendors/units', function () {
+    return Inertia::render('Web/home/vendors/Unit');
+})->name('vendors.units');
+

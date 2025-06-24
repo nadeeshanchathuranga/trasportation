@@ -22,11 +22,11 @@ const SideMenu = () => {
                     <img src={dashLogo} className="w-[25px]" />
                     <h1>Dashboard</h1>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer">
+                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer" onClick={() => window.location.href = '/vendors/bookings'}>
                     <img src={bookLogo} className="w-[25px]" />
                     <h1>Bookings</h1>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer">
+                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer" onClick={() => window.location.href = '/vendors/units'}>
                     <img src={uniLogo} className="w-[25px]" />
                     <h1>Units</h1>
                 </div>
