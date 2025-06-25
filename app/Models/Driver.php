@@ -8,6 +8,7 @@ class Driver extends Model
 {
       protected $fillable = [
         'user_id',
+        'profile_photo',
         'license_number',
         'dob',
         'nic_path',

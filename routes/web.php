@@ -129,6 +129,8 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
 Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () {
     Route::get('/dashboard', [DriverController::class, 'index'])->name('driver.view');
     Route::post('/store', [DriverController::class, 'store'])->name('driver.store');
+    Route::get('/edit/{user}', [DriverController::class, 'edit'])->name('driver.edit');
+    Route::post('/update', [DriverController::class, 'update'])->name('driver.update');
     Route::get('/rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
     Route::get('/service', [DriverController::class, 'servicePackage'])->name('driver.service_package');
     Route::get('/service-package', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
@@ -292,10 +294,16 @@ require __DIR__ . '/auth.php';
 // -------------------------------
 // 🚛 Freight Booking Routes
 // -------------------------------
-Route::middleware(['auth'])->prefix('freight-booking')->name('freight.booking.')->group(function () {
+// Route::middleware(['auth'])->prefix('freight-booking')->name('freight.booking.')->group(function () {
+//     Route::get('/create', [App\Http\Controllers\FreightBookingController::class, 'create'])->name('create');
+//     Route::post('/', [App\Http\Controllers\FreightBookingController::class, 'store'])->name('store');
+// });
+
+Route::prefix('freight-booking')->name('freight.booking.')->group(function () {
     Route::get('/create', [App\Http\Controllers\FreightBookingController::class, 'create'])->name('create');
     Route::post('/', [App\Http\Controllers\FreightBookingController::class, 'store'])->name('store');
 });
+
 
 Route::middleware(['auth', 'role:freight'])->prefix('freight')->name('freight.')->group(function () {
     Route::get('/bookings', [App\Http\Controllers\FreightBookingController::class, 'index'])->name('bookings.index');
