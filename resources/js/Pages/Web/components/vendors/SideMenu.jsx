@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import dashLogo from "../../assets/vendors/dashboard/dashLogo.svg";
 import bookLogo from "../../assets/vendors/dashboard/bookLogo.svg";
 import uniLogo from "../../assets/vendors/dashboard/uniLogo.svg";
@@ -11,6 +11,8 @@ import messgLogo from "../../assets/vendors/dashboard/messgLogo.svg";
 import logOutLogo from "../../assets/vendors/dashboard/logOutLogo.svg";
 
 const SideMenu = () => {
+    const [showFinancialDropdown, setShowFinancialDropdown] = useState(false);
+
     return (
         <div className="poppins w-[289px] h-[1070px] bg-[#FFFFFF] flex flex-col items-center py-5 px-5 rounded-tr-[10px] rounded-br-[10px]">
             <h1 className="text-[25px] font-[700] text-center uppercase">
@@ -18,7 +20,7 @@ const SideMenu = () => {
             </h1>
 
             <div className="relative figtree flex flex-col items-start gap-10 text-[24px] font-[500] text-[#00000066] h-full py-10">
-                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer">
+                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer" onClick={() => window.location.href = '/vendors/dashboard'}>
                     <img src={dashLogo} className="w-[25px]" />
                     <h1>Dashboard</h1>
                 </div>
@@ -34,7 +36,7 @@ const SideMenu = () => {
                     <img src={calendarLogo} className="w-[25px]" />
                     <h1>Calendar</h1>
                 </div>
-                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer">
+                <div className="flex flex-row justify-center items-center gap-5 cursor-pointer" onClick={() => window.location.href = '/vendors/clients'}>
                     <img src={clientsLogo} className="w-[25px]" />
                     <h1>Clients</h1>
                 </div>
@@ -44,8 +46,26 @@ const SideMenu = () => {
                 </div>
                 <div className="flex flex-row justify-center items-center gap-5 cursor-pointer">
                     <img src={finLogo} className="w-[25px]" />
-                    <h1>Financial</h1>
+                    <h1 onClick={() => setShowFinancialDropdown((prev) => !prev)}>
+                        Financial
+                    </h1>
                 </div>
+                {showFinancialDropdown && (
+                    <div className="ml-10 mb-2 w-40 bg-white flex flex-col text-[24px] font-[500] text-[#00000066]">
+                        <div
+                            className="px-4 py-2 cursor-pointer"
+                            onClick={() => window.location.href = '/vendors/payment'}
+                        >
+                            Payment
+                        </div>
+                        <div
+                            className="px-4 py-2 cursor-pointer"
+                            onClick={() => window.location.href = '/vendors/expenses'}
+                        >
+                            Expenses
+                        </div>
+                    </div>
+                )}
                 <div className="flex flex-row justify-center items-center gap-5 cursor-pointer">
                     <img src={trackLogo} className="w-[25px]" />
                     <h1>Tracking</h1>

@@ -121,6 +121,9 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
         ->name('vendor.warehouses.toggle-status');
     Route::post('/warehouses/{warehouse}/book', [WarehouseController::class, 'book'])->name('warehouses.book');
     Route::get('/my-bookings', [WarehouseController::class, 'userBookings'])->name('warehouse.bookings');
+
+    Route::get('/financial/payment', [VendorController::class, 'financialPayment'])->name('vendor.financial.payment');
+    Route::get('/financial/expenses', [VendorController::class, 'financialExpenses'])->name('vendor.financial.expenses');
 });
 
 // -------------------------------
@@ -341,4 +344,21 @@ Route::get('/vendors/bookings', function () {
 Route::get('/vendors/units', function () {
     return Inertia::render('Web/home/vendors/Unit');
 })->name('vendors.units');
+
+Route::get('/vendors/dashboard', function () {
+    return Inertia::render('Web/home/vendors/Dashboard');
+})->name('vendors.dashboard');
+
+Route::get('/vendors/clients', function () {
+    return Inertia::render('Web/home/vendors/Client');
+})->name('vendors.clients');
+
+Route::get('/vendors/expenses', function () {
+    return Inertia::render('Web/home/vendors/Expenses');
+})->name('vendors.expenses');
+
+Route::get('/vendors/payment', function () {
+    return Inertia::render('Web/home/vendors/Payment');
+})->name('vendors.payment');
+
 

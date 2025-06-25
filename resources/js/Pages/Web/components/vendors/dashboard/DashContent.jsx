@@ -1,6 +1,7 @@
 import React from "react";
 import search from "../../../assets/vendors/dashboard/searchIcon.svg";
 import settings from "../../../assets/vendors/dashboard/settings.svg";
+import bell from "../../../assets/vendors/dashboard/bell.svg";
 import proPic from "../../../assets/vendors/dashboard/proPic.svg";
 
 import dollarIcon from "../../../assets/vendors/dashboard/icons/dollarIcon.svg";
@@ -50,7 +51,7 @@ const DashContent = () => {
                         <img src={settings} />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={settings} />
+                        <img src={bell} />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
                         <img src={proPic} />

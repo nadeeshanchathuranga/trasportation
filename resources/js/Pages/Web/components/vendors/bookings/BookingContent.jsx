@@ -2,10 +2,9 @@ import React from "react";
 
 import search from "../../../assets/vendors/dashboard/searchIcon.svg";
 import settings from "../../../assets/vendors/dashboard/settings.svg";
+import bell from "../../../assets/vendors/dashboard/bell.svg"
 import proPic from "../../../assets/vendors/dashboard/proPic.svg";
 
-import dollarIcon from "../../../assets/vendors/dashboard/icons/dollarIcon.svg";
-import carIcon from "../../../assets/vendors/dashboard/icons/carIcon.svg";
 import upArrow from "../../../assets/vendors/dashboard/icons/upArrow.svg";
 
 import icon1 from "../../../assets/vendors/booking/icons/icon1.svg";
@@ -34,7 +33,7 @@ const BookingContent = () => {
                         <img src={settings} />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={settings} />
+                        <img src={bell} />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
                         <img src={proPic} />
