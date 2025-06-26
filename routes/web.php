@@ -329,7 +329,5 @@ Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.'
 });
 
 
-Route::get('/sample', function () {
-    return Inertia::render('Web/components/vehicleBooking/sample');
-})->name('sample');
+
 

@@ -45,37 +45,15 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
     }));
   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Here you would typically send the formData to your backend
-//     console.log('Form submitted:', formData);
-//     // Add your form submission logic here
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//         const response = await axios.post('/vehicle-bookings/book', formData); // use full URL if needed
-//         // console.log('Submission successful:', response.data);
-//         // alert('Booking successful!', response.data);
-//         alert('Booking successful!');
-
-//     } catch (error) {
-//         // console.error('Submission error:', error.response?.data || error.message);
-//         alert('Failed to submit booking.');
-//     }
-//   };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/vehicle-bookings/book', formData);
 
             if (response.data.success) {
-                // Optional: Show success message before redirect
                 alert('Booking is completed');
-                // Redirect to the desired page
                 window.location.href = '/vehicle-bookings/bookings/land';
+                // return redirect('/vehicle-bookings/bookings/land');
             } else {
                 alert('Booking failed');
             }
@@ -97,7 +75,18 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
 
+
+
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
+
+        <a href="/vehicle-bookings/bookings/land" className="mb-6">
+            <button>
+                <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                    <h2> ⬅️ Back</h2>
+                </div>
+            </button>
+        </a>
+
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Complete Your Booking</h1>

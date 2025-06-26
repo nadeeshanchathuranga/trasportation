@@ -41,7 +41,7 @@ export default function seaIndex({ vehicles = [], seaVehicleDetails = [] }) {
       {/* Image Container with Gradient Overlay */}
       <div className="relative h-56 overflow-hidden">
         <img
-          src={`/storage/app/public/vehicle_images/${vehicle.cover_image}`}
+          src={`/vehicle_images/${vehicle.image_path}`}
           alt={vehicle.model}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
@@ -133,6 +133,16 @@ export default function seaIndex({ vehicles = [], seaVehicleDetails = [] }) {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
+      <div className='max-w-7xl mx-auto px-10 py-6'>
+        <a href="/vehicle-bookings" className="mb-6">
+            <button>
+                <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                    <h2> ⬅️ Back</h2>
+                </div>
+            </button>
+        </a>
+      </div>
+
       <main className="max-w-7xl mx-auto px-4 py-12">
         {/* Hero Section */}
         <motion.div
@@ -197,64 +207,3 @@ export default function seaIndex({ vehicles = [], seaVehicleDetails = [] }) {
   );
 }
 
-
-// import React from 'react';
-// import Header from '../../layouts/Header';
-// import { Link } from '@inertiajs/react';
-// import Footer from '../../layouts/Footer';
-
-// export default function seaIndex({ vehicles = [], seaVehicleDetails = [] }) {
-//   const hasData = vehicles.length > 0 && seaVehicleDetails.length > 0;
-
-//   return (
-//     <div>
-//       <Header />
-//       <div className="max-w-7xl mx-auto px-4 py-8">
-//         <h1 className="text-3xl font-bold mb-6">Water Vehicles</h1>
-
-//         {!hasData ? (
-//           <p className="text-center text-gray-600">No water vehicles available at the moment.</p>
-//         ) : (
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-//             {seaVehicleDetails.map((sea) => {
-//               const vehicle = vehicles.find(v => v.id === sea.vehicle_id);
-//               if (!vehicle) return null;
-
-//               return (
-//                 <div key={vehicle.id} className="border rounded-lg shadow-md p-4">
-//                   <img
-//                     src={`/storage/${vehicle.cover_image}`}
-//                     alt={vehicle.model}
-//                     className="w-full h-48 object-cover rounded mb-4"
-//                   />
-//                   <h2 className="text-xl font-semibold">{vehicle.model}</h2>
-//                   <p><strong>Brand:</strong> {vehicle.brand?.name}</p>
-//                   <p><strong>Vehicle No:</strong> {vehicle.vehicle_no}</p>
-//                   <p><strong>Year:</strong> {vehicle.manufracture_year}</p>
-//                   <p><strong>Color:</strong> {vehicle.color}</p>
-//                   <p><strong>Passenger Capacity:</strong> {vehicle.passenger_capacity}</p>
-//                   <p><strong>Current Mileage:</strong> {vehicle.currect_milage} km</p>
-//                   <p><strong>Condition:</strong> {vehicle.condition}</p>
-//                   <p><strong>Ownership Type:</strong> {vehicle.ownership_type}</p>
-//                   <p><strong>Description:</strong> {vehicle.description}</p>
-//                   <p><strong>Insurance:</strong> {vehicle.insuarance_provider_name}</p>
-//                   <p><strong>Port of Operation:</strong> {sea.port_of_operation}</p>
-
-//                   <Link href={`/vehicle-bookings/bookings/land/${vehicle.id}`}>
-//                     <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
-//                       Book Now
-//                     </button>
-//                   </Link>
-
-//                 </div>
-
-
-//               );
-//             })}
-//           </div>
-//         )}
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// }

@@ -40,7 +40,7 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
       {/* Image Container with Gradient Overlay */}
       <div className="relative h-56 overflow-hidden">
         <img
-          src={`/storage/app/public/vehicle_images/${vehicle.cover_image}`}
+          src={`storage/vehicle_images/${vehicle.image_path}`}
           alt={vehicle.model}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
@@ -143,6 +143,16 @@ export default function airIndex({ vehicles = [], airVehicleDetails = [] }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+
+      <div className='max-w-7xl mx-auto px-10 py-6'>
+        <a href="/vehicle-bookings" className="mb-6">
+            <button>
+                <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                    <h2> ⬅️ Back</h2>
+                </div>
+            </button>
+        </a>
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 py-12">
         {/* Hero Section */}

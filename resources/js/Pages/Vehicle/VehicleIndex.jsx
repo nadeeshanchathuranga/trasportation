@@ -1,5 +1,5 @@
 import { usePage, Link } from '@inertiajs/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function VehicleIndex() {
@@ -7,6 +7,39 @@ export default function VehicleIndex() {
   const successMessage = props.flash?.success;
   const { vehicles, landVehicles, airVehicles, seaVehicles } = props.data || {};
   const [activeTab, setActiveTab] = useState('all');
+
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Handle escape key press to close modal
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
+
+  const handleViewDetails = (vehicle) => {
+    setSelectedVehicle(vehicle);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedVehicle(null), 200); // Delay to allow animation
+  };
 
   const getConditionBadge = (condition) => {
     const badges = {
@@ -28,6 +61,159 @@ export default function VehicleIndex() {
       'sea': '🚢',
     };
     return icons[category] || '🚙';
+  };
+
+  const getConditionColor = (condition) => {
+    const colors = {
+      'Excellent': 'from-emerald-500 to-green-500',
+      'Good': 'from-blue-500 to-cyan-500',
+      'Fair': 'from-yellow-500 to-orange-500',
+      'Poor': 'from-red-500 to-pink-500',
+    };
+    return colors[condition] || 'from-gray-500 to-slate-500';
+  };
+
+  // Modern Modal Component
+  const VehicleModal = ({ vehicle, isOpen, onClose }) => {
+    if (!vehicle) return null;
+
+    return (
+      <>
+        {/* Backdrop */}
+        <div
+          className={`fixed inset-0 z-40 transition-opacity duration-300 ${
+            isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        >
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            onClick={onClose}
+          />
+        </div>
+
+        {/* Modal */}
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ${
+            isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+          }`}
+        >
+          <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+
+            {/* Header */}
+            <div className={`relative p-8 bg-gradient-to-r ${getConditionColor(vehicle.condition)} text-white rounded-t-3xl`}>
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              <div className="text-center">
+                <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center text-4xl mb-4 mx-auto backdrop-blur-sm">
+                  {getCategoryIcon(vehicle.category)}
+                </div>
+                <h2 className="text-3xl font-bold mb-2">{vehicle.model || 'N/A'}</h2>
+                <p className="text-white/90 text-lg">{vehicle.manufracture || 'Unknown Manufacturer'}</p>
+                <div className="mt-4">
+                  <span className={`inline-flex px-4 py-2 rounded-full text-sm font-semibold border-2 border-white/30 bg-white/20 backdrop-blur-sm`}>
+                    {vehicle.condition || 'N/A'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* Vehicle Information */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                    Vehicle Information
+                  </h3>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <span className="text-gray-600 font-medium">Vehicle ID</span>
+                      <span className="text-gray-800 font-semibold">#{vehicle.id || 'N/A'}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <span className="text-gray-600 font-medium">Vehicle No</span>
+                      <span className="text-gray-800 font-semibold">{vehicle.vehicle_no || 'N/A'}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <span className="text-gray-600 font-medium">Category</span>
+                      <span className="flex items-center space-x-2">
+                        <span className="text-lg">{getCategoryIcon(vehicle.category)}</span>
+                        <span className="text-gray-800 font-semibold">{vehicle.category || 'N/A'}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Specifications */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-200 pb-2">
+                    Specifications
+                  </h3>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <span className="text-gray-600 font-medium">Year</span>
+                      <span className="text-gray-800 font-semibold">{vehicle.manufracture_year || 'N/A'}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <span className="text-gray-600 font-medium">Capacity</span>
+                      <span className="text-gray-800 font-semibold">
+                        {vehicle.passenger_capacity ? `${vehicle.passenger_capacity} passengers` : 'N/A'}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                      <span className="text-gray-600 font-medium">Condition</span>
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getConditionBadge(vehicle.condition)}`}>
+                        {vehicle.condition || 'N/A'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Details */}
+              {(vehicle.description || vehicle.notes) && (
+                <div className="mt-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                  <h4 className="font-semibold text-blue-800 mb-2">Additional Notes</h4>
+                  <p className="text-blue-700 text-sm">
+                    {vehicle.description || vehicle.notes || 'No additional information available.'}
+                  </p>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-gray-200">
+                <button
+                  onClick={onClose}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-6 rounded-xl transition-colors"
+                >
+                  Close
+                </button>
+                {/* <Link
+                  href={`/vendor/vehicles/${vehicle.id}/edit`}
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-6 rounded-xl transition-all text-center"
+                >
+                  Edit Vehicle
+                </Link> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
   };
 
   const VehicleCard = ({ vehicle, index, isNested = false }) => {
@@ -76,8 +262,15 @@ export default function VehicleIndex() {
         <div className="px-6 py-3 bg-gray-50 border-t border-gray-100">
           <div className="flex justify-between items-center">
             <span className="text-xs text-gray-500">ID: #{vehicleData?.id || index + 1}</span>
-            <button className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
-              View Details →
+            <button
+              onClick={() => handleViewDetails(vehicleData)}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg transition-colors flex items-center space-x-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <span>View Details</span>
             </button>
           </div>
         </div>
@@ -149,8 +342,19 @@ export default function VehicleIndex() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
+          
+          <a href="/vendor/dashboard" className="mb-6">
+            <button>
+                <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                    <h2> ⬅️ Back</h2>
+                </div>
+            </button>
+          </a>
+
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
+
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+
               <div>
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
                   🚗 Vehicle Management
@@ -244,6 +448,13 @@ export default function VehicleIndex() {
           </div>
         </div>
       </div>
+
+      {/* Modern Modal */}
+      <VehicleModal
+        vehicle={selectedVehicle}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </AuthenticatedLayout>
   );
 }
