@@ -33,6 +33,7 @@ Route::get('/booking-home', [WebController::class, 'bookingHome'])->name('bookin
 Route::get('/cargo-freight', [WebController::class, 'cargoFreight'])->name('cargo.freight');
 Route::get('/drivers-home', [WebController::class, 'driversHome'])->name('drivers.home');
 Route::get('/driver-search-results', [WebController::class, 'driverSearchResults'])->name('driver.search.results');
+Route::get('/driver-details', [WebController::class, 'driverDetails'])->name('driver.details');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [
@@ -120,6 +121,9 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
         ->name('vendor.warehouses.toggle-status');
     Route::post('/warehouses/{warehouse}/book', [WarehouseController::class, 'book'])->name('warehouses.book');
     Route::get('/my-bookings', [WarehouseController::class, 'userBookings'])->name('warehouse.bookings');
+
+    Route::get('/financial/payment', [VendorController::class, 'financialPayment'])->name('vendor.financial.payment');
+    Route::get('/financial/expenses', [VendorController::class, 'financialExpenses'])->name('vendor.financial.expenses');
 });
 
 // -------------------------------
@@ -329,5 +333,38 @@ Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.'
 });
 
 
+
+
+Route::get('/vendors/bookings', function () {
+    return Inertia::render('Web/home/vendors/Booking');
+})->name('vendors.bookings');
+
+Route::get('/vendors/units', function () {
+    return Inertia::render('Web/home/vendors/Unit');
+})->name('vendors.units');
+
+Route::get('/vendors/dashboard', function () {
+    return Inertia::render('Web/home/vendors/Dashboard');
+})->name('vendors.dashboard');
+
+Route::get('/vendors/clients', function () {
+    return Inertia::render('Web/home/vendors/Client');
+})->name('vendors.clients');
+
+Route::get('/vendors/expenses', function () {
+    return Inertia::render('Web/home/vendors/Expenses');
+})->name('vendors.expenses');
+
+Route::get('/vendors/payment', function () {
+    return Inertia::render('Web/home/vendors/Payment');
+})->name('vendors.payment');
+
+Route::get('/vendors/tracking', function () {
+    return Inertia::render('Web/home/vendors/Tracking');
+})->name('vendors.tracking');
+
+Route::get('/vendors/calendar', function () {
+    return Inertia::render('Web/home/vendors/Calendar');
+})->name('vendors.calendar');
 
 

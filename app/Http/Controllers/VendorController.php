@@ -37,7 +37,8 @@ class VendorController extends Controller
 
 
     public function vendorDashboard(){
-        return Inertia::render('Vendors/VendorDashboard');
+        return Inertia::render('Web/home/vendors/Dashboard');
+        // return Inertia::render('Vendors/VendorDashboard');
     }
 
 

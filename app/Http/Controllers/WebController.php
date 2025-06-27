@@ -50,7 +50,7 @@ class WebController extends Controller
 
     public function vehicleDetails(Request $request)
     {
-        return Inertia::render('Web/home/vehicleDetails', [
+        return Inertia::render('Web/home/land/VehicleDetails', [
             'vehicle' => $request->vehicle,
             'searchParams' => $request->except('vehicle')
         ]);
@@ -85,6 +85,13 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/DriverSearchResults', [
             'searchParams' => $request->all()
+        ]);
+    }
+
+    public function driverDetails(Request $request)
+    {
+        return Inertia::render('Web/home/DriverDetails', [
+            'driver' => $request->driver,
         ]);
     }
 }
