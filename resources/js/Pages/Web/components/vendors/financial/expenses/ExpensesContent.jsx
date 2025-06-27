@@ -394,7 +394,7 @@ const ExpensesContent = () => {
             >
                 {/* card header */}
                 <div className="flex flex-row justify-between">
-                    <h1 className="text-[24px] font-[700]">Car Booking</h1>
+                    <h1 className="text-[24px] font-[700]">Recent Transactions</h1>
                     <div className="flex flex-row gap-5">
                         <div className="w-[253px] h-[35px] bg-[#F3F3F3] rounded-[6px] flex flex-row justify-center items-center py-2 px-5">
                             <img src={miniSearchIcon} />

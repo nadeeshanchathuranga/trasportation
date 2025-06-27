@@ -4,7 +4,7 @@ import clock from "../../assets/landVehicleDetails/clock.svg";
 
 const VehicleSearch = () => {
     return (
-        <div className="poppins w-auto h-auto xl:w-[440px] xl:h-[1165px] bg-[#F4F3F3] rounded-[19px] flex flex-col gap-10 py-10 px-20">
+        <div className="poppins w-auto h-auto xl:w-[440px] xl:h-auto bg-[#F4F3F3] rounded-[19px] flex flex-col gap-10 py-10 px-20">
             <div className="text-[25px] font-[700]">
                 <h1>
                     $620{" "}
@@ -258,7 +258,13 @@ const VehicleSearch = () => {
                 </div>
 
                 <div className="flex justify-center items-center">
-                    <div className=" w-auto md:w-[261px] h-[29px] bg-[#0955AC] rounded-[5px] mt-10 flex items-center justify-center text-[12px] font-[700] text-[#FFFFFF] cursor-pointer">
+                    <div className=" w-auto md:w-[261px] h-[29px] bg-[#E8EBEF] border-[1.5px] border-[#0955AC] rounded-[5px] mt-10 flex items-center justify-center text-[12px] font-[700] text-[#0955AC] cursor-pointer">
+                        GET A QOUTE
+                    </div>
+                </div>
+
+                <div className="flex justify-center items-center">
+                    <div className=" w-auto md:w-[261px] h-[29px] bg-[#0955AC] rounded-[5px] mt-5 flex items-center justify-center text-[12px] font-[700] text-[#FFFFFF] cursor-pointer">
                         CONTINUE TO CHECKOUT
                     </div>
                 </div>

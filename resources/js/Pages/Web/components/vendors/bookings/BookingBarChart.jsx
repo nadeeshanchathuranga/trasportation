@@ -111,7 +111,7 @@ const options = {
       max: 500,
       stacked: true,
       grid: {
-        color: '#E5E7EB',
+        color: '#00000040',
         drawBorder: false,
         lineWidth: 1,
       },

@@ -361,4 +361,12 @@ Route::get('/vendors/payment', function () {
     return Inertia::render('Web/home/vendors/Payment');
 })->name('vendors.payment');
 
+Route::get('/vendors/tracking', function () {
+    return Inertia::render('Web/home/vendors/Tracking');
+})->name('vendors.tracking');
+
+Route::get('/vendors/calendar', function () {
+    return Inertia::render('Web/home/vendors/Calendar');
+})->name('vendors.calendar');
+
 
