@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { Link } from '@inertiajs/react';
 import { Calendar, MapPin, Clock, Phone, CreditCard, Shield, Star, Users, Fuel, Settings, CheckCircle } from 'lucide-react';
 import Header from '../../layouts/Header';
 import Footer from '../../layouts/Footer';
 import axios from 'axios';
 import { redirect } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
 
-export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
+export default function BookingPage({ vehicle = {}, landVehicleDetails = {}, vehicleImages = [] }) {
   // Insurance and payment state
   const [selectedInsurance, setSelectedInsurance] = useState('basic');
   const [selectedPayment, setSelectedPayment] = useState('card');
@@ -79,13 +81,20 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
 
-        <a href="/vehicle-bookings/bookings/land" className="mb-6">
+        {/* <a href="/vehicle-bookings/" className="mb-6">
             <button>
                 <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
                     <h2> ⬅️ Back</h2>
                 </div>
             </button>
-        </a>
+        </a> */}
+
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
+            <Link href="/vehicle-bookings/" className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 transition duration-300">
+            <ChevronLeft className="w-5 h-5" />
+            <span>Back to Bookings</span>
+            </Link>
+        </div>
 
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -101,11 +110,20 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
             <div className="lg:col-span-1">
               <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
                 <div className="relative">
-                  <img
-                    src={vehicle.cover_image || "#"}
+                  {/* <img
+                    src={vehicleImages[0]?.image_path || "#"}
                     alt={`${vehicle.brand?.name || ''} ${vehicle.model}`}
                     className="w-full h-64 object-cover"
-                  />
+                  /> */}
+                  {vehicleImages.length > 0 && (
+                    <img
+                        src={vehicleImages[0].image}
+                        alt={`${vehicle.brand?.name || ''} ${vehicle.model}`}
+                        className="w-full h-64 object-cover"
+                    />
+                )}
+
+
                   <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                     Available
                   </div>

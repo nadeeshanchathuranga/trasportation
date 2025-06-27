@@ -100,29 +100,42 @@ export default function VehicleIndex() {
           <div className="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
 
             {/* Header */}
-            <div className={`relative p-8 bg-gradient-to-r ${getConditionColor(vehicle.condition)} text-white rounded-t-3xl`}>
-              <button
-                onClick={onClose}
-                className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+            <div
+                className={`relative p-8 bg-gradient-to-r ${getConditionColor(vehicle.condition)} text-white rounded-t-3xl`}
+                style={{
+                    backgroundImage: vehicle.image_path
+                    ? `url('${vehicle.image_path}')`
+                    : "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmtFkvWOs2XZetsbn_U1bJVKNRePuC6nvQ3Q&s')",
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                }}
+                >
+                <div className="absolute inset-0 bg-black/60 rounded-t-3xl backdrop-blur-sm"></div> {/* Overlay for readability */}
 
-              <div className="text-center">
-                <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center text-4xl mb-4 mx-auto backdrop-blur-sm">
-                  {getCategoryIcon(vehicle.category)}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm z-10"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div className="relative z-10 text-center">
+                    <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center text-4xl mb-4 mx-auto backdrop-blur-sm">
+                    {getCategoryIcon(vehicle.category)}
+                    </div>
+                    <h2 className="text-3xl font-bold mb-2">{vehicle.model || 'N/A'}</h2>
+                    <p className="text-white/90 text-lg">{vehicle.manufracture || 'Unknown Manufacturer'}</p>
+                    <div className="mt-4">
+                    <span className={`inline-flex px-4 py-2 rounded-full text-sm font-semibold border-2 border-white/30 bg-white/20 backdrop-blur-sm`}>
+                        {vehicle.condition || 'N/A'}
+                    </span>
+                    </div>
                 </div>
-                <h2 className="text-3xl font-bold mb-2">{vehicle.model || 'N/A'}</h2>
-                <p className="text-white/90 text-lg">{vehicle.manufracture || 'Unknown Manufacturer'}</p>
-                <div className="mt-4">
-                  <span className={`inline-flex px-4 py-2 rounded-full text-sm font-semibold border-2 border-white/30 bg-white/20 backdrop-blur-sm`}>
-                    {vehicle.condition || 'N/A'}
-                  </span>
-                </div>
-              </div>
             </div>
+
 
             {/* Content */}
             <div className="p-8">
@@ -342,7 +355,7 @@ export default function VehicleIndex() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
-          
+
           <a href="/vendor/dashboard" className="mb-6">
             <button>
                 <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
