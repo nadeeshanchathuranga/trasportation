@@ -34,6 +34,7 @@ Route::get('/cargo-freight', [WebController::class, 'cargoFreight'])->name('carg
 Route::get('/drivers-home', [WebController::class, 'driversHome'])->name('drivers.home');
 Route::get('/driver-search-results', [WebController::class, 'driverSearchResults'])->name('driver.search.results');
 Route::get('/driver-details', [WebController::class, 'driverDetails'])->name('driver.details');
+Route::get('/vehicle-checkout', [WebController::class, 'vehicleCheckout'])->name('vehicle.checkout');
 
 Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized', [

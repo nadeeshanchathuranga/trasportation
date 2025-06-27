@@ -94,4 +94,9 @@ class WebController extends Controller
             'driver' => $request->driver,
         ]);
     }
+
+    public function vehicleCheckout()
+    {
+        return Inertia::render('Web/home/land/VehicleCheckout');
+    }
 }
