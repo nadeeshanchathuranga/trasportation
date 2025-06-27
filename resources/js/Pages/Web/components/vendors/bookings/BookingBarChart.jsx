@@ -98,7 +98,7 @@ const options = {
       ticks: {
         color: '#7B7B7A',
         font: {
-          size: 16,
+          size: 14,
           weight: 500,
         },
       },
@@ -159,7 +159,7 @@ function CustomTooltip({ chart, tooltip }) {
         position: 'absolute',
         left: tooltip.caretX,
         top: tooltip.caretY - 60,
-        background: '#E8F0FB',
+        background: '#D8E4F2',
         color: '#000',
         padding: '12px 24px',
         borderRadius: 12,
@@ -171,9 +171,9 @@ function CustomTooltip({ chart, tooltip }) {
         transform: 'translate(-50%, -100%)',
       }}
     >
-      <div className="text-[16px] font-[600] text-[#7B7B7A]">{month} 2025</div>
-      <div className="text-[18px] font-[700] text-black mt-1">
-        <span className="font-bold">{type} </span>{value}
+      <div className="text-[14px] font-[600]">{month} 2025</div>
+      <div className="text-[16px] font-[700] text-[#000000]">
+        <span className="font-[700] text-[16px]">{type} </span>{value}
       </div>
     </div>
   );
@@ -182,6 +182,10 @@ function CustomTooltip({ chart, tooltip }) {
 function BookingBarChart() {
   const chartRef = React.useRef();
   const [tooltipModel, setTooltipModel] = React.useState(null);
+
+  // Find the highest 'Done' value and its index
+  const maxDone = Math.max(...doneData);
+  const maxDoneIndex = doneData.indexOf(maxDone);
 
   // Custom tooltip handler
   React.useEffect(() => {
@@ -194,12 +198,31 @@ function BookingBarChart() {
       });
     };
     chart.update();
+
+    // Show tooltip for the highest 'Done' bar on mount
+    setTimeout(() => {
+      if (!chart) return;
+      const meta = chart.getDatasetMeta(0); // 0 for 'Done' dataset
+      if (!meta || !meta.data || !meta.data[maxDoneIndex]) return;
+      const bar = meta.data[maxDoneIndex];
+      const { x, y } = bar.getCenterPoint();
+      setTooltipModel({
+        opacity: 1,
+        dataPoints: [{
+          dataIndex: maxDoneIndex,
+          datasetIndex: 0,
+        }],
+        caretX: x,
+        caretY: y,
+        chart,
+      });
+    }, 500); // Delay to ensure chart is rendered
   }, []);
 
   return (
     <div className="w-full h-full flex flex-col items-stretch relative px-8 pt-8 pb-4">
       {/* Header */}
-      <div className="flex flex-row justify-between items-center mb-4">
+      <div className="flex flex-row justify-between items-center mb-6">
         <div className="flex flex-col gap-2">
           <h2 className="text-[28px] font-[700]">Booking Overview</h2>
           <div className="flex flex-row items-center gap-6 mt-1">

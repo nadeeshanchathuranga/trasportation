@@ -1,16 +1,37 @@
 import React, { useState } from "react";
 import carImage from "../../assets/rentAVehicle/car.png";
+import flightImage from "../../assets/rentAVehicle/flight.svg"
 import { router } from '@inertiajs/react';
 import { route } from 'ziggy-js';
 
 const HeroSection = ({ formData, onFormChange, onSubmit }) => {
-  const [expandedImage, setExpandedImage] = useState("other");
+  const [imageOrder, setImageOrder] = useState(["other", "water", "air"]);
 
-  const handleImageClick = (imageType) => {
-    setExpandedImage(imageType);
+  const imageData = {
+    other: {
+      src: carImage,
+      alt: "Land Vehicle",
+      label: "LAND VEHICLE"
+    },
+    water: {
+      src: carImage,
+      alt: "Water Vehicle",
+      label: "WATER VEHICLE"
+    },
+    air: {
+      src: flightImage,
+      alt: "Air Vehicle",
+      label: "AIR VEHICLE"
+    }
   };
 
-
+  const handleImageClick = (imageType) => {
+    setImageOrder((prevOrder) => {
+      const newOrder = prevOrder.filter(type => type !== imageType);
+      newOrder.unshift(imageType);
+      return newOrder;
+    });
+  };
 
     const handleFindVehicleClick = (e) => {
     e.preventDefault(); // Prevent default form submit behavior
@@ -68,7 +89,7 @@ const HeroSection = ({ formData, onFormChange, onSubmit }) => {
         </p>
 
         {/* Search Form */}
-        <form onSubmit={onSubmit} className="figtree bg-white p-4 sm:p-6 rounded-[15px] shadow-2xl shadow-[#00000040] w-full 2xl:w-[505px] h-auto text-[#286BB6] text-[13px] font-[400]">
+        <form onSubmit={onSubmit} className="figtree bg-white p-4 sm:p-6 rounded-[15px] w-full 2xl:w-[505px] h-auto text-[#286BB6] text-[13px] font-[400]" style={{ boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)' }}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             {/* Pick-up Location */}
             <div>
@@ -152,85 +173,30 @@ const HeroSection = ({ formData, onFormChange, onSubmit }) => {
       </div>
 
       {/* Images Section */}
-      <div className="bebas-neue hidden md:flex flex-row items-stretch h-[500px] lg:h-[680px] gap-4 w-full md:w-2/3 flex-shrink-0 mt-8 md:mt-20 md:ml-8 lg:ml-40">
-        <div
-          className={`relative h-full overflow-hidden rounded-[25px] shadow-lg transition-all duration-300 ease-in-out cursor-pointer flex-shrink-0 ${
-            expandedImage === "other"
-              ? "flex-grow"
-              : expandedImage
-              ? "w-[180px] lg:w-[220px]"
-              : "w-[400px] lg:w-[559px]"
-          }`}
-          onClick={() => handleImageClick("other")}
-        >
-          <img
-            src={carImage}
-            alt="Land Vehicle"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#00000066]"></div>
-          <div className={`absolute inset-0 flex items-center justify-center`}>
-            <span
-              className={`text-white text-[24px] lg:text-[32px] font-[400] rotate-[270deg] ${
-                expandedImage === "other" ? "hidden" : ""
-              }`}
-            >
-              LAND VEHICLE
-            </span>
+      <div className="bebas-neue hidden md:flex flex-row items-stretch h-[500px] lg:h-[680px] gap-4 w-full md:w-2/3 flex-shrink-0 mt-8 md:mt-20">
+        {imageOrder.map((type, idx) => (
+          <div
+            key={type}
+            className={`relative h-full overflow-hidden rounded-[25px] shadow-lg transition-all duration-300 ease-in-out cursor-pointer flex-shrink-0 ${
+              idx === 0 ? "w-[559px]" : "w-[220px]"
+            }`}
+            onClick={() => handleImageClick(type)}
+          >
+            <img
+              src={imageData[type].src}
+              alt={imageData[type].alt}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-[#00000066]"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span
+                className={`text-white text-[24px] lg:text-[32px] font-[400] rotate-[270deg] ${idx === 0 ? "hidden" : ""}`}
+              >
+                {imageData[type].label}
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className={`relative h-full overflow-hidden rounded-[25px] shadow-lg transition-all duration-300 ease-in-out cursor-pointer flex-shrink-0 ${
-            expandedImage === "water"
-              ? "flex-grow"
-              : expandedImage
-              ? "w-[180px] lg:w-[220px]"
-              : "w-[400px] lg:w-[559px]"
-          }`}
-          onClick={() => handleImageClick("water")}
-        >
-          <img
-            src={carImage}
-            alt="Water Vehicle"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#00000066]"></div>
-          <div className={`absolute inset-0 flex items-center justify-center`}>
-            <span
-              className={`text-white text-[24px] lg:text-[32px] font-[400] rotate-[270deg] whitespace-nowrap ${
-                expandedImage === "water" ? "hidden" : ""
-              }`}
-            >
-              WATER VEHICLE
-            </span>
-          </div>
-        </div>
-        <div
-          className={`relative h-full overflow-hidden rounded-[25px] shadow-lg transition-all duration-300 ease-in-out cursor-pointer flex-shrink-0 ${
-            expandedImage === "air"
-              ? "flex-grow"
-              : expandedImage
-              ? "w-[180px] lg:w-[220px]"
-              : "w-[400px] lg:w-[559px]"
-          }`}
-          onClick={() => handleImageClick("air")}
-        >
-          <img
-            src={carImage}
-            alt="Air Vehicle"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#00000066]"></div>
-          <div className={`absolute inset-0 flex items-center justify-center`}>
-            <span
-              className={`text-white text-[24px] lg:text-[32px] font-[400] rotate-[270deg] mr-[20px] lg:mr-[30px] ${
-                expandedImage === "air" ? "hidden" : ""
-              }`}
-            >
-              AIR VEHICLE
-            </span>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

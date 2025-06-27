@@ -66,9 +66,11 @@ const data = {
                 return gradient;
             },
             borderColor: "#0955AC",
+            pointBackgroundColor: "#0955AC",
             pointRadius: 0,
             tension: 0.4,
             borderWidth: 3,
+            pointHoverRadius: 7,
             order: 2,
         },
         {
@@ -86,9 +88,9 @@ const data = {
             },
             borderColor: "#000000",
             borderWidth: 3,
-            pointRadius: (ctx) => (ctx.dataIndex === highlightIndex ? 7 : 0),
-            pointBackgroundColor: (ctx) =>
-                ctx.dataIndex === highlightIndex ? "#000000" : "#000000",
+            pointRadius: 0,
+            pointHoverRadius: 7,
+            pointBackgroundColor: "#000000",
             tension: 0.4,
             order: 1,
         },
@@ -156,7 +158,13 @@ const options = {
 
 const CashflowChart = () => {
     const chartRef = useRef();
-    const [tooltip, setTooltip] = React.useState(null);
+    const [tooltip, setTooltip] = React.useState({
+        x: null, // Will be set after chart renders
+        y: null,
+        month: months[highlightIndex],
+        income: incomeData[highlightIndex],
+        expenses: expensesData[highlightIndex],
+    });
 
     const customTooltip = (context) => {
         const { chart, tooltip } = context;
@@ -165,15 +173,13 @@ const CashflowChart = () => {
             return;
         }
         const dataIndex = tooltip.dataPoints?.[0]?.dataIndex;
-        if (dataIndex === highlightIndex) {
+        if (dataIndex !== undefined) {
             setTooltip({
-                x: chart.scales.x.getPixelForValue(months[highlightIndex]),
-                y: chart.scales.y.getPixelForValue(
-                    expensesData[highlightIndex]
-                ),
-                month: "May 2025",
-                income: highlightIncome,
-                expenses: highlightExpenses,
+                x: chart.scales.x.getPixelForValue(months[dataIndex]),
+                y: chart.scales.y.getPixelForValue(expensesData[dataIndex]),
+                month: months[dataIndex],
+                income: incomeData[dataIndex],
+                expenses: expensesData[dataIndex],
             });
         } else {
             setTooltip(null);
@@ -184,6 +190,12 @@ const CashflowChart = () => {
         const chart = chartRef.current;
         if (chart) {
             chart.options.plugins.tooltip.external = customTooltip;
+            // Set initial tooltip position after chart is ready
+            setTooltip((prev) => ({
+                ...prev,
+                x: chart.scales.x.getPixelForValue(months[highlightIndex]),
+                y: chart.scales.y.getPixelForValue(expensesData[highlightIndex]),
+            }));
         }
     }, [chartRef]);
 
@@ -219,30 +231,32 @@ const CashflowChart = () => {
                 {/* Custom Tooltip */}
                 {tooltip && (
                     <div
-                        className="absolute z-10 bg-[#D8E4F2] rounded-[10px] px-6 py-4 shadow-lg"
+                        className="absolute z-10 bg-[#D8E4F2] rounded-[10px] px-2 py-2 shadow-lg flex flex-col items-center"
                         style={{
-                            left: tooltip.x - 80,
-                            top: tooltip.y - 120,
+                            left: tooltip.x - 20,
+                            top: tooltip.y - 20,
                             minWidth: 180,
+                            width: 152,
+                            height: 73,
                         }}
                     >
-                        <div className="figtree text-[20px] font-[700] mb-2">
-                            {tooltip.month}
+                        <div className="figtree text-[14px] font-[600]">
+                            {`${tooltip.month} 2025`}
                         </div>
-                        <div className="flex flex-row gap-6">
-                            <div className="flex flex-col">
-                                <span className="text-[#7B7B7A] text-[16px] font-[600]">
+                        <div className="flex flex-col">
+                            <div className="flex flex-row items-center gap-4">
+                                <span className="text-[#000000] text-[10px] font-[500]">
                                     Income
                                 </span>
-                                <span className="text-[#2563EB] text-[20px] font-[700]">
+                                <span className="text-[#000000] text-[13px] font-[700]">
                                     ${tooltip.income.toLocaleString()}
                                 </span>
                             </div>
-                            <div className="flex flex-col">
-                                <span className="text-[#7B7B7A] text-[16px] font-[600]">
+                            <div className="flex flex-row items-center gap-4">
+                                <span className="text-[#000000] text-[10px] font-[500]">
                                     Expenses
                                 </span>
-                                <span className="text-black text-[20px] font-[700]">
+                                <span className="text-[#000000] text-[13px] font-[700]">
                                     ${tooltip.expenses.toLocaleString()}
                                 </span>
                             </div>

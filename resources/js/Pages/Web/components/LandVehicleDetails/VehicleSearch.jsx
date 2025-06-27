@@ -259,7 +259,7 @@ const VehicleSearch = () => {
 
                 <div className="flex justify-center items-center">
                     <div className=" w-auto md:w-[261px] h-[29px] bg-[#E8EBEF] border-[1.5px] border-[#0955AC] rounded-[5px] mt-10 flex items-center justify-center text-[12px] font-[700] text-[#0955AC] cursor-pointer">
-                        GET A QOUTE
+                        GET A QUOTE
                     </div>
                 </div>
 

@@ -20,6 +20,8 @@ const maxBookings = 1000;
 function BookingOverviewBarChart() {
   const [hovered, setHovered] = React.useState(null);
   const chartHeight = 217; // px
+  // Find the index of the highest bookings
+  const maxIndex = bookingData.reduce((maxIdx, d, idx, arr) => d.bookings > arr[maxIdx].bookings ? idx : maxIdx, 0);
   return (
     <div className="w-[600px] h-auto flex flex-col items-stretch relative">
       {/* Chart area: grid lines and bars, fixed height */}
@@ -53,10 +55,10 @@ function BookingOverviewBarChart() {
                 onMouseLeave={() => setHovered(null)}
               ></div>
               {/* Tooltip */}
-              {hovered === i && (
-                <div className="absolute -top-20 left-1/2 -translate-x-1/2 bg-blue-100 text-black px-6 py-2 rounded-lg shadow text-center z-20">
-                  <div className="font-bold text-base">{d.name} 2025</div>
-                  <div className="text-2xl font-extrabold">{d.bookings}</div>
+              {(hovered === i || (hovered === null && i === maxIndex)) && (
+                <div className="absolute -top-20 left-1/2 -translate-x-1/2 bg-[#D8E4F2] text-black px-6 py-2 rounded-lg shadow text-center z-20">
+                  <div className="font-[600] text-[14px] flex flex-row items-center justify-center gap-1">{d.name} <span className="">2025</span></div>
+                  <div className="text-[16px] font-[700]">{d.bookings}</div>
                 </div>
               )}
             </div>

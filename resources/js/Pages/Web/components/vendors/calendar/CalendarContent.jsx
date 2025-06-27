@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import search from "../../../assets/vendors/dashboard/searchIcon.svg";
 import settings from "../../../assets/vendors/dashboard/settings.svg";
 import bell from "../../../assets/vendors/dashboard/bell.svg";
@@ -11,6 +11,7 @@ import leftArrow from "../../../assets/vendors/calendar/leftArrow.svg";
 import miniDownArrow from "../../../assets/vendors/calendar/miniDown.svg";
 
 import CalendarMonthPicker from "./CalendarMonthPicker";
+import CalendarGrid from "./CalendarGrid";
 
 // Define days, times, and events for the calendar
 const days = [
@@ -55,7 +56,36 @@ const events = [
   { day: 6, time: "4:00 PM", title: "BMW LX3", person: "Steve Gibson", status: "done" },
 ];
 
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 const CalendarContent = () => {
+    const today = new Date();
+    const [currentMonth, setCurrentMonth] = useState(today.getMonth());
+    const [currentYear, setCurrentYear] = useState(today.getFullYear());
+
+    const handlePrevMonth = () => {
+        setCurrentMonth(prev => {
+            if (prev === 0) {
+                setCurrentYear(y => y - 1);
+                return 11;
+            }
+            return prev - 1;
+        });
+    };
+
+    const handleNextMonth = () => {
+        setCurrentMonth(prev => {
+            if (prev === 11) {
+                setCurrentYear(y => y + 1);
+                return 0;
+            }
+            return prev + 1;
+        });
+    };
+
     return (
         <div className="w-full h-auto pr-20 py-10">
             {/* Header section */}
@@ -213,15 +243,15 @@ const CalendarContent = () => {
                             Today
                         </div>
                         <div className="flex flex-row justify-center items-center gap-2">
-                            <div className="size-[35px] bg-[#F3F3F3] rounded-[6px] flex justify-center items-center">
+                            <div className="size-[35px] bg-[#F3F3F3] rounded-[6px] flex justify-center items-center cursor-pointer" onClick={handlePrevMonth}>
                                 <img src={leftArrow} />
                             </div>
-                            <div className="size-[35px] bg-[#F3F3F3] rounded-[6px] flex justify-center items-center">
+                            <div className="size-[35px] bg-[#F3F3F3] rounded-[6px] flex justify-center items-center cursor-pointer" onClick={handleNextMonth}>
                                 <img src={leftArrow} className="rotate-180" />
                             </div>
                         </div>
                         <h1 className="text-[18px] font-[700]">
-                            September 2025
+                            {monthNames[currentMonth]} {currentYear}
                         </h1>
                     </div>
                     <div className="flex flex-row justify-center items-center gap-5">
@@ -259,64 +289,7 @@ const CalendarContent = () => {
                 </div>
 
                 <div className="grid grid-cols-8 border-t border-l border-[#00000026]">
-                  {/* Header Row */}
-                  <div className="border-b border-r border-[#00000026] bg-white flex justify-center items-center text-[#00000080] text-[14px] font-[500]">UTC +1</div>
-                  {days.map((day) => (
-                    <div key={day.date} className="border-b border-r border-[#00000026] flex flex-col items-center py-2">
-                      <span className="font-[700] text-[24px]">{day.date}</span>
-                      <span className="text-[14px] font-[500] text-[#00000080]">{day.label}</span>
-                    </div>
-                  ))}
-
-                  {/* Time Rows */}
-                  {times.map((time, rowIdx) => (
-                    <React.Fragment key={time}>
-                      {/* Time column */}
-                      <div className="relative border-[#00000026] bg-[#FFFFFF] h-[80px] text-[14px] text-[#7B7B7A] font-[500]">
-                        <div className="absolute bottom-[0px] left-1/2 -translate-x-1/2 mb-1">
-                          {time}
-                        </div>
-                      </div>
-                      {/* Day columns */}
-                      {days.map((day, colIdx) => {
-                        // Find all events for this cell
-                        const cellEvents = events.filter(
-                          (e) => e.day === colIdx && e.time === time
-                        );
-                        return (
-                          <div
-                            key={colIdx}
-                            className="border-b border-r border-l border-[#00000026] relative h-[100px] flex flex-col items-center justify-center gap-1"
-                          >
-                            {cellEvents.map((event, idx) => (
-                              <div
-                                key={idx}
-                                className="w-[122px] h-[90px] rounded-[12px] px-3 py-2 flex flex-col justify-center items-center bg-[#C5E6F9]"
-                              >
-                                {/* Time */}
-                                <span className="w-full text-start text-[12px] font-[500] text-[#000000B2] tracking-wide mb-1">
-                                  {event.time.replace(":", " : ")}
-                                </span>
-                                {/* Car Name */}
-                                <span className="w-full text-left font-[500] text-[16px] text-[#000000B2]">
-                                  {event.title}
-                                </span>
-                                {/* Avatar and Name */}
-                                <div className="flex flex-row items-start w-full mt-auto">
-                                  <img
-                                    src={proPicTwo}
-                                    alt="avatar"
-                                    className="w-7 h-7 rounded-full object-cover mr-2"
-                                  />
-                                  <span className="text-[12px] font-[500] text-[#000000B2]">{event.person}</span>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        );
-                      })}
-                    </React.Fragment>
-                  ))}
+                  <CalendarGrid days={days} times={times} events={events} proPicTwo={proPicTwo} currentMonth={currentMonth} currentYear={currentYear} />
                 </div>
             </div>
         </div>

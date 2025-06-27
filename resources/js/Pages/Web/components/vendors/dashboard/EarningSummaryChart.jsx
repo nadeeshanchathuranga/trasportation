@@ -46,7 +46,12 @@ function generateSmoothPath(points) {
 }
 
 const EarningSummaryChart = () => {
-  const [hovered, setHovered] = useState(3);
+  // Find the index of the highest value
+  const highestIndex = earningData.reduce(
+    (maxIdx, d, idx, arr) => d.value > arr[maxIdx].value ? idx : maxIdx,
+    0
+  );
+  const [hovered, setHovered] = useState(highestIndex);
 
   // Generate points for the paths
   const points = earningData.map((d, i) => [getX(i), getY(d.value)]);
@@ -91,38 +96,54 @@ const EarningSummaryChart = () => {
         {/* Interactive areas and tooltips */}
         {earningData.map((d, i) => (
           <g key={i}>
-            {/* Invisible larger circle for better hover detection */}
+            {/* Invisible larger circle for better click detection */}
             <circle
               cx={getX(i)}
               cy={getY(d.value)}
               r={15}
               fill="transparent"
               className="cursor-pointer"
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
+              onClick={() => setHovered(i)}
             />
-            {/* Visible point only on hover */}
+            {/* Visible point only when selected */}
             {hovered === i && (
               <circle
                 cx={getX(i)}
                 cy={getY(d.value)}
                 r={6}
-                fill="#fff"
-                stroke="#2196F3"
-                strokeWidth={3}
+                fill="rgba(9, 85, 172, 1)"
+                strokeWidth={2}
               />
-            )}
-            {/* Tooltip */}
-            {hovered === i && (
-              <foreignObject x={getX(i) - 60} y={Math.max(getY(d.value) - 70, 0)} width={108} height={50}>
-                <div className="bg-[#D8E4F2] rounded-[5px] shadow-lg px-4 py-2 flex flex-col items-center">
-                  <span className="text-[14px] font-[500] mb-1">{d.name} 2025</span>
-                  <span className="text-[16px] font-[700]">${d.value.toLocaleString()}</span>
-                </div>
-              </foreignObject>
             )}
           </g>
         ))}
+        {/* Single Tooltip rendered outside the map to prevent flicker */}
+        {hovered !== null && (() => {
+          const tooltipWidth = 108;
+          const tooltipHeight = 55;
+          const pointX = getX(hovered);
+          const pointY = getY(earningData[hovered].value);
+          let tooltipX = pointX - tooltipWidth / 2;
+          let tooltipY = pointY - tooltipHeight - 15; // 15px above the point
+
+          // Ensure tooltip stays within left/right bounds
+          if (tooltipX < 0) tooltipX = 0;
+          if (tooltipX + tooltipWidth > chartWidth) tooltipX = chartWidth - tooltipWidth;
+
+          // If tooltip would overflow the top, show it below the point
+          if (tooltipY < 0) tooltipY = pointY + 15;
+          // If tooltip would overflow the bottom, show it above the point
+          if (tooltipY + tooltipHeight > chartHeight) tooltipY = pointY - tooltipHeight - 15;
+
+          return (
+            <foreignObject x={tooltipX} y={tooltipY} width={tooltipWidth} height={tooltipHeight} pointerEvents="none">
+              <div className="bg-[#D8E4F2] w-[108px] h-[55px] rounded-[5px] shadow-lg px-4 py-2 flex flex-col items-center">
+                <span className="text-[14px] font-[500] mb-1">{earningData[hovered].name} 2025</span>
+                <span className="text-[16px] font-[700]">${earningData[hovered].value.toLocaleString()}</span>
+              </div>
+            </foreignObject>
+          );
+        })()}
         {/* X axis labels */}
         {earningData.map((d, i) => (
           <text
