@@ -70,6 +70,15 @@ export default function BookingManagement() {
         <div className="max-w-7xl mx-auto space-y-8">
 
           {/* Header */}
+
+        <a href="/vendor/dashboard" className="mb-6">
+            <button>
+                <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                    <h2> ⬅️ Back</h2>
+                </div>
+            </button>
+          </a>
+
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">Booking Management</h1>

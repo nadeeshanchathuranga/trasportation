@@ -87,7 +87,7 @@ export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             {/* Form Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-6">
+            <div className="bg-gradient-to-r from-green-600 to-blue-500 px-8 py-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h1 className="text-2xl font-bold text-white">Register New Vehicle</h1>
@@ -103,7 +103,7 @@ export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
             </div>
 
             {/* Main Form */}
-            <form onSubmit={handleSubmit} className="px-8 py-6 space-y-6">
+            <form onSubmit={handleSubmit} className="bg-gradient-to-r from-blue-300 to-green-100 px-8 py-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Vehicle Brand */}
                 <div className="space-y-2">

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { Link } from '@inertiajs/react';
 import { Calendar, MapPin, Clock, Phone, CreditCard, Shield, Star, Users, Fuel, Settings, CheckCircle } from 'lucide-react';
 import Header from '../../layouts/Header';
 import Footer from '../../layouts/Footer';
 import axios from 'axios';
 import { redirect } from 'react-router-dom';
+import { ChevronLeft } from 'lucide-react';
 
-export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
+export default function BookingPage({ vehicle = {}, landVehicleDetails = {}, vehicleImages = [] }) {
   // Insurance and payment state
   const [selectedInsurance, setSelectedInsurance] = useState('basic');
   const [selectedPayment, setSelectedPayment] = useState('card');
@@ -45,37 +47,15 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
     }));
   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     // Here you would typically send the formData to your backend
-//     console.log('Form submitted:', formData);
-//     // Add your form submission logic here
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//         const response = await axios.post('/vehicle-bookings/book', formData); // use full URL if needed
-//         // console.log('Submission successful:', response.data);
-//         // alert('Booking successful!', response.data);
-//         alert('Booking successful!');
-
-//     } catch (error) {
-//         // console.error('Submission error:', error.response?.data || error.message);
-//         alert('Failed to submit booking.');
-//     }
-//   };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('/vehicle-bookings/book', formData);
 
             if (response.data.success) {
-                // Optional: Show success message before redirect
                 alert('Booking is completed');
-                // Redirect to the desired page
                 window.location.href = '/vehicle-bookings/bookings/land';
+                // return redirect('/vehicle-bookings/bookings/land');
             } else {
                 alert('Booking failed');
             }
@@ -97,7 +77,25 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
 
+
+
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
+
+        {/* <a href="/vehicle-bookings/" className="mb-6">
+            <button>
+                <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                    <h2> ⬅️ Back</h2>
+                </div>
+            </button>
+        </a> */}
+
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4'>
+            <Link href="/vehicle-bookings/" className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-800 transition duration-300">
+            <ChevronLeft className="w-5 h-5" />
+            <span>Back to Bookings</span>
+            </Link>
+        </div>
+
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Complete Your Booking</h1>
@@ -112,11 +110,20 @@ export default function BookingPage({ vehicle = {}, landVehicleDetails = {} }) {
             <div className="lg:col-span-1">
               <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
                 <div className="relative">
-                  <img
-                    src={vehicle.cover_image || "#"}
+                  {/* <img
+                    src={vehicleImages[0]?.image_path || "#"}
                     alt={`${vehicle.brand?.name || ''} ${vehicle.model}`}
                     className="w-full h-64 object-cover"
-                  />
+                  /> */}
+                  {vehicleImages.length > 0 && (
+                    <img
+                        src={vehicleImages[0].image}
+                        alt={`${vehicle.brand?.name || ''} ${vehicle.model}`}
+                        className="w-full h-64 object-cover"
+                    />
+                )}
+
+
                   <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                     Available
                   </div>

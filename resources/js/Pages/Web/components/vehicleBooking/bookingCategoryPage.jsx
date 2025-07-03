@@ -8,7 +8,20 @@ export default function bookingCategoryPage() {
     <div className="bg-gradient-to-br from-gray-100 via-white to-gray-50 min-h-screen flex flex-col justify-between">
       <Header />
 
+
+
       <main className="py-16 px-4 sm:px-8 lg:px-20">
+
+        <div className='max-w-7xl mx-auto px-10 py-6'>
+            <a href="/" className="mb-6">
+                <button>
+                    <div className="flex items-center justify-between mb-6 text-gray-800 font-semibold text-lg">
+                        <h2> ⬅️ Back</h2>
+                    </div>
+                </button>
+            </a>
+        </div>
+
         <h1 className="text-5xl font-extrabold text-center text-gray-900 mb-16 tracking-tight">
           Select Your Mode of Travel
         </h1>
@@ -60,11 +73,6 @@ export default function bookingCategoryPage() {
                 </div>
             </div>
           </a>
-
-          <a href="/sample">
-            <button>Click Me - Sample</button>
-          </a>
-
         </div>
       </main>
 
