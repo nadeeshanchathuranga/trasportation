@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "@inertiajs/react";
 
 import linkedin from "../assets/rentAVehicle/footer/linkedin.png";
 import fb from "../assets/rentAVehicle/footer/fb.png";
@@ -20,24 +21,24 @@ const Footer = () => {
                             </h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Vehicle Rental
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="/book-a-ticket" className="hover:text-blue-400 transition-colors duration-200">
                                         Ticket Booking
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="/courier-service" className="hover:text-blue-400 transition-colors duration-200">
                                         Courier Service
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="/drivers-home" className="hover:text-blue-400 transition-colors duration-200">
                                         Drivers
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -49,19 +50,19 @@ const Footer = () => {
                             </h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         FAQ
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Blog
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Support
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -73,19 +74,19 @@ const Footer = () => {
                             </h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         About Us
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Careers
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Contact Us
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -97,19 +98,19 @@ const Footer = () => {
                             </h3>
                             <ul className="space-y-2">
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Privacy Policy
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Terms & Conditions
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="#" className="hover:text-blue-400 transition-colors duration-200">
+                                    <Link href="#" className="hover:text-blue-400 transition-colors duration-200">
                                         Help Center
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>
@@ -163,11 +164,20 @@ const Footer = () => {
                 <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-700 flex flex-col md:flex-row items-center justify-between gap-4">
                     {/* Logo */}
                     <div className="text-center md:text-left">
-                        <h3 className="text-xl sm:text-2xl font-bold">
+
+
+  <Link
+      href="#"
+      title="Home Page | Company Name">
+   <h3 className="text-xl sm:text-2xl font-bold">
                             COMPANY
                             <br />
                             LOGO
                         </h3>
+      </Link>
+
+
+
                     </div>
                     {/* Copyright */}
                     <p className="figtree text-[14px] sm:text-[16px] text-[#FFFFFF] text-center">
@@ -176,9 +186,10 @@ const Footer = () => {
                     </p>
                     {/* Social Icons */}
                     <div className="flex space-x-3 sm:space-x-4">
-                        {/* LinkedIn Icon */}
                         <a
-                            href="#"
+                            href="https://www.linkedin.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-gray-400 hover:text-blue-400 flex items-center justify-center rounded-full border-[1.5px] border-[#FFFFFF] w-[32px] h-[32px] sm:w-[35px] sm:h-[35px] p-2 transition-colors duration-200"
                         >
                             <img
@@ -187,9 +198,10 @@ const Footer = () => {
                                 className="h-[10px] w-[10px] sm:h-[11px] sm:w-[11px]"
                             />
                         </a>
-                        {/* Facebook Icon */}
                         <a
-                            href="#"
+                            href="https://www.facebook.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-gray-400 hover:text-blue-400 flex items-center justify-center rounded-full border-[1.5px] border-[#FFFFFF] w-[32px] h-[32px] sm:w-[35px] sm:h-[35px] p-2 transition-colors duration-200"
                         >
                             <img
@@ -198,9 +210,10 @@ const Footer = () => {
                                 className="h-[11px] w-[5px] sm:h-[12px] sm:w-[6px]"
                             />
                         </a>
-                        {/* Twitter Icon */}
                         <a
-                            href="#"
+                            href="https://www.twitter.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-gray-400 hover:text-blue-400 flex items-center justify-center rounded-full border-[1.5px] border-[#FFFFFF] w-[32px] h-[32px] sm:w-[35px] sm:h-[35px] p-2 transition-colors duration-200"
                         >
                             <img
