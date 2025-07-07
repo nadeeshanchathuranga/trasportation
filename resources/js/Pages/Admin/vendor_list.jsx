@@ -17,6 +17,7 @@ function handleDelete(id) {
 }
 
 export default function VendorList({ vendor_lists }) {
+    // alert("vendors:", vendor_lists);
     const [filter, setFilter] = useState('all');
 
     // Filter vendors based on status - fixed to match database values
@@ -91,7 +92,7 @@ export default function VendorList({ vendor_lists }) {
                                             <td className="px-4 py-2 border">{vendor.business_name}
                                              <p className="text-red-600 text-xs "> Reg No :   {vendor.business_registration_no}</p>
                                             </td>
-                                      
+
 
 
 <td className="px-4 py-2 border">

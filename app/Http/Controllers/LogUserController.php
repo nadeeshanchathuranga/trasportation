@@ -19,8 +19,6 @@ class LogUserController extends Controller
 public function flightView()
 {
 
- 
-
     $user = Auth::user();
 
         if ($user->role_type === 'user') {

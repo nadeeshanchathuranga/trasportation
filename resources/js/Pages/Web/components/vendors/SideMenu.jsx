@@ -34,7 +34,38 @@ const SideMenu = () => {
                     <img src={dashLogo} className="w-[25px]" />
                     <h1>Dashboard</h1>
                 </div>
+
+
                 <div
+                    className={`flex flex-row justify-start items-center gap-5 cursor-pointer w-full rounded-lg px-4 py-2 ${
+                        currentPath === "/vendor/vehicles"
+                            ? "bg-[#0955AC29] text-[#000000] font-[700]"
+                            : "text-[#00000066]"
+                    }`}
+                    onClick={() =>
+                        (window.location.href = "/vendor/vehicles")
+                    }
+                >
+                    <img src={dashLogo} className="w-[25px]" />
+                    <h1>Vehicles</h1>
+                </div>
+
+
+                <div
+                    className={`flex flex-row justify-start items-center gap-5 cursor-pointer w-full rounded-lg px-4 py-2 ${
+                        currentPath === "/vendor/booking-management"
+                            ? "bg-[#0955AC29] text-[#000000] font-[700]"
+                            : "text-[#00000066]"
+                    }`}
+                    onClick={() => (window.location.href = "/vendor/booking-management")}
+                >
+                    <img src={bookLogo} className="w-[25px]" />
+                    <h1>Bookings</h1>
+                </div>
+
+
+
+                {/* <div
                     className={`flex flex-row justify-start items-center gap-5 cursor-pointer w-full rounded-lg px-4 py-2 ${
                         currentPath === "/vendors/bookings"
                             ? "bg-[#0955AC29] text-[#000000] font-[700]"
@@ -44,7 +75,9 @@ const SideMenu = () => {
                 >
                     <img src={bookLogo} className="w-[25px]" />
                     <h1>Bookings</h1>
-                </div>
+                </div> */}
+
+
                 <div
                     className={`flex flex-row justify-start items-center gap-5 cursor-pointer w-full rounded-lg px-4 py-2 ${
                         currentPath === "/vendors/units"

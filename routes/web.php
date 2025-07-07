@@ -89,6 +89,7 @@ Route::get('/my-freight-bookings', [LogUserController::class, 'freightBookings']
 Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () {
     Route::get('/', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('/store', [VendorController::class, 'store'])->name('vendor.store');
+
     Route::get('/dashboard', [VendorController::class, 'vendorDashboard'])->name('vendor.dashboard');
     Route::get('/booking-management', [VendorController::class, 'bookingManagement'])->name('vendor.booking');
     Route::get('/earning-management', [VendorController::class, 'earningManagement'])->name('vendor.earning');
@@ -198,9 +199,12 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () 
 // -------------------------------
 Route::middleware(['auth', 'role:admin,superadmin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.view');
+
     Route::get('/admin/vendor-list', [AdminController::class, 'vendorList'])->name('vendor.list');
+
     Route::post('/vendors/{id}/approve', [AdminController::class, 'vendorApprove']);
     Route::post('/vendors/{id}/reject', [AdminController::class, 'vendorReject']);
+
     Route::delete('/vendor-delete/{id}', [AdminController::class, 'destroy']);
 
     Route::get('/admin/add-vehicle-brand', [AdminController::class, 'addVehicleBrand'])->name('admin.add_vehicle_brand');

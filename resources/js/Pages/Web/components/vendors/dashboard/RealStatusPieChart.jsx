@@ -62,4 +62,4 @@ const RealStatusPieChart = () => {
   );
 };
 
-export default RealStatusPieChart; 
+export default RealStatusPieChart;

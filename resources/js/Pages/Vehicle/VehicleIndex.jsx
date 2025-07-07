@@ -1,6 +1,7 @@
 import { usePage, Link } from '@inertiajs/react';
 import React, { useState, useEffect } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import SideMenu from '../Web/components/vendors/SideMenu';
 
 export default function VehicleIndex() {
   const { props } = usePage();
@@ -79,6 +80,7 @@ export default function VehicleIndex() {
 
     return (
       <>
+
         {/* Backdrop */}
         <div
           className={`fixed inset-0 z-40 transition-opacity duration-300 ${

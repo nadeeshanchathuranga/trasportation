@@ -202,7 +202,7 @@ const BookingContent = () => {
                             </h1>
                             <img src={miniDownArrow} />
                         </div>
-                        <button className="w-[125px] h-[35px] bg-[#0955AC] text-[14px] rounded-[6px] text-[#FFFFFF] font-[700]">Add Booking</button>
+                        {/* <button className="w-[125px] h-[35px] bg-[#0955AC] text-[14px] rounded-[6px] text-[#FFFFFF] font-[700]">Add Booking</button> */}
                     </div>
                 </div>
 

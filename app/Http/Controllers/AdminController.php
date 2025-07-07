@@ -41,7 +41,14 @@ class AdminController extends Controller
     // This function is used to display the list of vendors
     public function vendorList()
     {
-        $vendor_lists = Vendor::with('user')->get();
+        // $vendor_lists = Vendor::with('user')->get();
+
+        $vendor_lists = Vendor::with('user')
+            ->whereHas('user', function ($query) {
+                $query->where('role_type', 'vendor');
+            })
+            ->get();
+
         return Inertia::render('Admin/vendor_list', [
             'vendor_lists' => $vendor_lists,
         ]);
