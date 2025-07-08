@@ -2,23 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Courier;
-use App\Policies\CourierPolicy;
-use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * The model to policy mappings for the application.
-     *
-     * @var array<class-string, class-string>
-     */
-    protected $policies = [
-        // ...existing policies...
-        Courier::class => CourierPolicy::class,
-    ];
-
     /**
      * Register any application services.
      */
@@ -32,6 +20,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Vite::prefetch(concurrency: 3);
+        // Load the front.php routes
+        $this->loadFrontRoutes();
+    }
+
+    /**
+     * Load frontend routes from front.php
+     */
+    protected function loadFrontRoutes(): void
+    {
+        Route::middleware(['web'])
+            ->group(base_path('routes/front.php'));
     }
 }
