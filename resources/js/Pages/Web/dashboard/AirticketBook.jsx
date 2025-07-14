@@ -6,7 +6,7 @@ import { Head } from '@inertiajs/react';
 const mockDestinations = [
   {
     city: "Osaka",
-    image: "https://content.skyscnr.com/m/14316548b29a2ab3/original/Osaka.jpg",
+    image: "https://content.skyscnr.com/m/14316548b29a2ab3/original/ .jpg",
     flight: "Direct",
     flightPrice: "Rp 38,369",
     hotel: "4 stars",
