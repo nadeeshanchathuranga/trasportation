@@ -28,6 +28,7 @@ export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
     flight_fly_range_km: '',
     airport_name: '',
     port_of_operation: '',
+    driver_status: '',
   });
 
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -36,17 +37,17 @@ export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
     if (type === 'file') {
-      if (name === 'images') {
-        const selectedImages = Array.from(files);
-        setFormData({ ...formData, images: selectedImages });
-        setImagePreviews(selectedImages.map(file => URL.createObjectURL(file)));
-      } else {
-        setFormData({ ...formData, [name]: files[0] });
-      }
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
+        if (name === 'images') {
+            const selectedImages = Array.from(files);
+            setFormData({ ...formData, images: selectedImages });
+            setImagePreviews(selectedImages.map(file => URL.createObjectURL(file)));
+        } else {
+            setFormData({ ...formData, [name]: files[0] });
+        }
+        } else {
+        setFormData({ ...formData, [name]: value });
+        }
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -206,6 +207,39 @@ export default function VehicleCreate({ brands = [], bodyTypes = [] }) {
                     className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     placeholder="License plate number"
                   />
+                </div>
+
+                {/* Vehicle Category */}
+                {/* <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">Vehicle Category *</label>
+                  <select
+                    name="category"
+                    value={formData.category}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm"
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    <option value="air">Air</option>
+                    <option value="land">Land</option>
+                    <option value="sea">Sea</option>
+                  </select>
+                </div> */}
+
+                {/* Driver Status - with or without driver */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">Driver Status *</label>
+                  <select
+                    name="driver_status"
+                    value={formData.driver_status}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm"
+                    required
+                  >
+                    <option value="">Select Driver Status</option>
+                    <option value="with_driver">With Driver</option>
+                    <option value="without_driver">Without Driver</option>
+                  </select>
                 </div>
 
                 {/* Vehicle Category */}

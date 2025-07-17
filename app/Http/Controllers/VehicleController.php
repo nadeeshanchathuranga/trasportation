@@ -94,6 +94,9 @@ public function store(Request $request)
 
         'port_of_operation' => 'nullable|string',
 
+        // Driver status
+        'driver_status' => 'nullable|string|in:with_driver,without_driver',
+
         // Multiple vehicle images
         'images.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
@@ -126,6 +129,7 @@ public function store(Request $request)
         'description' => $validatedData['description'] ?? null,
         'insuarance_provider_name' => $validatedData['insuarance_provider_name'] ?? null,
         'insuarance_document' => $validatedData['insuarance_document'] ?? null,
+        'driver_status' => $validatedData['driver_status'] ?? null,
     ]);
 
     // Category-specific insert

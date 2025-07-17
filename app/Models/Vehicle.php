@@ -28,7 +28,8 @@ class Vehicle extends Model
         'description',
         'insuarance_provider_name',
         'insuarance_document',
-        'cover_image'
+        'cover_image',
+        'driver_status', // Added driver status field
     ];
 
     public function images()
