@@ -7,7 +7,6 @@ const VehicleCheckout = () => {
     <div>
       <Header />
       <VehicleCheckoutContent />
-
     </div>
   )
 }

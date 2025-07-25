@@ -49,7 +49,7 @@ const RentByBrands = () => {
             <div 
               key={index} 
               onClick={() => handleBrandClick(brand.name)}
-              className="bg-white border-[1px] border-[#0955AC] p-4 rounded-[8px] shadow flex flex-col items-center justify-center h-[137px] cursor-pointer hover:bg-[#f5f5f5] transition-colors duration-300"
+              className="bg-[#EAEAE9] border-[1px] border-[#0955AC] p-4 rounded-[8px] shadow flex flex-col items-center justify-center h-[137px] cursor-pointer hover:bg-[#f5f5f5] transition-colors duration-300"
             >
               <img src={brand.logo} alt={`${brand.name} Logo`} className="object-contain mb-5 w-[42px] h-[42px]" />
               <p className="figtree text-[#0F0F0F] text-[12px] md:text-[16px] font-[500] group-hover:text-white text-center">{brand.name}</p>

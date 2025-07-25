@@ -99,4 +99,9 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/land/VehicleCheckout');
     }
+
+    public function freightHomepage()
+    {
+        return Inertia::render('Web/home/freight/Homepage');
+    }
 }

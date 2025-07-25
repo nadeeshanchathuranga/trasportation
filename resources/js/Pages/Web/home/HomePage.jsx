@@ -40,18 +40,18 @@ const HomePage = ({ auth }) => {
 
     return (
         <div>
-            <Header />
             <div
                 className="relative flex flex-col"
-                style={{
-                    backgroundImage: `url(${bg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    minHeight: "calc(100vh - 80px)",
-                }}
+                // style={{
+                //     backgroundImage: `url(${bg})`,
+                //     backgroundSize: "cover",
+                //     backgroundPosition: "center",
+                //     backgroundRepeat: "no-repeat",
+                //     minHeight: "calc(100vh - 80px)",
+                // }}
             >
-                
+                <Header />
+
                 <HeroSection
                     formData={formData}
                     onFormChange={handleFormChange}

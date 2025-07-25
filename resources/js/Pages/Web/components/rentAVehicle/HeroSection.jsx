@@ -173,7 +173,7 @@ const HeroSection = ({ formData, onFormChange, onSubmit }) => {
       </div>
 
       {/* Images Section */}
-      <div className="bebas-neue hidden md:flex flex-row items-stretch h-[500px] lg:h-[680px] gap-4 w-full md:w-2/3 flex-shrink-0 mt-8 md:mt-20">
+      <div className="bebas-neue hidden md:flex flex-row items-stretch h-[500px] lg:h-[680px] gap-4 w-full md:w-2/3 flex-shrink-0">
         {imageOrder.map((type, idx) => (
           <div
             key={type}

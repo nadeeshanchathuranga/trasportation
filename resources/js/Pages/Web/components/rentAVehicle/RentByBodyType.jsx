@@ -49,7 +49,7 @@ const RentByBodyType = () => {
           {bodyTypes.map((bodyType, index) => (
             <div 
               key={index} 
-              className="bg-[white] border-[1px] border-[#0955AC] p-4 rounded-[8px] shadow flex flex-col items-center justify-center h-[137px] hover:bg-[#f5f5f5] transition-colors duration-200"
+              className="bg-[#EAEAE9] border-[1px] border-[#0955AC] p-4 rounded-[8px] shadow flex flex-col items-center justify-center h-[137px] hover:bg-[#f5f5f5] transition-colors duration-200"
               onClick={() => handleBodyTypeClick(bodyType)}
             >
               <img src={bodyType.icon} alt={`${bodyType.name} Icon`} className="h-[40px] object-contain mb-5" />

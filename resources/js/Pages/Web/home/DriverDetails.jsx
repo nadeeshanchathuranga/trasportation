@@ -16,7 +16,6 @@ const DriverDetails = () => {
                 <div className="w-full p-10 flex flex-col gap-10 items-center">
                     <HeroSection />
                     <ReviewSection/>
-
                 </div>x
             </div>
 
