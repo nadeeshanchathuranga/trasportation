@@ -168,8 +168,7 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->group(function () 
     Route::get('/driver-rejected', [DriverController::class, 'driverReject'])->name('driver.rejected');
     Route::get('/driver-service', [DriverController::class, 'servicePackage'])->name('driver.service_pacakge');
 
-    Route::get('/driver-service-pakage', [DriverController::class, 'servicePackageForm'])->name('driver.service_package_form');
-    Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
+     Route::post('/driver/service-package', [DriverController::class, 'servicePackageStore'])->name('driver.service_package.store');
     Route::get('/driver/service-package-view', [DriverController::class, 'servicePackageView'])->name('driver.service_package.view');
 
     Route::put('/service-package/{id}/update', [DriverController::class, 'servicePackageUpdate'])

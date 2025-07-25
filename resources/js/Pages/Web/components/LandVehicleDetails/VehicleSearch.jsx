@@ -411,12 +411,20 @@ const VehicleSearch = () => {
                     </div>
 
                     <div className="flex justify-center items-center">
-                        <div
+                        {/* <div
                             className=" w-auto md:w-[261px] h-[29px] bg-[#0955AC] rounded-[5px] mt-5 flex items-center justify-center text-[12px] font-[700] text-[#FFFFFF] cursor-pointer"
                             onClick={() => router.visit("/vehicle-checkout")}
                         >
                             CONTINUE TO CHECKOUT
-                        </div>
+                        </div> */}
+<a
+    href="/vehicle-checkout"
+    className="w-auto md:w-[261px] h-[29px] bg-[#0955AC] rounded-[5px] mt-5 flex items-center justify-center text-[12px] font-[700] text-[#FFFFFF] cursor-pointer"
+>
+    CONTINUE TO CHECKOUT
+</a>
+
+
                     </div>
                 </div>
             </div>

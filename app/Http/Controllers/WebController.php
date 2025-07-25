@@ -97,6 +97,7 @@ class WebController extends Controller
 
     public function vehicleCheckout()
     {
+ 
         return Inertia::render('Web/home/land/VehicleCheckout');
     }
 
