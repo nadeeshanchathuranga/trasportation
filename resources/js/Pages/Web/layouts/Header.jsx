@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { router, usePage, Link } from "@inertiajs/react";
 import downArrow from "../assets/rentAVehicle/header/downArrow.png";
+import proPic from "../assets/header/profilePic.svg"
+import bell from "../assets/header/bell.svg"
+import search from "../assets/header/search.svg"
 
 const Header = () => {
     const { auth } = usePage().props;
