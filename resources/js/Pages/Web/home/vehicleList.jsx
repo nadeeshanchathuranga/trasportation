@@ -36,13 +36,13 @@ const VehicleList = () => {
       <Header />
       <div 
         className="main-content flex"
-        style={{
-          backgroundImage: `url(${bg})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          minHeight: 'calc(100vh - 80px)'
-        }}
+        // style={{
+        //   backgroundImage: `url(${bg})`,
+        //   backgroundSize: 'cover',
+        //   backgroundPosition: 'center',
+        //   backgroundRepeat: 'no-repeat',
+        //   minHeight: 'calc(100vh - 80px)'
+        // }}
       >
         <FilterSidebar searchParams={formData} />
         <div className="vehicle-list-container flex-1">

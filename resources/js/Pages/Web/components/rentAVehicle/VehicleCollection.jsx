@@ -152,7 +152,7 @@ const VehicleCollection = () => {
                     {vehicles.map((vehicle, index) => (
                         <div
                             key={index}
-                            className="bg-white shadow-md overflow-hidden h-auto w-full max-w-[286px] py-3 sm:py-4 md:py-5"
+                            className="bg-[#EAEAE9] shadow-md overflow-hidden h-auto w-full max-w-[286px] py-3 sm:py-4 md:py-5"
                         >
                             <div className="flex items-center justify-center mt-3 sm:mt-4 md:mt-5">
                                 <div className="flex flex-wrap justify-center gap-6 w-full px-5 text-[9px] text-[#00000040]">

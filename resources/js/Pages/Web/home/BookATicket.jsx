@@ -19,7 +19,7 @@ const BookATicket = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-row bg-[#E7E7E7]">
+            <div className="flex flex-row bg-[#FFFFFF]">
                 <FilterSidebar />
                 <SearchForm
                     formData={formData}

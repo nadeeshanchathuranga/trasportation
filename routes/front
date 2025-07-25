@@ -1,5 +1,3 @@
-
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -7,6 +5,8 @@ use App\Http\Controllers\WebController;
 
 Route::get('/', [WebController::class, 'index'])->name('home');
 Route::get('/drivers-home', [WebController::class, 'driversHome'])->name('drivers.home');
+<<<<<<< HEAD
+=======
 
 Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
 Route::get('/vehicleDetails', [WebController::class, 'vehicleDetails'])->name('vehicle.details');
@@ -50,3 +50,4 @@ Route::get('/vehicle-checkout', [WebController::class, 'vehicleCheckout'])->name
 // Route::get('/vendors/calendar', function () {
 //   return Inertia::render('Web/home/vendors/Calendar');
 // })->name('vendors.calendar');
+>>>>>>> origin/kevin
