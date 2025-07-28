@@ -100,8 +100,18 @@ class WebController extends Controller
         return Inertia::render('Web/home/land/VehicleCheckout');
     }
 
+    public function summary()
+    {
+        return Inertia::render('Web/home/land/Summary');
+    }
+
     public function freightHomepage()
     {
         return Inertia::render('Web/home/freight/Homepage');
+    }
+
+    public function freightTicketBooking()
+    {
+        return Inertia::render('Web/home/flight/TicketBooking');
     }
 }

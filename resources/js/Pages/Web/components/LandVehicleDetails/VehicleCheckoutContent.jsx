@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { router } from "@inertiajs/react";
 import car from "../../assets/vehicleCheckout/car.svg";
 import icon1 from "../../assets/vehicleCheckout/icon1.svg";
 import icon2 from "../../assets/vehicleCheckout/icon2.svg";
@@ -12,6 +13,13 @@ const VehicleCheckoutContent = () => {
     const [countryCode, setCountryCode] = useState("lk");
     const [phone, setPhone] = useState("");
     const [selectedPayment, setSelectedPayment] = useState("");
+
+    const handleConfirmBooking = () => {
+        router.visit('/summary', {
+            method: 'get',
+            preserveScroll: true
+        });
+    };
 
     return (
         <div>
@@ -427,7 +435,8 @@ const VehicleCheckoutContent = () => {
                     </div>
 
                     <div
-                        className="rounded-[5px] flex justify-center items-center text-[#FFFFFF] font-[700] text-[12px] lg:w-[874px] h-[50px] bg-[#0955AC] px-5 py-5 cursor-pointer">
+                        onClick={handleConfirmBooking}
+                        className="rounded-[5px] flex justify-center items-center text-[#FFFFFF] font-[700] text-[12px] lg:w-[874px] h-[50px] bg-[#0955AC] px-5 py-5 cursor-pointer hover:bg-[#074a8f] transition-colors">
                         {" "}
                         CONFIRM BOOKING{" "}
                     </div>
