@@ -30,10 +30,10 @@ const Hero = () => {
             />
             {/* Content */}
             <div style={{ position: "relative", zIndex: 2 }}>
-                <div className="flex flex-row items-center justify-between px-20 py-10">
+                <div className="flex flex-col xl:flex-row items-center justify-between px-20 py-10">
                     <div className="">
                         <div className="w-[125px] h-[5px] bg-[#FFFFFF] mb-6 rounded-sm"></div>
-                        <h1 className="w-[638px] bebas-neue text-[78px]/[70px] font-[400] mb-4">
+                        <h1 className="xl:w-[638px] bebas-neue text-[78px]/[70px] font-[400] mb-4">
                             Million <span className="text-[#FFFFFF]">of</span>{" "}
                             flights.
                             <span className="text-[#FFFFFF]">
@@ -41,7 +41,7 @@ const Hero = () => {
                             </span> simple{" "}
                             <span className="text-[#FFFFFF]">search</span>.
                         </h1>
-                        <p className="poppins py-5 w-[628px] text-[12px]/[20px] md:text-[14px]/[33px] font-[400] text-[#FFFFFF] text-justify mb-10 md:mb-20">
+                        <p className="poppins py-5 xl:w-[628px] text-[12px]/[20px] md:text-[14px]/[33px] font-[400] text-[#FFFFFF] text-justify mb-10 md:mb-20">
                             Lorem ipsum dolor sit amet, consectetur adipiscing
                             elit. Donec semper eu risus ut ornare. In bibendum
                             tempus sapien, tristique consectetur purus

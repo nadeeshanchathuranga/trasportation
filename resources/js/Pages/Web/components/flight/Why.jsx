@@ -6,7 +6,7 @@ import icon4 from "../../assets/flight/icon4.svg";
 
 const Why = () => {
     return (
-        <div className="bg-[#0955AC5C] flex flex-row justify-between items-center px-[150px] py-20">
+        <div className="bg-[#0955AC5C] flex flex-col xl:flex-row justify-between items-center px-[150px] py-20">
             <div>
                 <div className="w-[195px] h-[52px] rounded-[10px] bg-[#0955AC] text-[16px] font-[700] text-[#FFFFFF] flex justify-center items-center">
                     <h1>WHY CHOOSE US ?</h1>
@@ -23,7 +23,7 @@ const Why = () => {
                     Choose one style or create a package, fill your passports
                     with adventures together.
                 </p>
-                <div className="flex flex-row gap-12 text-[16px]/[28px] text-[#737373] font-[700] py-10">
+                <div className="flex flex-col xl:flex-row gap-12 text-[16px]/[28px] text-[#737373] font-[700] py-10">
                     <div className="flex flex-col justify-center items-start gap-5">
                         <h1 className="text-[44px] font-[800] text-[#000000]">
                             45+
@@ -64,7 +64,7 @@ const Why = () => {
                 </div>
             </div>
 
-            <div className="flex flex-row gap-10">
+            <div className="flex flex-col xl:flex-row gap-10">
                 <div className="flex flex-col gap-10 mt-10">
                     <div className="w-[280px] h-[213px] bg-[#FFF0EC] rounded-[16px] p-10 flex flex-col justify-center items-center gap-3">
                         <img src={icon1} />

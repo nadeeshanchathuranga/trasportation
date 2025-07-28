@@ -20,17 +20,17 @@ const ContentOne = () => {
 
             <div className="py-10 flex flex-col gap-10">
                 {/* 1st row */}
-                <div className="flex flex-row gap-10">
+                <div className="flex flex-col xl:flex-row gap-10">
                     {/* card 1 */}
-                    <div className="relative flex flex-row">
+                    <div className="relative flex flex-col xl:flex-row">
                         <div className="absolute top-5 left-5 size-[32px] bg-[#FFFFFFD1] rounded-full flex justify-center items-center cursor-pointer">
                             <img src={heart} />{" "}
                         </div>
                         <img
                             src={img1}
-                            className="rounded-l-[24px] -mr-[80px]"
+                            className="xl:rounded-l-[24px] -mr-[80px]"
                         />
-                        <div className="w-[389px] h-[311px] bg-[#FFFFFF] rounded-[24px] px-10 py-10">
+                        <div className="xl:w-[389px] h-[311px] bg-[#FFFFFF] xl:rounded-[24px] px-10 py-10">
                             <div className="pr-10">
                                 <div className="flex flex-row justify-between">
                                     <div className="flex justify-center items-center gap-3 text-[16px] text-[#737373] font-[500]">
@@ -79,15 +79,15 @@ const ContentOne = () => {
                     </div>
 
                     {/* Card 2 */}
-                    <div className="relative flex flex-row">
+                    <div className="relative flex flex-col xl:flex-row">
                         <div className="absolute top-5 left-5 size-[32px] bg-[#FFFFFFD1] rounded-full flex justify-center items-center cursor-pointer">
                             <img src={heart} />{" "}
                         </div>
                         <img
                             src={img2}
-                            className="rounded-l-[24px] -mr-[80px]"
+                            className="xl:rounded-l-[24px] -mr-[80px]"
                         />
-                        <div className="w-[389px] h-[311px] bg-[#FFFFFF] rounded-[24px] px-10 py-10">
+                        <div className="xl:w-[389px] h-[311px] bg-[#FFFFFF] xl:rounded-[24px] px-10 py-10">
                             <div className="pr-10">
                                 <div className="flex flex-row justify-between">
                                     <div className="flex justify-center items-center gap-3 text-[16px] text-[#737373] font-[500]">
@@ -137,17 +137,17 @@ const ContentOne = () => {
                 </div>
 
                 {/* 2nd row */}
-                <div className="flex flex-row gap-10">
+                <div className="flex flex-col xl:flex-row gap-10">
                     {/* card 1 */}
-                    <div className="relative flex flex-row">
+                    <div className="relative flex flex-col xl:flex-row">
                         <div className="absolute top-5 left-5 size-[32px] bg-[#FFFFFFD1] rounded-full flex justify-center items-center cursor-pointer">
                             <img src={heart} />{" "}
                         </div>
                         <img
                             src={img3}
-                            className="rounded-l-[24px] -mr-[80px]"
+                            className="xl:rounded-l-[24px] -mr-[80px]"
                         />
-                        <div className="w-[389px] h-[311px] bg-[#FFFFFF] rounded-[24px] px-10 py-10">
+                        <div className="xl:w-[389px] h-[311px] bg-[#FFFFFF] xl:rounded-[24px] px-10 py-10">
                             <div className="pr-10">
                                 <div className="flex flex-row justify-between">
                                     <div className="flex justify-center items-center gap-3 text-[16px] text-[#737373] font-[500]">
@@ -196,15 +196,15 @@ const ContentOne = () => {
                     </div>
 
                     {/* Card 2 */}
-                    <div className="relative flex flex-row">
+                    <div className="relative flex flex-col xl:flex-row">
                         <div className="absolute top-5 left-5 size-[32px] bg-[#FFFFFFD1] rounded-full flex justify-center items-center cursor-pointer">
                             <img src={heart} />{" "}
                         </div>
                         <img
                             src={img4}
-                            className="rounded-l-[24px] -mr-[30px]"
+                            className="xl:rounded-l-[24px] -mr-[30px]"
                         />
-                        <div className="w-[389px] h-[311px] bg-[#FFFFFF] rounded-[24px] px-10 py-10">
+                        <div className="xl:w-[389px] h-[311px] bg-[#FFFFFF] xl:rounded-[24px] px-10 py-10">
                             <div className="pr-10">
                                 <div className="flex flex-row justify-between">
                                     <div className="flex justify-center items-center gap-3 text-[16px] text-[#737373] font-[500]">

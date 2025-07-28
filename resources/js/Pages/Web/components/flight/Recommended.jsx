@@ -19,7 +19,7 @@ const Recommended = () => {
 
             <div className="flex flex-col gap-10 py-10">
                 {/* 1st row */}
-                <div className="flex flex-row gap-10">
+                <div className="flex flex-col xl:flex-row gap-10">
                     {/* Card 1 */}
                     <div className="relative">
                         <img
@@ -46,7 +46,7 @@ const Recommended = () => {
                         </div>
 
                         <div
-                            className="relative w-[390px] h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
+                            className="relative xl:w-[390px] xl:h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
                             style={{
                                 boxShadow:
                                     "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",
@@ -124,7 +124,7 @@ const Recommended = () => {
                         </div>
 
                         <div
-                            className="relative w-[390px] h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
+                            className="relative xl:w-[390px] xl:h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
                             style={{
                                 boxShadow:
                                     "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",
@@ -202,7 +202,7 @@ const Recommended = () => {
                         </div>
 
                         <div
-                            className="relative w-[390px] h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
+                            className="relative xl:w-[390px] xl:h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
                             style={{
                                 boxShadow:
                                     "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",
@@ -256,7 +256,7 @@ const Recommended = () => {
                 </div>
 
                 {/* 2st row */}
-                <div className="flex flex-row gap-10">
+                <div className="flex flex-col xl:flex-row gap-10">
                     {/* Card 1 */}
                     <div className="relative">
                         <img
@@ -283,7 +283,7 @@ const Recommended = () => {
                         </div>
 
                         <div
-                            className="relative w-[390px] h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
+                            className="relative xl:w-[390px] xl:h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
                             style={{
                                 boxShadow:
                                     "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",
@@ -361,7 +361,7 @@ const Recommended = () => {
                         </div>
 
                         <div
-                            className="relative w-[390px] h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
+                            className="relative xl:w-[390px] xl:h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
                             style={{
                                 boxShadow:
                                     "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",
@@ -439,7 +439,7 @@ const Recommended = () => {
                         </div>
 
                         <div
-                            className="relative w-[390px] h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
+                            className="relative xl:w-[390px] xl:h-[259px] bg-[#FFFFFF] rounded-[30px] z-10 p-10"
                             style={{
                                 boxShadow:
                                     "0px 2px 2px 0px rgba(0, 0, 0, 0.25)",

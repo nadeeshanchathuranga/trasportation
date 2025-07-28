@@ -13,7 +13,7 @@ import skrill from "../../assets/flight/skrill.svg";
 
 const EasyPayment = () => {
     return (
-        <div className="bg-[#FFFFFF] flex flex-row gap-10 px-10 py-20 justify-center items-start relative">
+        <div className="bg-[#FFFFFF] flex flex-col xl:flex-row gap-10 px-10 py-20 justify-center items-center xl:items-start relative">
             <div className="flex flex-row gap-10">
                 <div className="flex flex-col gap-10">
                     <img src={payImg1} />
@@ -29,7 +29,7 @@ const EasyPayment = () => {
                     <h1 className="text-[14px] font-[700]">Easy Payments</h1>
                 </div>
 
-                <h1 className="bebas-neue text-[52px]/[76px] font-[400] xl:w-[500px]">
+                <h1 className="bebas-neue text-[52px]/[76px] font-[400] xl:w-[500px] mt-5">
                     We <span className="text-[#0955AC]">offer</span> tours in a
                     <span className="text-[#0955AC]"> range</span> of{" "}
                     <span className="text-[#0955AC]">locations</span>
@@ -41,7 +41,7 @@ const EasyPayment = () => {
                 <img src={flight} className="absolute top-5 right-0" />
 
                 <div className="flex flex-col gap-5 py-10 text-[14px] font-[400] poppins">
-                    <div className="flex flex-row gap-20">
+                    <div className="flex flex-col xl:flex-row xl:gap-20">
                         <div className="flex flex-row gap-3 justify-center items-center">
                             <img src={greenTic} />
                             <h1 className="w-[202px]">Security Assurance</h1>
@@ -51,7 +51,7 @@ const EasyPayment = () => {
                             <h1 className="w-[202px]">Customer Support</h1>
                         </div>
                     </div>
-                    <div className="flex flex-row gap-20">
+                    <div className="flex flex-col xl:flex-row xl:gap-20">
                         <div className="flex flex-row gap-3 justify-center items-center">
                             <img src={greenTic} />
                             <h1 className="w-[202px]">Transparent Policies</h1>
@@ -65,7 +65,7 @@ const EasyPayment = () => {
 
                 <h1 className="text-[14px] font-[700]">Payment is secure and safe</h1>
 
-                <div className="py-10 flex flex-row gap-3">
+                <div className="py-10 flex flex-col xl:flex-row gap-3">
                   <div className="w-[111px] h-[50px] border-[1px] border-[#E4E6E8] rounded-[5px] flex justify-center items-center">
                     <img src={paypal} />
                   </div>
