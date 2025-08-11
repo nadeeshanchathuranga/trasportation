@@ -114,4 +114,9 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/flight/TicketBooking');
     }
+
+     public function landingPage()
+    {
+        return Inertia::render('Web/home/landingPages/LandingPage');
+    }
 }

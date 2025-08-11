@@ -38,7 +38,7 @@ Route::get('/vehicle-checkout', [WebController::class, 'vehicleCheckout'])->name
 Route::get('/summary', [WebController::class, 'summary'])->name('summary');
 Route::get('/freight-home', [WebController::class, 'freightHomepage'])->name('freight.home');
 Route::get('/flight-booking', [WebController::class, 'freightTicketBooking'])->name('flight.ticket');
-
+Route::get('/landingPage', [WebController::class, 'landingPage'])->name('landingPage.home');
 
 
 
