@@ -119,4 +119,9 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/landingPages/LandingPage');
     }
+
+    public function blog()
+    {
+        return Inertia::render('Web/home/landingPages/Blog');
+    }
 }
