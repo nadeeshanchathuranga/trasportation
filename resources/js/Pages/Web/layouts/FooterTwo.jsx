@@ -7,7 +7,7 @@ const FooterTwo = () => {
     const currentYear = new Date().getFullYear();
 
     return (
-        <div className="px-20 py-10">
+        <div className="md:px-20 px-10 py-10">
             <div className="relative border-t-[1px] border-b-[2px] flex flex-col items-center justify-center py-20">
                 <h1 className="text-[25px] font-[700] uppercase">
                     Company Logo{" "}
@@ -16,7 +16,7 @@ const FooterTwo = () => {
                     <h1 className="text-[50px] font-[700] uppercase">
                         Your journey starts here{" "}
                     </h1>
-                    <p className="text-[15px] font-[500] pb-40">
+                    <p className="text-[15px] font-[500] md:-pb-40 pb-80">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Donec semper eu risus ut ornare. In.Lorem{" "}
                     </p>
@@ -33,7 +33,7 @@ const FooterTwo = () => {
                         </div>
                     </div>
 
-                    <div className="absolute bottom-5 flex flex-row gap-10 text-[17px]">
+                    <div className="absolute bottom-5 left-0 md:left-1/2 md:-translate-x-1/2 flex md:flex-row flex-col gap-10 text-[17px]">
                         <h1 className="cursor-pointer">Home</h1>
                         <h1 className="cursor-pointer">About Us</h1>
                         <h1 className="cursor-pointer">Services</h1>
@@ -43,7 +43,7 @@ const FooterTwo = () => {
                 </div>
             </div>
 
-            <div className=" flex flex-row justify-between items-center mt-5 text-[17px] font-[400]">
+            <div className=" flex flex-row justify-between items-center mt-5 md:text-[17px] text-[12px] font-[400]">
                 <h1>
                     © {currentYear} JAAN Network (Pvt) Ltd. | All rights
                     reserved.

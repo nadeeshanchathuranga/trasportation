@@ -6,25 +6,25 @@ const About = () => {
     return (
         <div className="poppins px-10 py-10">
             <div className="flex flex-row justify-center items-center gap-5">
-                <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
-                <h1 className="text-[#FF7003] text-[40px] font-[600]">
+                <div className="md:w-[112px] w-[50px] h-[1.8px] bg-[#FF7003]" />
+                <h1 className="text-[#FF7003] text-[40px] text-center font-[600]">
                     ABOUT US
                 </h1>
-                <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
+                <div className="md:w-[112px] w-[50px] h-[1.8px] bg-[#FF7003]" />
             </div>
-            <div className="flex xl:flex-row flex-col gap-10 justify-between items-center py-10">
+            <div className="flex xl:flex-row flex-col gap-10 justify-center items-center py-10">
                 <div className="flex md:flex-row flex-col gap-5 items-center justify-center">
                     <img src={img1} />
                     <div className="flex flex-col gap-5">
                         <div
-                            className="w-[337px] h-[219px] rounded-[30px] font-[600] text-[#29D3DC] flex flex-col justify-center items-center"
+                            className="lg:w-[337px] lg:h-[219px] rounded-[30px] font-[600] text-[#29D3DC] flex flex-col justify-center items-center"
                             style={{
                                 background:
                                     "linear-gradient(180deg, #11207D 0%, #1F3AE3 100%)",
                             }}
                         >
                             <h1 className="text-[82px]">10+</h1>
-                            <h1 className="text-[28px]">
+                            <h1 className="text-[28px] text-center">
                                 Years of experience{" "}
                             </h1>
                         </div>
@@ -32,7 +32,7 @@ const About = () => {
                     </div>
                 </div>
 
-                <div className="w-[600px] text-[14px]/[33px] font-[400] text-justify flex flex-col gap-10">
+                <div className="xl:w-[600px] text-[14px]/[33px] font-[400] md:text-justify flex flex-col gap-10">
                     <h1 className="text-[47px] font-[600]">
                         Why is Company Name?
                     </h1>

@@ -8,18 +8,18 @@ const Contact = () => {
     return (
         <div>
             <div className="poppins py-20 px-20">
-                <div className="flex xl:flex-row flex-col justify-between items-center xl:items-start px-20">
+                <div className="flex xl:flex-row flex-col gap-20 justify-center items-center xl:items-start px-20">
                     <div className="flex flex-col gap-10">
                         {/* heading */}
-                        <div className="flex flex-row justify-center items-center gap-5">
-                            <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
+                        <div className="flex flex-row justify-center items-center gap-5 text-center">
+                            <div className="lg:w-[112px] w-[30px] h-[1.8px] bg-[#FF7003]" />
                             <h1 className="text-[#FF7003] text-[40px] font-[600] uppercase">
                                 Contact us
                             </h1>
-                            <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
+                            <div className="lg:w-[112px] w-[30px] h-[1.8px] bg-[#FF7003]" />
                         </div>
                         <div>
-                            <p className="text-[14px]/[33px] text-justify md:w-[553px]">
+                            <p className="text-[14px]/[33px] text-justify lg:w-[553px]">
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit. Donec semper eu risus ut
                                 ornare. In bibendum tempus sapien, tristique
@@ -49,28 +49,28 @@ const Contact = () => {
                             <label className="px-5">Name</label>
                             <input
                                 type="text"
-                                className="w-[568px] h-[66px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-2"
+                                className="xl:w-[568px] xl:h-[66px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-2"
                             />
                         </div>
                         <div className="flex flex-col gap-2">
                             <label className="px-5">Email</label>
                             <input
                                 type="email"
-                                className="w-[568px] h-[66px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-2"
+                                className="xl:w-[568px] xl:h-[66px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-2"
                             />
                         </div>
                         <div className="flex flex-col gap-2">
                             <label className="px-5">Phone Number</label>
                             <input
                                 type="number"
-                                className="w-[568px] h-[66px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-2"
+                                className="xl:w-[568px] xl:h-[66px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-2"
                             />
                         </div>
                         <div className="flex flex-col gap-2">
                             <label className="px-5">Your Message Here</label>
                             <Textarea
                                 type="text"
-                                className="w-[568px] min-h-[156px] max-h-[156px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-4"
+                                className="xl:w-[568px] min-h-[100px] max-h-[100px] xl:min-h-[156px] xl:max-h-[156px] rounded-[12px] bg-[#000000] border-[1px] border-[#76ADEC] px-4 py-4"
                             ></Textarea>
                         </div>
                         <div

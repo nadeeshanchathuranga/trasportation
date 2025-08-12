@@ -64,16 +64,16 @@ const Stories = () => {
             <div className="poppins py-20 px-10">
                 {/* heading */}
                 <div className="flex flex-row justify-center items-center gap-5">
-                    <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
-                    <h1 className="text-[#FF7003] text-[40px] font-[600] uppercase">
+                    <div className="xl:w-[112px] w-[50px] h-[1.8px] bg-[#FF7003]" />
+                    <h1 className="text-[#FF7003] text-[40px] font-[600] text-center uppercase">
                         Stories form our clinets
                     </h1>
-                    <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
+                    <div className="xl:w-[112px] w-[50px] h-[1.8px] bg-[#FF7003]" />
                 </div>
 
-                <div className="flex flex-row justify-between items-center py-10 px-20">
+                <div className="flex flex-row gap-10 justify-center items-center py-10 px-20">
                     <button
-                        className="size-[38px] rounded-full flex justify-center items-center"
+                        className="size-[38px] rounded-full hidden md:flex justify-center items-center"
                         style={{ backgroundColor: leftButtonColor }}
                         onClick={handlePrev}
                         aria-label="Previous review"
@@ -90,7 +90,7 @@ const Stories = () => {
                         <p className="xl:w-[875px] text-center">
                             {review.text}
                         </p>
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col md:items-center items-start">
                             <h1 className="text-[22px] font-[600]">
                                 {review.name}
                             </h1>
@@ -98,7 +98,7 @@ const Stories = () => {
                         </div>
                     </div>
                     <button
-                        className="size-[38px] rounded-full flex justify-center items-center rotate-180"
+                        className="size-[38px] rounded-full hidden md:flex justify-center items-center rotate-180"
                         style={{ backgroundColor: rightButtonColor }}
                         onClick={handleNext}
                         aria-label="Next review"

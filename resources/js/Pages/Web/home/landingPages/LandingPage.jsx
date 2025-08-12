@@ -12,15 +12,25 @@ import FooterTwo from "../../layouts/FooterTwo";
 const LandingPage = () => {
     return (
         <div className="bg-[#000000] text-[#FFFFFF]">
-            <Hero />
-            <About />
-            <Service />
+            <div id="home">
+                <Hero />
+            </div>
+            <div id="about">
+                <About />
+            </div>
+            <div id="services">
+                <Service />
+            </div>
             <Why />
+            <div id="blog">
+                <Blog />
+            </div>
             <FAQ />
-            <Blog />
             <Stories />
-            <Contact />
-            <FooterTwo/>
+            <div id="contact">
+                <Contact />
+            </div>
+            <FooterTwo />
         </div>
     );
 };

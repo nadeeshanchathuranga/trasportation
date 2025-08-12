@@ -13,13 +13,13 @@ const Service = () => {
     return (
         <div className="poppins py-10">
             <div className="flex flex-row justify-center items-center gap-5">
-                <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
+                <div className="md:w-[112px] w-[30px] h-[1.8px] bg-[#FF7003]" />
                 <h1 className="text-[#FF7003] text-[40px] font-[600] uppercase">
                     Services
                 </h1>
-                <div className="w-[112px] h-[1.8px] bg-[#FF7003]" />
+                <div className="md:w-[112px] w-[30px] h-[1.8px] bg-[#FF7003]" />
             </div>
-            <div className="flex flex-row pt-10">
+            <div className="flex lg:flex-row flex-col justify-center items-center pt-10">
                 {/* Card 1 */}
                 <div className="w-[305px] h-[740px] relative group overflow-hidden">
                     {/* Background image */}
