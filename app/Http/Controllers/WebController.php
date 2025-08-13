@@ -129,4 +129,14 @@ class WebController extends Controller
     {
         return Inertia::render('Web/home/landingPages/BlogExample');
     }
+
+    public function signin()
+    {
+        return Inertia::render('Web/home/auth/Signin');
+    }
+
+    public function signup()
+    {
+        return Inertia::render('Web/home/auth/Signup');
+    }
 }

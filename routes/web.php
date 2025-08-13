@@ -44,6 +44,12 @@ Route::get('/landingPage', [WebController::class, 'landingPage'])->name('landing
 Route::get('/landingPage/blog', [WebController::class, 'blog'])->name('landingPage.blog');
 Route::get('/landingPage/blogExample', [WebController::class, 'blogExample'])->name('blogExample.blog');
 
+// Auth
+Route::get('/signin', [WebController::class, 'signin'])->name('signin.signin');
+Route::get('/signup', [WebController::class, 'signup'])->name('signup.signup');
+
+
+
 
 
 
