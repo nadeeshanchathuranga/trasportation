@@ -20,18 +20,18 @@ import sideArrow from "../../../assets/landingPages/blog/sideArrow.svg";
 
 const Spotlight = () => {
     return (
-        <div className="px-40 py-10">
-            <div className="flex flex-row gap-10">
+        <div className="xl:px-40 px-10 py-10">
+            <div className="flex lg:flex-row flex-col gap-10">
                 {/* left section */}
                 <div className="w-full">
-                    <div className="flex flex-row justify-center items-center pl-20">
-                        <div className="w-[155px] h-[37px] bg-[#286BB6] rounded-[3px] flex justify-center items-center text-[12px] font-[600]">
+                    <div className="flex flex-row justify-center items-center xl:pl-20">
+                        <div className="w-[155px] h-[37px] bg-[#286BB6] rounded-[3px] flex justify-center items-center text-[12px] font-[600] p-3">
                             <h1>Today’s Spotlight</h1>
                         </div>
                         <div className="w-full h-[5px] border-y-[1px] border-[#DFDFDF]"></div>
                     </div>
                     {/* blog section */}
-                    <div className="flex flex-row gap-5 py-10">
+                    <div className="flex lg:flex-row items-center flex-col gap-5 py-10">
                         {/* big blog */}
                         <div className="cursor-pointer">
                             <img src={poster1} />
@@ -127,7 +127,7 @@ const Spotlight = () => {
                 {/* right section */}
                 <div className="">
                     <div className="flex flex-row justify-center items-center">
-                        <div className="w-[155px] h-[37px] bg-[#286BB6] rounded-[3px] flex justify-center items-center text-[12px] font-[600]">
+                        <div className="w-[155px] h-[37px] bg-[#286BB6] rounded-[3px] flex justify-center items-center text-[12px] font-[600] p-3">
                             <h1>Follow Us</h1>
                         </div>
                         <div className="w-[176px] h-[5px] border-y-[1px] border-[#DFDFDF]"></div>
@@ -170,7 +170,7 @@ const Spotlight = () => {
                          <h1 className="text-[24px] font-[800]">Daily Newsletter</h1>
                          <p className="text-[16px]/[28px] text-center">Get all the top stories from <br/> Blogs to keep track.</p>
 
-                         <div className="inter w-[260px] h-[55px] bg-[#0955AC] rounded-[5px] flex flex-row text-[14px] font-[400] justify-between items-center px-5 cursor-pointer">
+                         <div className="inter gap-3 xl:w-[260px] h-[55px] bg-[#0955AC] rounded-[5px] flex flex-row text-[14px] font-[400] justify-between items-center px-5 cursor-pointer">
                               <h1 className="opacity-[80%]">Enter your e-mail</h1>
                               <img src={sideArrow} />
                          </div>
