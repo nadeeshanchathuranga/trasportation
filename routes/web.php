@@ -42,6 +42,8 @@ Route::get('/flight-booking', [WebController::class, 'freightTicketBooking'])->n
 // landing pages
 Route::get('/landingPage', [WebController::class, 'landingPage'])->name('landingPage.home');
 Route::get('/landingPage/blog', [WebController::class, 'blog'])->name('landingPage.blog');
+Route::get('/landingPage/blogExample', [WebController::class, 'blogExample'])->name('blogExample.blog');
+
 
 
 
