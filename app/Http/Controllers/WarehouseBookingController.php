@@ -130,7 +130,7 @@ class WarehouseBookingController extends Controller
                 break;
             case 'day':
                 $duration = ceil($endDate->diff($startDate)->days);
-                break;
+                break; 
             case 'month':
                 $duration = ceil($endDate->diff($startDate)->days / 30);
                 break;

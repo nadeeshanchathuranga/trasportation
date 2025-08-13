@@ -85,7 +85,6 @@ Route::middleware(['auth', 'role:vendor'])->prefix('vendor')->group(function () 
     Route::patch('/warehouses/{warehouse}/toggle-status', [WarehouseController::class, 'toggleStatus'])
         ->name('vendor.warehouses.toggle-status');
     Route::post('/warehouses/{warehouse}/book', [WarehouseController::class, 'book'])->name('warehouses.book');
-    Route::get('/my-bookings', [WarehouseController::class, 'userBookings'])->name('warehouse.bookings');
 });
 
 // -------------------------------
@@ -208,8 +207,12 @@ Route::post('/track', [CourierController::class, 'track'])->name('couriers.track
 // -------------------------------
 // 📋 Warehouse Routes
 // -------------------------------
-Route::get('/warehouses', [WarehouseController::class, 'search'])->name('warehouses.search');
+Route::get('/warehouses/search', [WarehouseController::class, 'search'])->name('warehouses.search');
 Route::get('/warehouses/{warehouse}', [WarehouseController::class, 'show'])->name('warehouses.show');
+Route::get('/my-bookings', [WarehouseController::class, 'userBookings'])
+    ->middleware(['auth'])
+    ->name('warehouse.bookings');
+
 
 
 // 🚛 Freight Company Routes

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 export default function Show({ auth, warehouse, previewPrice, previewDuration, dates }) {
     const [activeTab, setActiveTab] = useState('details');
@@ -70,7 +70,7 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
     }, [data.start_date, data.end_date, data.duration_unit, data.quantity]);
     
     return (
-        <AppLayout
+        <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">{warehouse.name}</h2>}
         >
@@ -438,6 +438,6 @@ export default function Show({ auth, warehouse, previewPrice, previewDuration, d
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }

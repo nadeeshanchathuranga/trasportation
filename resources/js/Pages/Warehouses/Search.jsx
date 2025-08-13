@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Pagination from '@/Components/Pagination';
 
 const WAREHOUSE_TYPES = [
@@ -102,7 +102,7 @@ export default function Search({ auth, warehouses, filters }) {
     };
 
     return (
-        <AppLayout
+        <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Find Warehouses</h2>}
         >
@@ -402,6 +402,6 @@ export default function Search({ auth, warehouses, filters }) {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </AuthenticatedLayout>
     );
 }
