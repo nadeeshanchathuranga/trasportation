@@ -11,13 +11,16 @@ const Hero = () => {
     const handleScroll = (id) => {
         const el = document.getElementById(id);
         if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
+            el.scrollIntoView({ behavior: "smooth" });
             setMenuOpen(false); // close sidebar if open
         }
     };
     return (
         <div className="flex relative justify-center items-center md:py-10 md:px-20 px-10 poppins">
-            <h1 className="absolute md:top-[30px] top-[10px] md:text-[31px] text-[20px] font-[700] poppins uppercase">
+            <h1
+                className="absolute md:top-[30px] top-[10px] md:text-[31px] text-[20px] font-[700] poppins uppercase cursor-pointer"
+                onClick={() => (window.location.href = "/")}
+            >
                 Company Logo
             </h1>
             <div className="flex xl:flex-col flex-row gap-5 absolute xl:bottom-[330px] bottom-[80px] xl:left-16 xl:pb-10">
@@ -39,27 +42,48 @@ const Hero = () => {
                 {/* navbar section - desktop only */}
                 <div className="md:flex flex-row hidden justify-between">
                     <div className="flex flex-row gap-5 xl:text-[17px] text-[10px] font-[400]">
-                        <div className="xl:w-[101px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2" onClick={() => handleScroll('home')}>
+                        <div
+                            className="xl:w-[101px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2"
+                            onClick={() => handleScroll("home")}
+                        >
                             Home
                         </div>
-                        <div className="xl:w-[121px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2" onClick={() => handleScroll('about')}>
+                        <div
+                            className="xl:w-[121px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2"
+                            onClick={() => handleScroll("about")}
+                        >
                             About Us
                         </div>
-                        <div className="xl:w-[114px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2" onClick={() => handleScroll('services')}>
+                        <div
+                            className="xl:w-[114px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2"
+                            onClick={() => handleScroll("services")}
+                        >
                             Services
                         </div>
-                        <div className="xl:w-[81px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2" onClick={() => handleScroll('blog')}>
+                        <div
+                            className="xl:w-[81px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2"
+                            onClick={() => handleScroll("blog")}
+                        >
                             Blog
                         </div>
-                        <div className="xl:w-[137px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2" onClick={() => handleScroll('contact')}>
+                        <div
+                            className="xl:w-[137px] h-[38px] border-[1.2px] border-[#FFFFFF91] rounded-[100px] bg-[#0A063000] flex justify-center items-center cursor-pointer px-4 py-2"
+                            onClick={() => handleScroll("contact")}
+                        >
                             Contact Us
                         </div>
                     </div>
                     <div className="flex flex-row gap-5 xl:text-[17px] text-[10px] font-[700]">
-                        <div className="xl:w-[137px] h-[38px] bg-[#FF7003] border-[1.2px] border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2">
+                        <div
+                            className="xl:w-[137px] h-[38px] bg-[#FF7003] border-[1.2px] border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2 cursor-pointer"
+                            onClick={() => (window.location.href = "/signin")}
+                        >
                             Login
                         </div>
-                        <div className="xl:w-[137px] h-[38px] text-[#FF7003] border-[1.2px] border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2">
+                        <div
+                            className="xl:w-[137px] h-[38px] text-[#FF7003] border-[1.2px] border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2 cursor-pointer"
+                            onClick={() => (window.location.href = "/signup")}
+                        >
                             Register
                         </div>
                     </div>
@@ -95,15 +119,44 @@ const Hero = () => {
                                 </button>
                             </div>
                             <div className="flex flex-col gap-4 text-white text-[17px] font-[400]">
-                                <div className="border-b border-[#FFFFFF91] py-2 cursor-pointer" onClick={() => handleScroll('home')}>Home</div>
-                                <div className="border-b border-[#FFFFFF91] py-2 cursor-pointer" onClick={() => handleScroll('about')}>About Us</div>
-                                <div className="border-b border-[#FFFFFF91] py-2 cursor-pointer" onClick={() => handleScroll('services')}>Services</div>
-                                <div className="border-b border-[#FFFFFF91] py-2 cursor-pointer" onClick={() => handleScroll('blog')}>Blog</div>
-                                <div className="border-b border-[#FFFFFF91] py-2 cursor-pointer" onClick={() => handleScroll('contact')}>Contact Us</div>
+                                <div
+                                    className="border-b border-[#FFFFFF91] py-2 cursor-pointer"
+                                    onClick={() => handleScroll("home")}
+                                >
+                                    Home
+                                </div>
+                                <div
+                                    className="border-b border-[#FFFFFF91] py-2 cursor-pointer"
+                                    onClick={() => handleScroll("about")}
+                                >
+                                    About Us
+                                </div>
+                                <div
+                                    className="border-b border-[#FFFFFF91] py-2 cursor-pointer"
+                                    onClick={() => handleScroll("services")}
+                                >
+                                    Services
+                                </div>
+                                <div
+                                    className="border-b border-[#FFFFFF91] py-2 cursor-pointer"
+                                    onClick={() => handleScroll("blog")}
+                                >
+                                    Blog
+                                </div>
+                                <div
+                                    className="border-b border-[#FFFFFF91] py-2 cursor-pointer"
+                                    onClick={() => handleScroll("contact")}
+                                >
+                                    Contact Us
+                                </div>
                             </div>
                             <div className="flex flex-col gap-4 mt-6 text-white text-[17px] font-[700]">
-                                <div className="bg-[#FF7003] border border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2 cursor-pointer">Login</div>
-                                <div className="text-[#FF7003] border border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2 cursor-pointer">Register</div>
+                                <div className="bg-[#FF7003] border border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2 cursor-pointer">
+                                    Login
+                                </div>
+                                <div className="text-[#FF7003] border border-[#FF7003] rounded-[100px] flex justify-center items-center px-4 py-2 cursor-pointer">
+                                    Register
+                                </div>
                             </div>
                         </div>
                     </>

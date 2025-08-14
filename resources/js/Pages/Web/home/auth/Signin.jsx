@@ -9,7 +9,10 @@ const Signin = () => {
     return (
         <div className="bg-[#000000] text-[#FFFFFF] poppins">
             <div className="flex relative justify-center items-center md:py-10 md:px-20 px-10 poppins">
-                <h1 className="absolute md:top-[30px] top-[10px] md:text-[31px] text-[20px] font-[700] poppins uppercase">
+                <h1
+                    className="absolute md:top-[30px] top-[10px] md:text-[31px] text-[20px] font-[700] poppins uppercase cursor-pointer"
+                    onClick={() => (window.location.href = "/")}
+                >
                     Company Logo
                 </h1>
 
@@ -32,7 +35,12 @@ const Signin = () => {
 
                         <div>
                             {/* client */}
-                            <div className="w-[426px] h-[74px] border-[0.7px] border-[#FFFFFFBF] rounded-[9px] my-10 flex flex-row gap-5 justify-between px-5 py-5">
+                            <div
+                                className="w-[426px] h-[74px] border-[0.7px] border-[#FFFFFFBF] rounded-[9px] my-10 flex flex-row gap-5 justify-between px-5 py-5"
+                                onClick={() =>
+                                    (window.location.href = "/registerNew")
+                                }
+                            >
                                 <div className="flex flex-row gap-5 justify-center items-start">
                                     <div className="flex flex-row items-center">
                                         <img src={proPic1} className="-mr-4" />
@@ -55,7 +63,12 @@ const Signin = () => {
                             </div>
 
                             {/* vendor */}
-                            <div className="w-[426px] h-[74px] border-[0.7px] border-[#FFFFFFBF] rounded-[9px] my-10 flex flex-row gap-5 justify-between px-5 py-5">
+                            <div
+                                className="w-[426px] h-[74px] border-[0.7px] border-[#FFFFFFBF] rounded-[9px] my-10 flex flex-row gap-5 justify-between px-5 py-5"
+                                onClick={() =>
+                                    (window.location.href = "/registerNew")
+                                }
+                            >
                                 <div className="flex flex-row gap-5 justify-center items-start">
                                     <div className="flex flex-row items-center">
                                         <img src={proPic1} className="-mr-4" />
@@ -80,7 +93,14 @@ const Signin = () => {
 
                         <h1 className="text-[12px] font-[500] absolute bottom-20">
                             Already have an account?{" "}
-                            <span className="text-[#FF7003] font-[600] cursor-pointer pl-2">Sign in</span>{" "}
+                            <span
+                                className="text-[#FF7003] font-[600] cursor-pointer pl-2"
+                                onClick={() =>
+                                    (window.location.href = "/signin")
+                                }
+                            >
+                                Sign in
+                            </span>{" "}
                         </h1>
                     </div>
                 </div>

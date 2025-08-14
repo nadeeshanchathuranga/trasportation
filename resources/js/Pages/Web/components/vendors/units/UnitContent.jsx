@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Inertia } from '@inertiajs/inertia';
+import { Inertia } from "@inertiajs/inertia";
 import search from "../../../assets/vendors/dashboard/searchIcon.svg";
 import settings from "../../../assets/vendors/dashboard/settings.svg";
 import bell from "../../../assets/vendors/dashboard/bell.svg";
@@ -20,6 +20,8 @@ import icon4 from "../../../assets/vendors/units/icons/icon4.svg";
 
 import editIcon from "../../../assets/vendors/units/edit.svg";
 import deleteIcon from "../../../assets/vendors/units/delete.svg";
+
+import AddUnit from "../../../home/vendors/AddUnit";
 
 const UnitContent = () => {
     // Sample data array for units
@@ -209,6 +211,7 @@ const UnitContent = () => {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [showAddUnit, setShowAddUnit] = useState(false);
     const perPageOptions = [5, 10, 20, 50];
     const totalPages = Math.ceil(units.length / itemsPerPage);
     const startIdx = (currentPage - 1) * itemsPerPage;
@@ -256,6 +259,12 @@ const UnitContent = () => {
         setCurrentPage(1);
     }, [itemsPerPage]);
 
+    // Handle Add Unit button click
+    const handleAddUnitClick = () => {
+        setShowAddUnit(true);
+    };
+
+
     return (
         <div className="w-full h-auto pr-10 py-10">
             {/* Header section */}
@@ -263,18 +272,17 @@ const UnitContent = () => {
                 <h1 className="figtree text-[35px] font-[700]">Units</h1>
                 <div className="flex flex-row gap-5">
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={search} />
+                        <img src={search} alt="Search" />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={settings} />
+                        <img src={settings} alt="Settings" />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={bell} />
+                        <img src={bell} alt="Notifications" />
                     </div>
                     <div className="size-[60px] rounded-[10px] bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={proPic} />
+                        <img src={proPic} alt="Profile" />
                     </div>
-
                     <div className="figtree flex flex-col justify-center items-start">
                         <h1 className="text-[20px] font-[700]">Steve Gibson</h1>
                         <h1 className="text-[16px] font-[600] text-[#7B7B7A]">
@@ -285,12 +293,12 @@ const UnitContent = () => {
             </div>
             {/* end of header section */}
 
-            {/* Search , Filter section */}
+            {/* Search, Filter section */}
             <div className="flex flex-row justify-between mt-10 mb-5">
                 <div className="flex flex-row items-center justify-between w-full">
                     <div className="flex flex-row gap-5 justify-center items-center">
                         <div className="w-[253px] h-[35px] bg-[#F3F3F3] rounded-[6px] flex flex-row justify-center items-center py-2 px-5">
-                            <img src={miniSearchIcon} />
+                            <img src={miniSearchIcon} alt="Search" />
                             <input
                                 type="text"
                                 className="w-full outline-none bg-transparent shadow-none focus:ring-0 border-none placeholder:text-[#7B7B7ACC]"
@@ -298,23 +306,23 @@ const UnitContent = () => {
                             />
                         </div>
                         <div className="w-[139px] h-[35px] bg-[#F3F3F3] rounded-[6px] flex flex-row items-center justify-between py-2 px-5">
-                            <img src={filterIcon} className="size-[12px]" />
+                            <img src={filterIcon} className="size-[12px]" alt="Filter" />
                             <h1 className="text-[14px] font-[500] text-[#7B7B7ACC]">
                                 Car type
                             </h1>
-                            <img src={miniDownArrow} />
+                            <img src={miniDownArrow} alt="Dropdown" />
                         </div>
                         <div className="w-[125px] h-[35px] bg-[#F3F3F3] rounded-[6px] flex flex-row items-center justify-between py-2 px-5">
-                            <img src={filterIcon} className="size-[12px]" />
+                            <img src={filterIcon} className="size-[12px]" alt="Filter" />
                             <h1 className="text-[14px] font-[500] text-[#7B7B7ACC]">
                                 Status
                             </h1>
-                            <img src={miniDownArrow} />
+                            <img src={miniDownArrow} alt="Dropdown" />
                         </div>
                     </div>
                     <button
                         className="w-[125px] h-[35px] bg-[#0955AC] text-[14px] rounded-[6px] text-[#FFFFFF] font-[700]"
-                        onClick={() => Inertia.visit('/vendors/addUnit')}
+                        onClick={handleAddUnitClick}
                     >
                         Add Unit
                     </button>
@@ -322,161 +330,161 @@ const UnitContent = () => {
             </div>
             {/* end */}
 
-            {/* Units cards */}
-            {currentUnits.map((unit) => (
-                <div
-                    key={unit.id}
-                    className="relative w-auto h-[157px] bg-[#FFFFFF] rounded-[10px] flex flex-row items-center my-10"
-                    style={{ boxShadow: "4px 4px 4px #0000001A" }}
-                >
-                    <img src={car1} />
-                    {/* text section */}
-                    <div className="px-5 py-5 flex flex-row justify-center items-center">
-                        <div>
-                            <div className="bebas-neue text-[30px] font-[400]">
-                                <h1>
-                                    {unit.brand}{" "}
-                                    <span className="text-[#0955AC]">
-                                        {unit.model}
-                                    </span>
-                                </h1>
-                                <h1>
-                                    ${unit.price}
-                                    <span className="figtree text-[#00000080] text-[15px] font-[600] ">
-                                        /day
-                                    </span>
-                                </h1>
-                            </div>
-                            <div className="poppins flex flex-row justify-start items-center gap-8 text-[14px] font-[600]">
-                                <div className="flex flex-row justify-center items-center gap-3">
-                                    <img
-                                        src={availableIcon}
-                                        className="w-[26px] h-[26px]"
-                                    />
-                                    <h1 className="text-[#3C9A34]">
-                                        {unit.status}
-                                    </h1>
-                                </div>
-                                {/* <h1 className="text-[#0955AC]">
-                                    {unit.unitsCount} Units
-                                </h1> */}
-                            </div>
-                        </div>
-                        <div className="flex flex-row justify-center items-center pl-[100px] gap-20">
-                            <div className="poppins flex flex-row gap-10 text-[15px] font-[500]">
-                                <div className="flex flex-col justify-center items-center gap-7">
-                                    <img
-                                        src={icon1}
-                                        className="w-[26px] h-[26px]"
-                                    />
-                                    <h1>{unit.mileage}</h1>
-                                </div>
-
-                                <div className="flex flex-col justify-center items-center gap-7">
-                                    <img
-                                        src={icon2}
-                                        className="w-[26px] h-[26px]"
-                                    />
-                                    <h1>{unit.transmission}</h1>
-                                </div>
-
-                                <div className="flex flex-col justify-center items-center gap-7">
-                                    <img
-                                        src={icon3}
-                                        className="w-[26px] h-[26px]"
-                                    />
-                                    <h1>{unit.capacity}</h1>
-                                </div>
-
-                                <div className="flex flex-col justify-center items-center gap-7">
-                                    <img
-                                        src={icon4}
-                                        className="w-[26px] h-[26px]"
-                                    />
-                                    <h1>{unit.fuelType}</h1>
-                                </div>
-                            </div>
-                            <button className="figtree w-[140px] h-[44px] bg-[#0955AC] rounded-[5px] text-[20px] text-[#FFFFFF] font-[700]">
-                                Select
-                            </button>
-                        </div>
-                    </div>
-                    {/* delete buttons */}
-                    <div className="absolute right-0 w-[143px] h-full bg-[#D8E4F2] flex flex-row justify-center items-center gap-3 rounded-tr-[10px] rounded-br-[10px]">
+            {/* Conditionally render AddUnit or Units list */}
+            {showAddUnit ? (
+                <AddUnit />
+            ) : (
+                <>
+                    {/* Units cards */}
+                    {currentUnits.map((unit) => (
                         <div
-                            className="size-[36px] border-[1.5px] border-[#0955AC] bg-[#D8E4F2] rounded-[5px] flex justify-center
-                         items-center cursor-pointer"
+                            key={unit.id}
+                            className="relative w-auto h-[157px] bg-[#FFFFFF] rounded-[10px] flex flex-row items-center my-10"
+                            style={{ boxShadow: "4px 4px 4px #0000001A" }}
                         >
-                            <img src={editIcon} className="size-[24px]" />
+                            <img src={car1} alt="Car" />
+                            {/* text section */}
+                            <div className="px-5 py-5 flex flex-row justify-center items-center">
+                                <div>
+                                    <div className="bebas-neue text-[30px] font-[400]">
+                                        <h1>
+                                            {unit.brand}{" "}
+                                            <span className="text-[#0955AC]">
+                                                {unit.model}
+                                            </span>
+                                        </h1>
+                                        <h1>
+                                            ${unit.price}
+                                            <span className="figtree text-[#00000080] text-[15px] font-[600]">
+                                                /day
+                                            </span>
+                                        </h1>
+                                    </div>
+                                    <div className="poppins flex flex-row justify-start items-center gap-8 text-[14px] font-[600]">
+                                        <div className="flex flex-row justify-center items-center gap-3">
+                                            <img
+                                                src={availableIcon}
+                                                className="w-[26px] h-[26px]"
+                                                alt="Status"
+                                            />
+                                            <h1 className="text-[#3C9A34]">
+                                                {unit.status}
+                                            </h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-row justify-center items-center pl-[100px] gap-20">
+                                    <div className="poppins flex flex-row gap-10 text-[15px] font-[500]">
+                                        <div className="flex flex-col justify-center items-center gap-7">
+                                            <img
+                                                src={icon1}
+                                                className="w-[26px] h-[26px]"
+                                                alt="Mileage"
+                                            />
+                                            <h1>{unit.mileage}</h1>
+                                        </div>
+                                        <div className="flex flex-col justify-center items-center gap-7">
+                                            <img
+                                                src={icon2}
+                                                className="w-[26px] h-[26px]"
+                                                alt="Transmission"
+                                            />
+                                            <h1>{unit.transmission}</h1>
+                                        </div>
+                                        <div className="flex flex-col justify-center items-center gap-7">
+                                            <img
+                                                src={icon3}
+                                                className="w-[26px] h-[26px]"
+                                                alt="Capacity"
+                                            />
+                                            <h1>{unit.capacity}</h1>
+                                        </div>
+                                        <div className="flex flex-col justify-center items-center gap-7">
+                                            <img
+                                                src={icon4}
+                                                className="w-[26px] h-[26px]"
+                                                alt="Fuel Type"
+                                            />
+                                            <h1>{unit.fuelType}</h1>
+                                        </div>
+                                    </div>
+                                    <button className="figtree w-[140px] h-[44px] bg-[#0955AC] rounded-[5px] text-[20px] text-[#FFFFFF] font-[700]">
+                                        View
+                                    </button>
+                                </div>
+                            </div>
+                            {/* delete buttons */}
+                            <div className="absolute right-0 w-[143px] h-full bg-[#D8E4F2] flex flex-row justify-center items-center gap-3 rounded-tr-[10px] rounded-br-[10px]">
+                                <div className="size-[36px] border-[1.5px] border-[#0955AC] bg-[#D8E4F2] rounded-[5px] flex justify-center items-center cursor-pointer">
+                                    <img src={editIcon} className="size-[24px]" alt="Edit" />
+                                </div>
+                                <div className="size-[36px] border-[1.5px] border-[#FF0000] bg-[#D8E4F2] rounded-[5px] flex justify-center items-center cursor-pointer">
+                                    <img src={deleteIcon} className="size-[24px]" alt="Delete" />
+                                </div>
+                            </div>
                         </div>
-                        <div
-                            className="size-[36px] border-[1.5px] border-[#FF0000] bg-[#D8E4F2] rounded-[5px] flex justify-center
-                         items-center cursor-pointer"
-                        >
-                            <img src={deleteIcon} className="size-[24px]" />
-                        </div>
-                    </div>
-                </div>
-            ))}
+                    ))}
 
-            {/* Pagination Controls and Results per page inline */}
-            <div className="flex justify-between items-center gap-2 mt-20">
-                {/* Left: Results per page */}
-                <div className="flex items-center">
-                    <span className="mr-3 text-[#00000080] text-[15px]">
-                        Results per page
-                    </span>
-                    <select
-                        className="rounded px-3 py-1 font-[600] text-[16px] bg-[#F4F3F3] border-[1px] border-[#BEBEBE] w-[71px] h-[40px] focus:outline-none"
-                        value={itemsPerPage}
-                        onChange={(e) =>
-                            setItemsPerPage(Number(e.target.value))
-                        }
-                    >
-                        {perPageOptions.map((opt) => (
-                            <option key={opt} value={opt}>
-                                {opt}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                {/* Right: Pagination */}
-                <div className="flex items-center gap-2">
-                    <button
-                        className="px-3 py-1 size-[40px] rounded-[4px] bg-[#F4F3F3] disabled:opacity-50"
-                        onClick={() => goToPage(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        <span className="text-lg">&#60;</span>
-                    </button>
-                    {getPageNumbers().map((num, idx) =>
-                        num === "..." ? (
-                            <span key={idx} className="px-2">
-                                ...
+                    {/* Pagination Controls and Results per page */}
+                    <div className="flex justify-between items-center gap-2 mt-20">
+                        {/* Left: Results per page */}
+                        <div className="flex items-center">
+                            <span className="mr-3 text-[#00000080] text-[15px]">
+                                Results per page
                             </span>
-                        ) : (
-                            <button
-                                key={num}
-                                className={`px-3 py-1 text-[16px] font-[600] rounded-[4px] size-[40px] bg-[#F4F3F3] ${
-                                    currentPage === num
-                                        ? " text-[#0955AC] font-[600] border-[2px] border-[#0955AC]"
-                                        : "bg-[#F4F3F3]"
-                                }`}
-                                onClick={() => goToPage(num)}
+                            <select
+                                className="rounded px-3 py-1 font-[600] text-[16px] bg-[#F4F3F3] border-[1px] border-[#BEBEBE] w-[71px] h-[40px] focus:outline-none"
+                                value={itemsPerPage}
+                                onChange={(e) =>
+                                    setItemsPerPage(Number(e.target.value))
+                                }
                             >
-                                {num}
+                                {perPageOptions.map((opt) => (
+                                    <option key={opt} value={opt}>
+                                        {opt}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        {/* Right: Pagination */}
+                        <div className="flex items-center gap-2">
+                            <button
+                                className="px-3 py-1 size-[40px] rounded-[4px] bg-[#F4F3F3] disabled:opacity-50"
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                <span className="text-lg">&#60;</span>
                             </button>
-                        )
-                    )}
-                    <button
-                        className="px-3 py-1 size-[40px] rounded-[4px] bg-[#F4F3F3] disabled:opacity-50"
-                        onClick={() => goToPage(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                    >
-                        <span className="text-lg">&#62;</span>
-                    </button>
-                </div>
-            </div>
+                            {getPageNumbers().map((num, idx) =>
+                                num === "..." ? (
+                                    <span key={idx} className="px-2">
+                                        ...
+                                    </span>
+                                ) : (
+                                    <button
+                                        key={num}
+                                        className={`px-3 py-1 text-[16px] font-[600] rounded-[4px] size-[40px] bg-[#F4F3F3] ${
+                                            currentPage === num
+                                                ? "text-[#0955AC] font-[600] border-[2px] border-[#0955AC]"
+                                                : "bg-[#F4F3F3]"
+                                        }`}
+                                        onClick={() => goToPage(num)}
+                                    >
+                                        {num}
+                                    </button>
+                                )
+                            )}
+                            <button
+                                className="px-3 py-1 size-[40px] rounded-[4px] bg-[#F4F3F3] disabled:opacity-50"
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                <span className="text-lg">&#62;</span>
+                            </button>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

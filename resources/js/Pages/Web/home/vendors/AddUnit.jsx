@@ -101,20 +101,20 @@ const AddUnit = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-      <div className="bg-white shadow-lg rounded-lg">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-gray-900">Add New Vehicle Unit</h1>
-          <p className="mt-1 text-sm text-gray-500">Fill in the details below to add a new vehicle to your fleet.</p>
-        </div>
+    <div className="w-full mx-auto p-4 sm:p-6 lg:p-8 figtree">
+      <div className="">
+        {/* <div className="px-6 py-4 border-b border-gray-200">
+          <h1 className="text-[30px] font-[700] text-[#000000]">Add New Vehicle Unit</h1>
+          <p className="mt-1 text-[14px] font-[500] text-gray-500">Fill in the details below to add a new vehicle to your fleet.</p>
+        </div> */}
         
-        <form onSubmit={handleSubmit} encType="multipart/form-data" className="p-6 space-y-8">
+        <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-8 bebas-neue font-[400]">
           {/* Basic Information Section */}
-          <section className="bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Basic Information</h2>
+          <section className="bg-[#FFFFFF] p-6 rounded-lg">
+            <h2 className="text-[18px] font-[400] text-gray-800 mb-6 ">Basic Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <label htmlFor="model" className="block text-sm font-medium text-gray-700">Vehicle Model</label>
+                <label htmlFor="model" className="block text-[14px] font-medium text-gray-700">Vehicle Model</label>
                 <input 
                   id="model"
                   name="model" 
@@ -127,7 +127,7 @@ const AddUnit = () => {
               </div>
               
               <div className="space-y-2">
-                <label htmlFor="manufacture" className="block text-sm font-medium text-gray-700">Manufacturer</label>
+                <label htmlFor="manufacture" className="block text-[14px] font-medium text-gray-700">Manufacturer</label>
                 <input 
                   id="manufacture"
                   name="manufacture" 
@@ -139,7 +139,7 @@ const AddUnit = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                <label htmlFor="category" className="block text-[14px] font-medium text-gray-700">Category</label>
                 <select 
                   id="category"
                   name="category" 
@@ -153,7 +153,7 @@ const AddUnit = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="manufactureYear" className="block text-sm font-medium text-gray-700">Manufacture Year</label>
+                <label htmlFor="manufactureYear" className="block text-[14px] font-medium text-gray-700">Manufacture Year</label>
                 <input 
                   id="manufactureYear"
                   type="number" 
@@ -168,7 +168,7 @@ const AddUnit = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="registerYear" className="block text-sm font-medium text-gray-700">Register Year</label>
+                <label htmlFor="registerYear" className="block text-[14px] font-medium text-gray-700">Register Year</label>
                 <input 
                   id="registerYear"
                   type="number" 
@@ -183,7 +183,7 @@ const AddUnit = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="number" className="block text-sm font-medium text-gray-700">Vehicle Number</label>
+                <label htmlFor="number" className="block text-[14px] font-medium text-gray-700">Vehicle Number</label>
                 <input 
                   id="number"
                   name="number" 
@@ -197,12 +197,12 @@ const AddUnit = () => {
           </section>
 
           {/* Details & Documentation Section */}
-          <section className="bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Vehicle Details & Documentation</h2>
+          <section className="bg-[#FFFFFF] p-6 rounded-lg">
+            <h2 className="text-[18px] font-[400] text-gray-800 mb-6">Vehicle Details & Documentation</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">Vehicle Images</label>
+                  <label className="block text-[14px] font-medium text-gray-700">Vehicle Images</label>
                   <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition-colors duration-150">
                     <div className="space-y-1 text-center">
                       <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
@@ -221,7 +221,7 @@ const AddUnit = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="bodyType" className="block text-sm font-medium text-gray-700">Body Type</label>
+                  <label htmlFor="bodyType" className="block text-[14px] font-medium text-gray-700">Body Type</label>
                   <select 
                     id="bodyType"
                     name="bodyType" 
@@ -235,7 +235,7 @@ const AddUnit = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                  <label htmlFor="description" className="block text-[14px] font-medium text-gray-700">Description</label>
                   <textarea
                     id="description"
                     name="description"
@@ -251,7 +251,7 @@ const AddUnit = () => {
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label htmlFor="condition" className="block text-sm font-medium text-gray-700">Condition</label>
+                    <label htmlFor="condition" className="block text-[14px] font-medium text-gray-700">Condition</label>
                     <select
                       id="condition"
                       name="condition"
@@ -265,7 +265,7 @@ const AddUnit = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="mileage" className="block text-sm font-medium text-gray-700">Mileage (km)</label>
+                    <label htmlFor="mileage" className="block text-[14px] font-medium text-gray-700">Mileage (km)</label>
                     <input
                       id="mileage"
                       type="number"
@@ -280,7 +280,7 @@ const AddUnit = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="insuranceProvider" className="block text-sm font-medium text-gray-700">Insurance Provider</label>
+                  <label htmlFor="insuranceProvider" className="block text-[14px] font-medium text-gray-700">Insurance Provider</label>
                   <input 
                     id="insuranceProvider"
                     name="insuranceProvider" 
@@ -292,7 +292,7 @@ const AddUnit = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">Insurance Documents</label>
+                  <label className="block text-[14px] font-medium text-gray-700">Insurance Documents</label>
                   <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500 transition-colors duration-150">
                     <div className="space-y-1 text-center">
                       <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
@@ -314,12 +314,12 @@ const AddUnit = () => {
           </section>
 
           {/* Features & Pricing Section */}
-          <section className="bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Features & Pricing</h2>
+          <section className="bg-[#FFFFFF] p-6 rounded-lg">
+            <h2 className="text-[18px] font-[400] text-gray-800 mb-6">Features & Pricing</h2>
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="rentalPricePerDay" className="block text-sm font-medium text-gray-700">Daily Rental Price ($)</label>
+                  <label htmlFor="rentalPricePerDay" className="block text-[14px] font-medium text-gray-700">Daily Rental Price ($)</label>
                   <input
                     id="rentalPricePerDay"
                     type="number"
@@ -334,7 +334,7 @@ const AddUnit = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="deposit" className="block text-sm font-medium text-gray-700">Deposit Amount ($)</label>
+                  <label htmlFor="deposit" className="block text-[14px] font-medium text-gray-700">Deposit Amount ($)</label>
                   <input
                     id="deposit"
                     type="number"
@@ -349,7 +349,7 @@ const AddUnit = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="advancePayment" className="block text-sm font-medium text-gray-700">Advance Payment ($)</label>
+                  <label htmlFor="advancePayment" className="block text-[14px] font-medium text-gray-700">Advance Payment ($)</label>
                   <input
                     id="advancePayment"
                     type="number"
@@ -365,7 +365,7 @@ const AddUnit = () => {
               </div>
 
               <div className="space-y-4">
-                <label className="block text-sm font-medium text-gray-700">Additional Features</label>
+                <label className="block text-[14px] font-medium text-gray-700">Additional Features</label>
                 <div className="flex flex-wrap gap-4">
                   <label className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-150">
                     <input type="checkbox" name="gps" checked={form.gps} onChange={handleChange} className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
@@ -399,15 +399,15 @@ const AddUnit = () => {
           <div className="flex items-center justify-end gap-4 pt-6 border-t border-gray-200">
             <button 
               type="button" 
-              className="px-6 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-150"
-              onClick={() => window.history.back()}
+              className="px-6 py-2.5 border border-gray-300 text-gray-700 font-[700] figtree rounded-lg focus:outline-none focus:ring-0 transition-colors duration-150"
+              onClick={() => window.location.href = "/vendors/units"}
             >
               Cancel
             </button>
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className={`inline-flex items-center px-6 py-2.5 border border-transparent font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+              className={`inline-flex items-center px-6 py-2.5 border border-transparent font-[700] figtree rounded-lg text-[#FFFFFF] bg-[#0955AC] focus:outline-none focus:ring-0 transition-colors duration-150 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
             >
               {isSubmitting ? (
                 <>

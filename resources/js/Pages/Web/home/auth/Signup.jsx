@@ -7,7 +7,10 @@ const Signup = () => {
     return (
         <div className="bg-[#000000] text-[#FFFFFF] poppins">
             <div className="flex relative justify-center items-center md:py-10 md:px-20 px-10 poppins">
-                <h1 className="absolute md:top-[30px] top-[10px] md:text-[31px] text-[20px] font-[700] poppins uppercase">
+                <h1
+                    className="absolute md:top-[30px] top-[10px] md:text-[31px] text-[20px] font-[700] poppins uppercase cursor-pointer"
+                    onClick={() => (window.location.href = "/")}
+                >
                     Company Logo
                 </h1>
 
@@ -59,13 +62,18 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="w-[397px] h-[56px] bg-[#2E6099] rounded-[100px] text-[16px] font-[600] flex justify-center items-center cursor-pointer">
-                            Register
+                            Login
                         </div>
 
                         <h1 className="text-[12px] font-[500] mt-5">
-                            Already have an account?{" "}
-                            <span className="text-[#FF7003] font-[600] cursor-pointer pl-2">
-                                Sign in
+                            If you don't have an account?{" "}
+                            <span
+                                className="text-[#FF7003] font-[600] cursor-pointer pl-2"
+                                onClick={() =>
+                                    (window.location.href = "/registerNew")
+                                }
+                            >
+                                Sign up
                             </span>{" "}
                         </h1>
 

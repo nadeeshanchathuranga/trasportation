@@ -16,8 +16,6 @@ import pintrestO from "../../../assets/landingPages/blog/pintrestO.svg";
 
 import sideArrow from "../../../assets/landingPages/blog/sideArrow.svg";
 
-
-
 const Spotlight = () => {
     return (
         <div className="xl:px-40 px-10 py-10">
@@ -33,7 +31,13 @@ const Spotlight = () => {
                     {/* blog section */}
                     <div className="flex lg:flex-row items-center flex-col gap-5 py-10">
                         {/* big blog */}
-                        <div className="cursor-pointer">
+                        <div
+                            className="cursor-pointer"
+                            onClick={() =>
+                                (window.location.href =
+                                    "/landingPage/blogExample")
+                            }
+                        >
                             <img src={poster1} />
                             <div className="flex flex-col gap-3 py-5">
                                 <div className="w-[74px] h-[24px] flex justify-center rounded-[3px] items-center border-[1px] border-[#FF700387] text-[#FF700380] text-[12px] font-[600] uppercase">
@@ -166,15 +170,18 @@ const Spotlight = () => {
                     </div>
 
                     <div className="w-full h-[270px] border-[2px] rounded-[5px] border-[#0955AC] mt-10 flex flex-col gap-5 justify-center items-center">
+                        <h1 className="text-[24px] font-[800]">
+                            Daily Newsletter
+                        </h1>
+                        <p className="text-[16px]/[28px] text-center">
+                            Get all the top stories from <br /> Blogs to keep
+                            track.
+                        </p>
 
-                         <h1 className="text-[24px] font-[800]">Daily Newsletter</h1>
-                         <p className="text-[16px]/[28px] text-center">Get all the top stories from <br/> Blogs to keep track.</p>
-
-                         <div className="inter gap-3 xl:w-[260px] h-[55px] bg-[#0955AC] rounded-[5px] flex flex-row text-[14px] font-[400] justify-between items-center px-5 cursor-pointer">
-                              <h1 className="opacity-[80%]">Enter your e-mail</h1>
-                              <img src={sideArrow} />
-                         </div>
-
+                        <div className="inter gap-3 xl:w-[260px] h-[55px] bg-[#0955AC] rounded-[5px] flex flex-row text-[14px] font-[400] justify-between items-center px-5 cursor-pointer">
+                            <h1 className="opacity-[80%]">Enter your e-mail</h1>
+                            <img src={sideArrow} />
+                        </div>
                     </div>
                 </div>
             </div>

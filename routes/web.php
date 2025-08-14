@@ -26,7 +26,7 @@ use Inertia\Inertia;
 // -------------------------------
 
 // client
-Route::get('/', [WebController::class, 'index'])->name('home');
+Route::get('/clientRent', [WebController::class, 'index'])->name('home');
 Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
 Route::get('/vehicleDetails', [WebController::class, 'vehicleDetails'])->name('vehicle.details');
 Route::get('/courier-service', [WebController::class, 'courierService'])->name('courier.service');
@@ -42,13 +42,15 @@ Route::get('/freight-home', [WebController::class, 'freightHomepage'])->name('fr
 Route::get('/flight-booking', [WebController::class, 'freightTicketBooking'])->name('flight.ticket');
 
 // landing pages
-Route::get('/landingPage', [WebController::class, 'landingPage'])->name('landingPage.home');
+Route::get('/', [WebController::class, 'landingPage'])->name('landingPage.home');
 Route::get('/landingPage/blog', [WebController::class, 'blog'])->name('landingPage.blog');
 Route::get('/landingPage/blogExample', [WebController::class, 'blogExample'])->name('blogExample.blog');
 
 // Auth
-Route::get('/signin', [WebController::class, 'signin'])->name('signin.signin');
 Route::get('/signup', [WebController::class, 'signup'])->name('signup.signup');
+Route::get('/signin', [WebController::class, 'signin'])->name('signin.signin');
+Route::get('/registerNew', [WebController::class, 'register'])->name('register.register');
+
 
 // vendor
 Route::get('/vendors/bookings', function () {

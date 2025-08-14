@@ -7,7 +7,10 @@ const Hero = () => {
     return (
         <div className="py-10">
             {/* back button */}
-            <div className="flex flex-row items-center gap-3 cursor-pointer px-10 py-5">
+            <div
+                className="flex flex-row items-center gap-3 cursor-pointer px-10 py-5"
+                onClick={() => (window.location.href = "/landingPage/blog")}
+            >
                 <div className="size-[24px] rounded-full border-[2px] border-[#FF7003] flex justify-center items-center">
                     <img src={oLine} className="w-[8px] h-[13px]" />
                 </div>

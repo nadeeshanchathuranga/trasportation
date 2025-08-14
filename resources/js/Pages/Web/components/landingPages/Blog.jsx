@@ -38,8 +38,11 @@ const Blog = () => {
                 <div className="flex xl:flex-row flex-col gap-10 justify-center items-center py-10 relative">
                     {/* Blog 1 */}
                     <div
-                        className="md:h-[518px] md:w-[400px] bg-cover bg-center flex flex-col justify-end px-8 py-8"
+                        className="md:h-[518px] md:w-[400px] bg-cover bg-center flex flex-col justify-end px-8 py-8 cursor-pointer"
                         style={{ backgroundImage: `url(${blog1})` }}
+                        onClick={() =>
+                            (window.location.href = "/landingPage/blog")
+                        }
                     >
                         <div className="px-[5px]">
                             <h1 className="text-[24px] font-[700]">
@@ -64,8 +67,11 @@ const Blog = () => {
 
                     {/* Blog 2 */}
                     <div
-                        className="md:h-[518px] md:w-[400px] bg-cover bg-center flex flex-col justify-end px-8 py-8"
+                        className="md:h-[518px] md:w-[400px] bg-cover bg-center flex flex-col justify-end px-8 py-8 cursor-pointer"
                         style={{ backgroundImage: `url(${blog2})` }}
+                        onClick={() =>
+                            (window.location.href = "/landingPage/blog")
+                        }
                     >
                         <div className="px-[5px]">
                             <h1 className="text-[24px] font-[700]">
@@ -90,8 +96,11 @@ const Blog = () => {
 
                     {/* Blog 3 */}
                     <div
-                        className="md:h-[518px] md:w-[400px] bg-cover bg-center flex flex-col justify-end px-8 py-8"
+                        className="md:h-[518px] md:w-[400px] bg-cover bg-center flex flex-col justify-end px-8 py-8 cursor-pointer"
                         style={{ backgroundImage: `url(${blog3})` }}
+                        onClick={() =>
+                            (window.location.href = "/landingPage/blog")
+                        }
                     >
                         <div className="px-[5px]">
                             <h1 className="text-[24px] font-[700]">

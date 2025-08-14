@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { router, usePage, Link } from "@inertiajs/react";
 import downArrow from "../assets/rentAVehicle/header/downArrow.png";
-import proPic from "../assets/header/profilePic.svg"
-import bell from "../assets/header/bell.svg"
-import search from "../assets/header/search.svg"
+import proPic from "../assets/header/profilePic.svg";
+import bell from "../assets/header/bell.svg";
+import search from "../assets/header/search.svg";
 
 const Header = () => {
     const { auth } = usePage().props;
@@ -47,7 +47,7 @@ const Header = () => {
 
                 {/* Centered Company Name/Logo */}
                 <div
-                    onClick={() => router.visit("/")}
+                    onClick={() => router.visit("/clientRent")}
                     className="absolute left-1/2 transform -translate-x-1/2 text-[16px] sm:text-[20px] md:text-[25px] lg:text-[30px] font-[700] text-black text-center cursor-pointer hover:text-[#0955AC] transition-colors"
                     style={{ minWidth: "120px" }}
                 >
@@ -57,13 +57,22 @@ const Header = () => {
                 {/* right side buttons */}
                 <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
                     <div className="size-[27px] md:size-[55px] rounded-full bg-[#E8EBEF] flex justify-center items-center">
-                        <img src={search} className="size-[18px] md:w-[24px] md:h-[23px]" />
+                        <img
+                            src={search}
+                            className="size-[18px] md:w-[24px] md:h-[23px]"
+                        />
                     </div>
                     <div className="size-[27px] md:size-[55px] rounded-full bg-[#E8EBEF] flex justify-center items-center">
-                    <img src={bell} className="size-[18px] md:w-[24px] md:h-[23px]" />
+                        <img
+                            src={bell}
+                            className="size-[18px] md:w-[24px] md:h-[23px]"
+                        />
                     </div>
                     <div className="size-[27px] md:size-[55px] flex justify-center items-center">
-                    <img src={proPic} className="size-[18px] md:size-[55px]" />
+                        <img
+                            src={proPic}
+                            className="size-[18px] md:size-[55px]"
+                        />
                     </div>
                 </div>
             </div>
@@ -96,17 +105,39 @@ const Header = () => {
                             <a href="#" className="hover:text-[#0955AC]">
                                 About Us
                             </a>
-                            <a
-                                href="#"
-                                className="text-[#0955AC] border-b-[3px] border-[#0955AC] flex items-center gap-1"
-                            >
-                                Rent a Vehicle{" "}
-                                <img
-                                    src={downArrow}
-                                    alt="dropdown"
-                                    className="w-[8px] h-[5px]"
-                                />
-                            </a>
+                            <div className="relative group">
+                                <Link
+                                    href="/clientRent"
+                                    className="hover:text-[#0955AC] flex items-center gap-1"
+                                >
+                                    Rent a Vehicle{" "}
+                                    <img
+                                        src={downArrow}
+                                        alt="dropdown"
+                                        className="w-[8px] h-[5px]"
+                                    />
+                                </Link>
+                                <div className="ml-4 mt-1 flex flex-col space-y-1">
+                                    <Link
+                                        href="/clientRent"
+                                        className="block text-sm text-gray-700 hover:text-[#0955AC]"
+                                    >
+                                        Land
+                                    </Link>
+                                    <Link
+                                        href=""
+                                        className="block text-sm text-gray-700 hover:text-[#0955AC]"
+                                    >
+                                        Air
+                                    </Link>
+                                    <Link
+                                        href=""
+                                        className="block text-sm text-gray-700 hover:text-[#0955AC]"
+                                    >
+                                        Water
+                                    </Link>
+                                </div>
+                            </div>
                             <div className="relative group">
                                 <Link
                                     href="/book-a-ticket"

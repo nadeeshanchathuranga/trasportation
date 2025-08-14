@@ -132,11 +132,16 @@ class WebController extends Controller
 
     public function signin()
     {
-        return Inertia::render('Web/home/auth/Signin');
+        return Inertia::render('Web/home/auth/Signup');
     }
 
     public function signup()
     {
-        return Inertia::render('Web/home/auth/Signup');
+        return Inertia::render('Web/home/auth/Signin');
+    }
+
+    public function register()
+    {
+        return Inertia::render('Web/home/auth/Register');
     }
 }

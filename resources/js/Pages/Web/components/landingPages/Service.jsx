@@ -21,7 +21,10 @@ const Service = () => {
             </div>
             <div className="flex lg:flex-row flex-col justify-center items-center pt-10">
                 {/* Card 1 */}
-                <div className="w-[305px] h-[740px] relative group overflow-hidden">
+                <div
+                    className="w-[305px] h-[740px] relative group overflow-hidden"
+                    onClick={() => (window.location.href = "/clientRent")}
+                >
                     {/* Background image */}
                     <img src={card1} className="w-full h-full object-cover" />
 
@@ -73,7 +76,10 @@ const Service = () => {
                     </div>
                 </div>
                 {/* Card 2 */}
-                <div className="w-[305px] h-[740px] relative group overflow-hidden">
+                <div
+                    className="w-[305px] h-[740px] relative group overflow-hidden"
+                    onClick={() => (window.location.href = "/flight-booking")}
+                >
                     {/* Background image */}
                     <img src={card2} className="w-full h-full object-cover" />
 
@@ -125,7 +131,10 @@ const Service = () => {
                     </div>
                 </div>
                 {/* Card 3 */}
-                <div className="w-[305px] h-[740px] relative group overflow-hidden">
+                <div
+                    className="w-[305px] h-[740px] relative group overflow-hidden"
+                    onClick={() => (window.location.href = "/courier-service")}
+                >
                     {/* Background image */}
                     <img src={card3} className="w-full h-full object-cover" />
 
@@ -135,7 +144,7 @@ const Service = () => {
                             03
                         </h1>
                         <h1 className="text-[21px] font-[600]">
-                            Warehouse booking
+                            Courier booking
                         </h1>
                         <div className="size-[38px] bg-[#D9D9D982] rounded-full flex justify-center items-center cursor-pointer mt-20">
                             <img src={rightArrow} />
@@ -161,7 +170,7 @@ const Service = () => {
                                     03
                                 </h1>
                                 <h1 className="text-[21px] font-[600] mt-5">
-                                    Warehouse booking
+                                    Courier booking
                                 </h1>
                                 <p className="text-[12px]/[33px] font-[500] text-justify">
                                     Lorem ipsum dolor sit amet, consectetur
@@ -177,7 +186,10 @@ const Service = () => {
                     </div>
                 </div>
                 {/* Card 4 */}
-                <div className="w-[305px] h-[740px] relative group overflow-hidden">
+                <div
+                    className="w-[305px] h-[740px] relative group overflow-hidden"
+                    // onClick={() => (window.location.href = "/courier-service")}
+                >
                     {/* Background image */}
                     <img src={card4} className="w-full h-full object-cover" />
 
@@ -229,7 +241,10 @@ const Service = () => {
                     </div>
                 </div>
                 {/* Card 5 */}
-                <div className="w-[305px] h-[740px] relative group overflow-hidden">
+                <div
+                    className="w-[305px] h-[740px] relative group overflow-hidden"
+                    onClick={() => (window.location.href = "/freight-home")}
+                >
                     {/* Background image */}
                     <img src={card5} className="w-full h-full object-cover" />
 
