@@ -24,6 +24,8 @@ use Inertia\Inertia;
 // -------------------------------
 // 🌐 Public Routes
 // -------------------------------
+
+// client
 Route::get('/', [WebController::class, 'index'])->name('home');
 Route::get('/vehicleList', [WebController::class, 'vehicleList'])->name('vehicle.list');
 Route::get('/vehicleDetails', [WebController::class, 'vehicleDetails'])->name('vehicle.details');
@@ -47,6 +49,57 @@ Route::get('/landingPage/blogExample', [WebController::class, 'blogExample'])->n
 // Auth
 Route::get('/signin', [WebController::class, 'signin'])->name('signin.signin');
 Route::get('/signup', [WebController::class, 'signup'])->name('signup.signup');
+
+// vendor
+Route::get('/vendors/bookings', function () {
+    return Inertia::render('Web/home/vendors/Booking');
+})->name('vendors.bookings');
+
+Route::get('/vendors/units', function () {
+    return Inertia::render('Web/home/vendors/Unit');
+})->name('vendors.units');
+
+Route::get('/vendors/dashboard', function () {
+    return Inertia::render('Web/home/vendors/Dashboard');
+})->name('vendors.dashboard');
+
+Route::get('/vendors/clients', function () {
+    return Inertia::render('Web/home/vendors/Client');
+})->name('vendors.clients');
+
+Route::get('/vendors/expenses', function () {
+    return Inertia::render('Web/home/vendors/Expenses');
+})->name('vendors.expenses');
+
+Route::get('/vendors/payment', function () {
+    return Inertia::render('Web/home/vendors/Payment');
+})->name('vendors.payment');
+
+Route::get('/vendors/tracking', function () {
+    return Inertia::render('Web/home/vendors/Tracking');
+})->name('vendors.tracking');
+
+Route::get('/vendors/calendar', function () {
+    return Inertia::render('Web/home/vendors/Calendar');
+})->name('vendors.calendar');
+
+Route::get('/vendors/addUnit', function () {
+    return Inertia::render('Web/home/vendors/AddUnit');
+})->name('vendors.addUnit');
+
+Route::get('/vendors/mainDashboard', function () {
+    return Inertia::render('Web/home/vendors/MainDashboard');
+})->name('vendors.mainDashboard');
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -354,36 +407,6 @@ Route::middleware(['auth'])->prefix('vehicle-bookings')->name('vehicle.booking.'
 
 
 
-Route::get('/vendors/bookings', function () {
-    return Inertia::render('Web/home/vendors/Booking');
-})->name('vendors.bookings');
 
-Route::get('/vendors/units', function () {
-    return Inertia::render('Web/home/vendors/Unit');
-})->name('vendors.units');
-
-Route::get('/vendors/dashboard', function () {
-    return Inertia::render('Web/home/vendors/Dashboard');
-})->name('vendors.dashboard');
-
-Route::get('/vendors/clients', function () {
-    return Inertia::render('Web/home/vendors/Client');
-})->name('vendors.clients');
-
-Route::get('/vendors/expenses', function () {
-    return Inertia::render('Web/home/vendors/Expenses');
-})->name('vendors.expenses');
-
-Route::get('/vendors/payment', function () {
-    return Inertia::render('Web/home/vendors/Payment');
-})->name('vendors.payment');
-
-Route::get('/vendors/tracking', function () {
-    return Inertia::render('Web/home/vendors/Tracking');
-})->name('vendors.tracking');
-
-Route::get('/vendors/calendar', function () {
-    return Inertia::render('Web/home/vendors/Calendar');
-})->name('vendors.calendar');
 
 

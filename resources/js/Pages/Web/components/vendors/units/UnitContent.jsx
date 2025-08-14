@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Inertia } from '@inertiajs/inertia';
 import search from "../../../assets/vendors/dashboard/searchIcon.svg";
 import settings from "../../../assets/vendors/dashboard/settings.svg";
 import bell from "../../../assets/vendors/dashboard/bell.svg";
@@ -256,7 +257,7 @@ const UnitContent = () => {
     }, [itemsPerPage]);
 
     return (
-        <div className="w-full h-auto pr-20 py-10">
+        <div className="w-full h-auto pr-10 py-10">
             {/* Header section */}
             <div className="flex flex-row gap-5 justify-between items-center">
                 <h1 className="figtree text-[35px] font-[700]">Units</h1>
@@ -311,7 +312,10 @@ const UnitContent = () => {
                             <img src={miniDownArrow} />
                         </div>
                     </div>
-                    <button className="w-[125px] h-[35px] bg-[#0955AC] text-[14px] rounded-[6px] text-[#FFFFFF] font-[700]">
+                    <button
+                        className="w-[125px] h-[35px] bg-[#0955AC] text-[14px] rounded-[6px] text-[#FFFFFF] font-[700]"
+                        onClick={() => Inertia.visit('/vendors/addUnit')}
+                    >
                         Add Unit
                     </button>
                 </div>
@@ -322,7 +326,7 @@ const UnitContent = () => {
             {currentUnits.map((unit) => (
                 <div
                     key={unit.id}
-                    className="relative w-[1127px] h-[157px] bg-[#FFFFFF] rounded-[10px] flex flex-row items-center my-10"
+                    className="relative w-auto h-[157px] bg-[#FFFFFF] rounded-[10px] flex flex-row items-center my-10"
                     style={{ boxShadow: "4px 4px 4px #0000001A" }}
                 >
                     <img src={car1} />
@@ -343,7 +347,7 @@ const UnitContent = () => {
                                     </span>
                                 </h1>
                             </div>
-                            <div className="poppins flex flex-row justify-center items-center gap-8 text-[14px] font-[600]">
+                            <div className="poppins flex flex-row justify-start items-center gap-8 text-[14px] font-[600]">
                                 <div className="flex flex-row justify-center items-center gap-3">
                                     <img
                                         src={availableIcon}
@@ -353,9 +357,9 @@ const UnitContent = () => {
                                         {unit.status}
                                     </h1>
                                 </div>
-                                <h1 className="text-[#0955AC]">
+                                {/* <h1 className="text-[#0955AC]">
                                     {unit.unitsCount} Units
-                                </h1>
+                                </h1> */}
                             </div>
                         </div>
                         <div className="flex flex-row justify-center items-center pl-[100px] gap-20">
